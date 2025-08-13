@@ -2,7 +2,7 @@
 /**
  * The template for displaying the footer
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 ?>
 
@@ -17,7 +17,7 @@
                         <?php the_custom_logo(); ?>
                     </div>
                 <?php endif; ?>
-                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col1_heading', __( 'Navigation', 'dreamtails' ) ) ); ?></h5>
+                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col1_heading', __( 'Navigation', 'happiness-is-pets' ) ) ); ?></h5>
                 <?php
                 if ( has_nav_menu( 'footer' ) ) {
                     wp_nav_menu(
@@ -36,7 +36,7 @@
                 ?>
             </div><?php // Footer Column 2: Info/Address ?>
             <div class="col-lg-3 col-md-6 footer-info">
-                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col2_heading', __( 'Dream Tails Sarasota', 'dreamtails' ) ) ); ?></h5>
+                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col2_heading', __( 'Happiness Is Pets Sarasota', 'happiness-is-pets' ) ) ); ?></h5>
                 <?php
                 // $part_of_the_Petland = get_theme_mod( 'footer_col2_part_of_the_petland', "Part of the Petland family of stores" );
                 $address = get_theme_mod( 'footer_col2_address', "6453 Lockwood Ridge Rd\nSarasota, FL 34243" );
@@ -56,7 +56,7 @@
                 </div>
             </div><?php // Footer Column 3: Hours ?>
             <div class="col-lg-3 col-md-6 footer-hours">
-                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col3_heading', __( 'Store Hours', 'dreamtails' ) ) ); ?></h5>
+                <h5 class="widget-title"><?php echo esc_html( get_theme_mod( 'footer_col3_heading', __( 'Store Hours', 'happiness-is-pets' ) ) ); ?></h5>
                 <!-- <p><i class="far fa-clock me-2"></i><?php //echo nl2br( esc_html( get_theme_mod( 'footer_col3_hours', "Mon - Sat: 10am - 8pm\nSun: 11am - 7pm" ) ) ); ?></p> -->
                 <?php
 $hours = get_theme_mod(
@@ -79,10 +79,10 @@ foreach ($hours_lines as $line) {
 
             </div><?php // Footer Column 4: Extra Info ?>
             <div class="col-lg-3 col-md-6 footer-extra">
-                <!-- <h5 class="widget-title"><?php //echo esc_html( get_theme_mod( 'footer_col4_heading', __( 'About Us', 'dreamtails' ) ) ); ?></h5> -->
-                <h5 class="widget-title"><img src="<?php echo esc_url( 'https://dreamtails.kinsta.cloud/wp-content/uploads/2025/08/DreamTailsstackedlogo-04-1.png' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> stacked logo" loading="lazy" /></h5>
-                <!-- <p><?php //echo esc_html( get_theme_mod( 'footer_col4_text', __( 'Part of the Petland family of stores.', 'dreamtails' ) ) ); ?></p> -->
-                <p><?php echo esc_html( get_theme_mod( 'footer_col4_heading', __( 'Part of the Petland family of stores.', 'dreamtails' ) ) ); ?></p>
+                <!-- <h5 class="widget-title"><?php //echo esc_html( get_theme_mod( 'footer_col4_heading', __( 'About Us', 'happiness-is-pets' ) ) ); ?></h5> -->
+                <h5 class="widget-title"><img src="<?php echo esc_url( 'https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/08/happiness-is-pets-stackedlogo-04-1.png' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> stacked logo" loading="lazy" /></h5>
+                <!-- <p><?php //echo esc_html( get_theme_mod( 'footer_col4_text', __( 'Part of the Petland family of stores.', 'happiness-is-pets' ) ) ); ?></p> -->
+                <p><?php echo esc_html( get_theme_mod( 'footer_col4_heading', __( 'Part of the Petland family of stores.', 'happiness-is-pets' ) ) ); ?></p>
                 
                 <!-- <div>
                     <a href="<?php //echo esc_url( get_theme_mod( 'footer_facebook_url', '#' ) ); ?>" class="me-2"><i class="fab fa-facebook-f"></i></a>
@@ -91,8 +91,8 @@ foreach ($hours_lines as $line) {
             </div></div><hr class="mt-4 mb-3" style="border-color: rgba(255, 255, 255, 0.2);">
 
         <div class="footer-bottom text-center">
-            <p class="mb-1">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All Rights Reserved.', 'dreamtails' ); ?></p>
-            <p class="mb-0 small"><?php esc_html_e( 'Developed by', 'dreamtails' ); ?> <a href="https://cosmickmedia.com/" target="_blank" rel="noopener">Cosmick Media</a></p>
+            <p class="mb-1">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All Rights Reserved.', 'happiness-is-pets' ); ?></p>
+            <p class="mb-0 small"><?php esc_html_e( 'Developed by', 'happiness-is-pets' ); ?> <a href="https://cosmickmedia.com/" target="_blank" rel="noopener">Cosmick Media</a></p>
         </div></div></footer></div><?php wp_footer(); ?>
 
 </body>

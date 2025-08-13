@@ -9,7 +9,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();
@@ -50,9 +50,9 @@ get_header();
 
                     // Add pagination if needed
                     the_posts_pagination( array(
-                        'prev_text' => '<i class="fas fa-arrow-left"></i><span class="screen-reader-text">' . __( 'Previous page', 'dreamtails' ) . '</span>',
-                        'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'dreamtails' ) . '</span><i class="fas fa-arrow-right"></i>',
-                        'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'dreamtails' ) . ' </span>',
+                        'prev_text' => '<i class="fas fa-arrow-left"></i><span class="screen-reader-text">' . __( 'Previous page', 'happiness-is-pets' ) . '</span>',
+                        'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'happiness-is-pets' ) . '</span><i class="fas fa-arrow-right"></i>',
+                        'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'happiness-is-pets' ) . ' </span>',
                         // Add Bootstrap pagination classes if desired
                         'type'      => 'list', // Use list format for easier Bootstrap styling
                         'echo'      => false   // Return the links to maybe wrap them later
@@ -60,7 +60,7 @@ get_header();
                 // Example: Wrap pagination with Bootstrap classes
                 // $pagination_links = the_posts_pagination( ... 'echo' => false ... );
                 // if ( $pagination_links ) {
-                //    echo '<nav class="navigation posts-navigation" aria-label="' . esc_attr__( 'Posts', 'dreamtails' ) . '"><ul class="pagination justify-content-center">' . $pagination_links . '</ul></nav>';
+                //    echo '<nav class="navigation posts-navigation" aria-label="' . esc_attr__( 'Posts', 'happiness-is-pets' ) . '"><ul class="pagination justify-content-center">' . $pagination_links . '</ul></nav>';
                 // }
 
 

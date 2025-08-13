@@ -5,7 +5,7 @@
  * Displays WooCommerce content within the theme layout and
  * adds an optional sidebar on product category archives.
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();
@@ -16,13 +16,13 @@ get_template_part( 'template-parts/page', 'header' );
         <div class="main-container">
             <?php if ( is_product_taxonomy() || is_shop() ) : ?>
                 <button class="btn filter-pets-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#petsFilterOffcanvas" aria-controls="petsFilterOffcanvas">
-                    <?php esc_html_e( 'Filter Pets', 'dreamtails' ); ?>
+                    <?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?>
                 </button>
 
                 <div class="offcanvas offcanvas-start pets-offcanvas" tabindex="-1" id="petsFilterOffcanvas" aria-labelledby="petsFilterLabel">
                     <div class="offcanvas-header">
-                        <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'dreamtails' ); ?></h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'dreamtails' ); ?>"></button>
+                        <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?></h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
                     </div>
                     <div class="offcanvas-body">
                         <?php get_sidebar( 'woocommerce-pets' ); ?>

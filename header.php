@@ -1,13 +1,13 @@
 <?php
 /**
- * The header for the Dream Tails theme (Two-Bar Structure with Top Offcanvas)
+ * The header for the Happiness Is Pets theme (Two-Bar Structure with Top Offcanvas)
  *
  * Displays all of the <head> section and everything up till <div id="content">
  * Implements a two-bar header:
  * 1) Top bar: Hamburger + Logo left, Contact info and Button right
  * 2) Nav bar: Menu items displayed horizontally on all devices (no hamburger)
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 ?>
 <!doctype html>
@@ -49,7 +49,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'dreamtails' ); ?></a>
+    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'happiness-is-pets' ); ?></a>
 
     <header id="masthead" class="site-header">
 
@@ -61,12 +61,12 @@
                 <div class="d-flex align-items-center">
                     <?php // Hamburger Menu Toggle ?>
                     <button
-                            class="navbar-toggler dream-tails-toggler me-2 me-md-3 d-md-none"
+                            class="navbar-toggler happiness-is-pets-toggler me-2 me-md-3 d-md-none"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#mobileNavOffcanvas"
                             aria-controls="mobileNavOffcanvas"
-                            aria-label="<?php esc_attr_e( 'Toggle navigation', 'dreamtails' ); ?>">
+                            aria-label="<?php esc_attr_e( 'Toggle navigation', 'happiness-is-pets' ); ?>">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -111,11 +111,11 @@
                                 <i class="fas fa-phone me-2 header-icon"></i><span class="phone-text d-none d-md-inline"><?php echo esc_html( $phone ); ?></span>
                             </a>
                         <?php endif; ?>
-                        <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'dreamtails' ); ?>">
+                        <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'happiness-is-pets' ); ?>">
                             <i class="fas fa-user"></i>
                         </a>
                         <?php if ( function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
-                            <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="header-icon header-cart-icon me-3" aria-label="<?php esc_attr_e( 'Shopping Cart', 'dreamtails' ); ?>">
+                            <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="header-icon header-cart-icon me-3" aria-label="<?php esc_attr_e( 'Shopping Cart', 'happiness-is-pets' ); ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         <?php endif; ?>
@@ -126,7 +126,7 @@
         </div>
 
         <?php // --- Offcanvas Menu (Triggered by hamburger in top bar) --- ?>
-        <div class="offcanvas offcanvas-start dream-tails-offcanvas" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">
+        <div class="offcanvas offcanvas-start happiness-is-pets-offcanvas" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">
             <div class="offcanvas-header">
                 <div class="offcanvas-logo">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
@@ -139,7 +139,7 @@
                         <?php } ?>
                     </a>
                 </div>
-                <button type="button" class="btn-close dream-tails-close" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'dreamtails' ); ?>"></button>
+                <button type="button" class="btn-close happiness-is-pets-close" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
             </div>
             <div class="offcanvas-body">
                 <?php // Full Navigation Menu in Offcanvas ?>
@@ -160,16 +160,16 @@
 
                 <?php // Mobile Quick Links ?>
                 <div class="mobile-quick-links">
-                    <h6 class="quick-links-title"><?php esc_html_e( 'Quick Links', 'dreamtails' ); ?></h6>
+                    <h6 class="quick-links-title"><?php esc_html_e( 'Quick Links', 'happiness-is-pets' ); ?></h6>
                     <div class="quick-links-grid">
                         <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="quick-link-item">
                             <i class="fas fa-user"></i>
-                            <span><?php esc_html_e( 'My Account', 'dreamtails' ); ?></span>
+                            <span><?php esc_html_e( 'My Account', 'happiness-is-pets' ); ?></span>
                         </a>
                         <?php if ( function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
                             <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="quick-link-item">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span><?php esc_html_e( 'Cart', 'dreamtails' ); ?></span>
+                                <span><?php esc_html_e( 'Cart', 'happiness-is-pets' ); ?></span>
                             </a>
                         <?php endif; ?>
                     </div>
@@ -195,10 +195,10 @@
 
                 <?php // Mobile Social Links ?>
                 <div class="mobile-social-links">
-                    <a href="<?php echo esc_url( get_theme_mod( 'footer_facebook_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Facebook', 'dreamtails' ); ?>">
+                    <a href="<?php echo esc_url( get_theme_mod( 'footer_facebook_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Facebook', 'happiness-is-pets' ); ?>">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="<?php echo esc_url( get_theme_mod( 'footer_instagram_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Instagram', 'dreamtails' ); ?>">
+                    <a href="<?php echo esc_url( get_theme_mod( 'footer_instagram_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Instagram', 'happiness-is-pets' ); ?>">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>

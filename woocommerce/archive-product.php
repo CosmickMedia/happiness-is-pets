@@ -6,13 +6,13 @@ get_header( 'shop' );
 
 <?php if ( is_product_taxonomy() || is_shop() ) : ?>
     <button class="btn filter-pets-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#petsFilterOffcanvas" aria-controls="petsFilterOffcanvas">
-        <?php esc_html_e( 'Filter Pets', 'dreamtails' ); ?>
+        <?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?>
     </button>
 
     <div class="offcanvas offcanvas-start pets-offcanvas" tabindex="-1" id="petsFilterOffcanvas" aria-labelledby="petsFilterLabel">
         <div class="offcanvas-header">
-            <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'dreamtails' ); ?></h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'dreamtails' ); ?>"></button>
+            <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?></h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
         </div>
         <div class="offcanvas-body">
             <?php get_sidebar( 'woocommerce-pets' ); ?>
@@ -26,7 +26,7 @@ get_header( 'shop' );
         <?php woocommerce_catalog_ordering(); ?>
     </div>
     <select class="product-filter form-select mb-3 d-block d-md-none">
-        <option value=""><?php esc_html_e( 'Filter Products', 'dreamtails' ); ?></option>
+        <option value=""><?php esc_html_e( 'Filter Products', 'happiness-is-pets' ); ?></option>
     </select>
 
     <?php woocommerce_product_loop_start(); ?>

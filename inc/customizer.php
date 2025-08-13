@@ -1,19 +1,19 @@
 <?php
 /**
- * Theme Customizer additions for Dream Tails.
+ * Theme Customizer additions for Happiness Is Pets.
  */
 
-function dreamtails_customize_register( $wp_customize ) {
+function happiness_is_pets_customize_register( $wp_customize ) {
     // Panel for front page settings
-    $wp_customize->add_panel( 'dreamtails_front_page', array(
-            'title'    => __( 'Front Page', 'dreamtails' ),
+    $wp_customize->add_panel( 'happiness_is_pets_front_page', array(
+            'title'    => __( 'Front Page', 'happiness-is-pets' ),
             'priority' => 160,
     ) );
 
     /* Hero Section */
-    $wp_customize->add_section( 'dreamtails_hero', array(
-            'title' => __( 'Hero Section', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_hero', array(
+            'title' => __( 'Hero Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     $wp_customize->add_setting( 'front_hero_image', array(
@@ -22,27 +22,27 @@ function dreamtails_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_hero_image', array(
-            'label'   => __( 'Hero Image', 'dreamtails' ),
-            'section' => 'dreamtails_hero',
+            'label'   => __( 'Hero Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_hero',
     ) ) );
 
     $wp_customize->add_setting( 'front_hero_heading', array(
-            'default'           => __( 'where pets find their people', 'dreamtails' ),
+            'default'           => __( 'where pets find their people', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_hero_heading', array(
-            'label'   => __( 'Hero Heading', 'dreamtails' ),
-            'section' => 'dreamtails_hero',
+            'label'   => __( 'Hero Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_hero',
             'type'    => 'text',
     ) );
 
     $wp_customize->add_setting( 'front_hero_button_text', array(
-            'default'           => __( 'Book an Appointment', 'dreamtails' ),
+            'default'           => __( 'Book an Appointment', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_hero_button_text', array(
-            'label'   => __( 'Hero Button Text', 'dreamtails' ),
-            'section' => 'dreamtails_hero',
+            'label'   => __( 'Hero Button Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_hero',
             'type'    => 'text',
     ) );
 
@@ -52,8 +52,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_hero_bg_image', array(
-            'label'   => __( 'Hero Background Image', 'dreamtails' ),
-            'section' => 'dreamtails_hero',
+            'label'   => __( 'Hero Background Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_hero',
     ) ) );
 
     $wp_customize->add_setting( 'front_hero_bg_color', array(
@@ -61,13 +61,13 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_hex_color',
     ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'front_hero_bg_color', array(
-            'label'   => __( 'Hero Background Color', 'dreamtails' ),
-            'section' => 'dreamtails_hero',
+            'label'   => __( 'Hero Background Color', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_hero',
     ) ) );
 
     /* Header Settings */
-    $wp_customize->add_section( 'dreamtails_header_settings', array(
-            'title'    => __( 'Header Settings', 'dreamtails' ),
+    $wp_customize->add_section( 'happiness_is_pets_header_settings', array(
+            'title'    => __( 'Header Settings', 'happiness-is-pets' ),
             'priority' => 30,
     ) );
 
@@ -76,8 +76,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'header_phone_number', array(
-            'label'   => __( 'Phone Number', 'dreamtails' ),
-            'section' => 'dreamtails_header_settings',
+            'label'   => __( 'Phone Number', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_header_settings',
             'type'    => 'text',
     ) );
 
@@ -86,18 +86,18 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'header_book_button_url', array(
-            'label'   => __( 'Reservation Button URL', 'dreamtails' ),
-            'section' => 'dreamtails_header_settings',
+            'label'   => __( 'Reservation Button URL', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_header_settings',
             'type'    => 'url',
     ) );
 
     $wp_customize->add_setting( 'header_book_button_text', array(
-            'default'           => __( 'Make a Reservation', 'dreamtails' ),
+            'default'           => __( 'Make a Reservation', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'header_book_button_text', array(
-            'label'   => __( 'Reservation Button Text', 'dreamtails' ),
-            'section' => 'dreamtails_header_settings',
+            'label'   => __( 'Reservation Button Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_header_settings',
             'type'    => 'text',
     ) );
 
@@ -106,16 +106,16 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'header_book_button_icon', array(
-            'label'       => __( 'Reservation Button Icon', 'dreamtails' ),
-            'section'     => 'dreamtails_header_settings',
+            'label'       => __( 'Reservation Button Icon', 'happiness-is-pets' ),
+            'section'     => 'happiness_is_pets_header_settings',
             'type'        => 'text',
-            'description' => __( 'Font Awesome class, e.g. fa-calendar-check', 'dreamtails' ),
+            'description' => __( 'Font Awesome class, e.g. fa-calendar-check', 'happiness-is-pets' ),
     ) );
 
     /* Shop Settings */
-    $wp_customize->add_section( 'dreamtails_shop_settings', array(
-            'title' => __( 'Shop Settings', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_shop_settings', array(
+            'title' => __( 'Shop Settings', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     // FIXED: Changed to boolean handling for checkbox
@@ -127,15 +127,15 @@ function dreamtails_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_control( 'enable_catalog_mode', array(
-            'label'   => __( 'Enable Catalog Mode', 'dreamtails' ),
-            'section' => 'dreamtails_shop_settings',
+            'label'   => __( 'Enable Catalog Mode', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_shop_settings',
             'type'    => 'checkbox',
     ) );
 
     /* Icon Section */
-    $wp_customize->add_section( 'dreamtails_icons', array(
-            'title' => __( 'Icon Section', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_icons', array(
+            'title' => __( 'Icon Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     $wp_customize->add_setting( 'front_icon1_img', array(
@@ -143,8 +143,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon1_img', array(
-            'label'   => __( 'First Icon Image', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'First Icon Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
     ) ) );
 
     $wp_customize->add_setting( 'front_icon1_link', array(
@@ -152,18 +152,18 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'front_icon1_link', array(
-            'label'   => __( 'First Icon Link', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'First Icon Link', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'url',
     ) );
 
     $wp_customize->add_setting( 'front_icon1_text', array(
-            'default'           => __( 'puppies dreaming of you', 'dreamtails' ),
+            'default'           => __( 'puppies dreaming of you', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_icon1_text', array(
-            'label'   => __( 'First Icon Text', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'First Icon Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'text',
     ) );
 
@@ -172,8 +172,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon2_img', array(
-            'label'   => __( 'Second Icon Image', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Second Icon Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
     ) ) );
 
     $wp_customize->add_setting( 'front_icon2_link', array(
@@ -181,18 +181,18 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'front_icon2_link', array(
-            'label'   => __( 'Second Icon Link', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Second Icon Link', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'url',
     ) );
 
     $wp_customize->add_setting( 'front_icon2_text', array(
-            'default'           => __( 'kittens dreaming of you', 'dreamtails' ),
+            'default'           => __( 'kittens dreaming of you', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_icon2_text', array(
-            'label'   => __( 'Second Icon Text', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Second Icon Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'text',
     ) );
 
@@ -201,8 +201,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon3_img', array(
-            'label'   => __( 'Third Icon Image', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Third Icon Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
     ) ) );
 
     $wp_customize->add_setting( 'front_icon3_link', array(
@@ -210,34 +210,34 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'front_icon3_link', array(
-            'label'   => __( 'Third Icon Link', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Third Icon Link', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'url',
     ) );
 
     $wp_customize->add_setting( 'front_icon3_text', array(
-            'default'           => __( 'concierge service', 'dreamtails' ),
+            'default'           => __( 'concierge service', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_icon3_text', array(
-            'label'   => __( 'Third Icon Text', 'dreamtails' ),
-            'section' => 'dreamtails_icons',
+            'label'   => __( 'Third Icon Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_icons',
             'type'    => 'text',
     ) );
 
     /* Featured Pets */
-    $wp_customize->add_section( 'dreamtails_featured_pets', array(
-            'title' => __( 'Featured Pets', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_featured_pets', array(
+            'title' => __( 'Featured Pets', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     $wp_customize->add_setting( 'front_featured_pets_heading', array(
-            'default'           => __( 'featured dream pets', 'dreamtails' ),
+            'default'           => __( 'featured dream pets', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_featured_pets_heading', array(
-            'label'   => __( 'Section Heading', 'dreamtails' ),
-            'section' => 'dreamtails_featured_pets',
+            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_featured_pets',
             'type'    => 'text',
     ) );
 
@@ -248,8 +248,8 @@ function dreamtails_customize_register( $wp_customize ) {
                 'sanitize_callback' => 'esc_url_raw',
         ) );
         $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "front_featured_pet_image{$i}", array(
-                'label'   => sprintf( __( 'Featured Pet Image %d', 'dreamtails' ), $i ),
-                'section' => 'dreamtails_featured_pets',
+                'label'   => sprintf( __( 'Featured Pet Image %d', 'happiness-is-pets' ), $i ),
+                'section' => 'happiness_is_pets_featured_pets',
         ) ) );
 
         $wp_customize->add_setting( "front_featured_pet_link{$i}", array(
@@ -257,25 +257,25 @@ function dreamtails_customize_register( $wp_customize ) {
                 'sanitize_callback' => 'esc_url_raw',
         ) );
         $wp_customize->add_control( "front_featured_pet_link{$i}", array(
-                'label'   => sprintf( __( 'Featured Pet Link %d', 'dreamtails' ), $i ),
-                'section' => 'dreamtails_featured_pets',
+                'label'   => sprintf( __( 'Featured Pet Link %d', 'happiness-is-pets' ), $i ),
+                'section' => 'happiness_is_pets_featured_pets',
                 'type'    => 'url',
         ) );
     }
 
     /* Testimonials */
-    $wp_customize->add_section( 'dreamtails_testimonials', array(
-            'title' => __( 'Testimonials', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_testimonials', array(
+            'title' => __( 'Testimonials', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     $wp_customize->add_setting( 'front_testimonial_heading', array(
-            'default'           => __( 'happy tails start here', 'dreamtails' ),
+            'default'           => __( 'happy tails start here', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_testimonial_heading', array(
-            'label'   => __( 'Section Heading', 'dreamtails' ),
-            'section' => 'dreamtails_testimonials',
+            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_testimonials',
             'type'    => 'text',
     ) );
 
@@ -284,8 +284,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_testimonial_image', array(
-            'label'   => __( 'Testimonial Image', 'dreamtails' ),
-            'section' => 'dreamtails_testimonials',
+            'label'   => __( 'Testimonial Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_testimonials',
     ) ) );
 
     // Background options for Testimonials Section
@@ -294,8 +294,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_testimonial_bg_image', array(
-            'label'   => __( 'Testimonials Background Image', 'dreamtails' ),
-            'section' => 'dreamtails_testimonials',
+            'label'   => __( 'Testimonials Background Image', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_testimonials',
     ) ) );
 
     $wp_customize->add_setting( 'front_testimonial_bg_color', array(
@@ -303,53 +303,53 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_hex_color',
     ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'front_testimonial_bg_color', array(
-            'label'   => __( 'Testimonials Background Color', 'dreamtails' ),
-            'section' => 'dreamtails_testimonials',
+            'label'   => __( 'Testimonials Background Color', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_testimonials',
     ) ) );
 
     /* Concierge Section */
-    $wp_customize->add_section( 'dreamtails_concierge', array(
-            'title' => __( 'Concierge Section', 'dreamtails' ),
-            'panel' => 'dreamtails_front_page',
+    $wp_customize->add_section( 'happiness_is_pets_concierge', array(
+            'title' => __( 'Concierge Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_front_page',
     ) );
 
     $wp_customize->add_setting( 'front_concierge_heading', array(
-            'default'           => __( 'concierge level care', 'dreamtails' ),
+            'default'           => __( 'concierge level care', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_concierge_heading', array(
-            'label'   => __( 'Section Heading', 'dreamtails' ),
-            'section' => 'dreamtails_concierge',
+            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_concierge',
             'type'    => 'text',
     ) );
 
     $wp_customize->add_setting( 'front_concierge_lead', array(
-            'default'           => __( 'Our service and environment are designed to match the high quality of puppies and kittens in our store and meet your expectations.', 'dreamtails' ),
+            'default'           => __( 'Our service and environment are designed to match the high quality of puppies and kittens in our store and meet your expectations.', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'front_concierge_lead', array(
-            'label'   => __( 'Lead Text', 'dreamtails' ),
-            'section' => 'dreamtails_concierge',
+            'label'   => __( 'Lead Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_concierge',
             'type'    => 'textarea',
     ) );
 
     $wp_customize->add_setting( 'front_concierge_desc', array(
-            'default'           => __( 'We think the puppies and kittens are worth it and so are you!', 'dreamtails' ),
+            'default'           => __( 'We think the puppies and kittens are worth it and so are you!', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'front_concierge_desc', array(
-            'label'   => __( 'Secondary Text', 'dreamtails' ),
-            'section' => 'dreamtails_concierge',
+            'label'   => __( 'Secondary Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_concierge',
             'type'    => 'textarea',
     ) );
 
     $wp_customize->add_setting( 'front_concierge_button_text', array(
-            'default'           => __( 'Learn more about Dream Tails Boutique', 'dreamtails' ),
+            'default'           => __( 'Learn more about Happiness Is Pets Boutique', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'front_concierge_button_text', array(
-            'label'   => __( 'Button Text', 'dreamtails' ),
-            'section' => 'dreamtails_concierge',
+            'label'   => __( 'Button Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_concierge',
             'type'    => 'text',
     ) );
 
@@ -358,30 +358,30 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'front_concierge_button_url', array(
-            'label'   => __( 'Button URL', 'dreamtails' ),
-            'section' => 'dreamtails_concierge',
+            'label'   => __( 'Button URL', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_concierge',
             'type'    => 'url',
     ) );
 
     /* Footer Panel */
-    $wp_customize->add_panel( 'dreamtails_footer', array(
-            'title'    => __( 'Footer', 'dreamtails' ),
+    $wp_customize->add_panel( 'happiness_is_pets_footer', array(
+            'title'    => __( 'Footer', 'happiness-is-pets' ),
             'priority' => 200,
     ) );
 
     /* Footer Column 1 */
-    $wp_customize->add_section( 'dreamtails_footer_col1', array(
-            'title' => __( 'Column 1', 'dreamtails' ),
-            'panel' => 'dreamtails_footer',
+    $wp_customize->add_section( 'happiness_is_pets_footer_col1', array(
+            'title' => __( 'Column 1', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer',
     ) );
 
     $wp_customize->add_setting( 'footer_col1_heading', array(
-            'default'           => __( 'Navigation', 'dreamtails' ),
+            'default'           => __( 'Navigation', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'footer_col1_heading', array(
-            'label'   => __( 'Heading', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col1',
+            'label'   => __( 'Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col1',
             'type'    => 'text',
     ) );
 
@@ -390,24 +390,24 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'wp_kses_post',
     ) );
     $wp_customize->add_control( 'footer_col1_text', array(
-            'label'   => __( 'Additional Text', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col1',
+            'label'   => __( 'Additional Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col1',
             'type'    => 'textarea',
     ) );
 
     /* Footer Column 2 */
-    $wp_customize->add_section( 'dreamtails_footer_col2', array(
-            'title' => __( 'Column 2', 'dreamtails' ),
-            'panel' => 'dreamtails_footer',
+    $wp_customize->add_section( 'happiness_is_pets_footer_col2', array(
+            'title' => __( 'Column 2', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer',
     ) );
 
     $wp_customize->add_setting( 'footer_col2_heading', array(
-            'default'           => __( 'Dream Tails Sarasota', 'dreamtails' ),
+            'default'           => __( 'Happiness Is Pets Sarasota', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'footer_col2_heading', array(
-            'label'   => __( 'Heading', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col2',
+            'label'   => __( 'Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col2',
             'type'    => 'text',
     ) );
 
@@ -416,8 +416,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'footer_col2_address', array(
-            'label'   => __( 'Address', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col2',
+            'label'   => __( 'Address', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col2',
             'type'    => 'textarea',
     ) );
 
@@ -426,24 +426,24 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'footer_col2_phone', array(
-            'label'   => __( 'Phone Number', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col2',
+            'label'   => __( 'Phone Number', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col2',
             'type'    => 'text',
     ) );
 
     /* Footer Column 3 */
-    $wp_customize->add_section( 'dreamtails_footer_col3', array(
-            'title' => __( 'Column 3', 'dreamtails' ),
-            'panel' => 'dreamtails_footer',
+    $wp_customize->add_section( 'happiness_is_pets_footer_col3', array(
+            'title' => __( 'Column 3', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer',
     ) );
 
     $wp_customize->add_setting( 'footer_col3_heading', array(
-            'default'           => __( 'Store Hours', 'dreamtails' ),
+            'default'           => __( 'Store Hours', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'footer_col3_heading', array(
-            'label'   => __( 'Heading', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col3',
+            'label'   => __( 'Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col3',
             'type'    => 'text',
     ) );
 
@@ -452,34 +452,34 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'footer_col3_hours', array(
-            'label'   => __( 'Hours', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col3',
+            'label'   => __( 'Hours', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col3',
             'type'    => 'textarea',
     ) );
 
     /* Footer Column 4 */
-    $wp_customize->add_section( 'dreamtails_footer_col4', array(
-            'title' => __( 'Column 4', 'dreamtails' ),
-            'panel' => 'dreamtails_footer',
+    $wp_customize->add_section( 'happiness_is_pets_footer_col4', array(
+            'title' => __( 'Column 4', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer',
     ) );
 
     $wp_customize->add_setting( 'footer_col4_heading', array(
-            'default'           => __( 'About Us', 'dreamtails' ),
+            'default'           => __( 'About Us', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'footer_col4_heading', array(
-            'label'   => __( 'Heading', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col4',
+            'label'   => __( 'Heading', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col4',
             'type'    => 'text',
     ) );
 
     $wp_customize->add_setting( 'footer_col4_text', array(
-            'default'           => __( 'Part of the Petland family of stores.', 'dreamtails' ),
+            'default'           => __( 'Part of the Petland family of stores.', 'happiness-is-pets' ),
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'footer_col4_text', array(
-            'label'   => __( 'Text', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col4',
+            'label'   => __( 'Text', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col4',
             'type'    => 'textarea',
     ) );
 
@@ -488,8 +488,8 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'footer_facebook_url', array(
-            'label'   => __( 'Facebook URL', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col4',
+            'label'   => __( 'Facebook URL', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col4',
             'type'    => 'url',
     ) );
 
@@ -498,17 +498,17 @@ function dreamtails_customize_register( $wp_customize ) {
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'footer_instagram_url', array(
-            'label'   => __( 'Instagram URL', 'dreamtails' ),
-            'section' => 'dreamtails_footer_col4',
+            'label'   => __( 'Instagram URL', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_footer_col4',
             'type'    => 'url',
     ) );
 }
-add_action( 'customize_register', 'dreamtails_customize_register' );
+add_action( 'customize_register', 'happiness_is_pets_customize_register' );
 
 /**
  * Output dynamic CSS based on customizer settings.
  */
-function dreamtails_customizer_css() {
+function happiness_is_pets_customizer_css() {
     $hero            = get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' );
     $hero_bg_image   = get_theme_mod( 'front_hero_bg_image', '' );
     $hero_bg_color   = get_theme_mod( 'front_hero_bg_color', '#ffcfcd' );
@@ -542,4 +542,4 @@ function dreamtails_customizer_css() {
     </style>
     <?php
 }
-add_action( 'wp_head', 'dreamtails_customizer_css' );
+add_action( 'wp_head', 'happiness_is_pets_customizer_css' );

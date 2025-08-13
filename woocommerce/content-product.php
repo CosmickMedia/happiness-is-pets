@@ -25,7 +25,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 ?>
 <div <?php wc_product_class( 'col' ); ?> >
     <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
-        <a href="<?php the_permalink(); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'dreamtails' ), get_the_title() ) ); ?>">
+        <a href="<?php the_permalink(); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), get_the_title() ) ); ?>">
             <div class="position-relative">
                 <?php if ( ! is_catalog_mode() ) : ?>
                 <!--div class="position-absolute top-0 end-0 m-2 z-index-1">
@@ -57,48 +57,48 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         <?php endif; ?>
                     </div>
 
-                    <!-- <h5 class="card-title pet-name fw-bold mb-2"><?php //echo sprintf( esc_html__( 'Hi, my name is %s!', 'dreamtails' ), get_the_title() ); ?></h5> -->
-                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo sprintf( esc_html__( '%s!', 'dreamtails' ), get_the_title() ); ?></h5>
+                    <!-- <h5 class="card-title pet-name fw-bold mb-2"><?php //echo sprintf( esc_html__( 'Hi, my name is %s!', 'happiness-is-pets' ), get_the_title() ); ?></h5> -->
+                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo sprintf( esc_html__( '%s!', 'happiness-is-pets' ), get_the_title() ); ?></h5>
 
                     <div class="card-text">
                         <?php if ( $gender ) : ?>
                         <div class="pet-detail pet-gender d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'Gender:', 'dreamtails' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
+                            <strong class="me-1"><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
                         </div>
                         <?php endif; ?>
 
                         <?php if ( $birth_date ) : ?>
                         <div class="pet-detail pet-dob d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'DOB:', 'dreamtails' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
+                            <strong class="me-1"><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
                         </div>
                         <?php endif; ?>
 
                         <?php if ( $sku ) : ?>
                         <div class="pet-detail pet-ref d-flex align-items-center">
-                            <strong class="me-1"><?php esc_html_e( 'Ref:', 'dreamtails' ); ?></strong> <span class="ref-id badge bg-light text-dark">#<?php echo esc_html( $sku ); ?></span>
+                            <strong class="me-1"><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> <span class="ref-id badge bg-light text-dark">#<?php echo esc_html( $sku ); ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
                 </div>
 
                 <!-- <div class="col-auto d-flex flex-column align-items-stretch justify-content-center gap-2">
-                    <a href="tel:" class="btn btn-light btn-sm d-flex flex-column align-items-center gap-1 z-2 action-icon" title="<?php //esc_attr_e( 'Call Us', 'dreamtails' ); ?>">
+                    <a href="tel:" class="btn btn-light btn-sm d-flex flex-column align-items-center gap-1 z-2 action-icon" title="<?php //esc_attr_e( 'Call Us', 'happiness-is-pets' ); ?>">
                         <i class="fas fa-phone-alt"></i>
-                        <small><?php //esc_html_e( 'Call', 'dreamtails' ); ?></small>
+                        <small><?php //esc_html_e( 'Call', 'happiness-is-pets' ); ?></small>
                     </a>
 
-                    <a href="mailto:<?php //echo antispambot( get_option( 'admin_email' ) ); ?>" class="btn btn-dark btn-sm d-flex flex-column align-items-center gap-1 z-2 action-icon" title="<?php //esc_attr_e( 'Email Us', 'dreamtails' ); ?>">
+                    <a href="mailto:<?php //echo antispambot( get_option( 'admin_email' ) ); ?>" class="btn btn-dark btn-sm d-flex flex-column align-items-center gap-1 z-2 action-icon" title="<?php //esc_attr_e( 'Email Us', 'happiness-is-pets' ); ?>">
                         <i class="fas fa-envelope"></i>
-                        <small><?php //esc_html_e( 'Email', 'dreamtails' ); ?></small>
+                        <small><?php //esc_html_e( 'Email', 'happiness-is-pets' ); ?></small>
                     </a>
                 </div> -->
             </div>
         </div>
 
         <div class="card-footer bg-transparent border-top-0 text-center p-3">
-            <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100 mb-2"><?php esc_html_e( 'View Details', 'dreamtails' ); ?></a>
+            <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100 mb-2"><?php esc_html_e( 'View Details', 'happiness-is-pets' ); ?></a>
             <a href="<?php echo esc_url( $reservation_url ); ?>" class="btn btn-secondary-theme w-100 mb-2" style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;">
-                <?php esc_html_e( 'Make a Reservation', 'dreamtails' ); ?>
+                <?php esc_html_e( 'Make a Reservation', 'happiness-is-pets' ); ?>
             </a>
             <?php if ( $header_phone ) : ?>
             <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $header_phone ) ); ?>" class="btn btn-outline-primary-theme w-100"><i class="fas fa-phone me-1"></i> <?php echo esc_html( $header_phone ); ?></a>

@@ -1,15 +1,15 @@
 <?php
 /**
- * Dream Tails functions and definitions
+ * Happiness Is Pets functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
-if ( ! defined( 'DREAMTAILS_VERSION' ) ) {
+if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'DREAMTAILS_VERSION', '1.1' ); // Updated version
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.1' ); // Updated version
 }
 
 /**
@@ -26,7 +26,7 @@ function is_catalog_mode() {
 /**
  * Output breadcrumbs with YoastSEO support.
  */
-function dreamtails_breadcrumb() {
+function happiness_is_pets_breadcrumb() {
     if ( function_exists( 'yoast_breadcrumb' ) ) {
         yoast_breadcrumb( '<nav class="breadcrumb-wrapper mb-3">', '</nav>' );
     } elseif ( function_exists( 'woocommerce_breadcrumb' ) ) {
@@ -37,9 +37,9 @@ function dreamtails_breadcrumb() {
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  */
-function dreamtails_setup() {
+function happiness_is_pets_setup() {
     // Make theme available for translation.
-    load_theme_textdomain( 'dreamtails', get_template_directory() . '/languages' );
+    load_theme_textdomain( 'happiness-is-pets', get_template_directory() . '/languages' );
 
     // Add default posts and comments RSS feed links to head.
     add_theme_support( 'automatic-feed-links' );
@@ -53,10 +53,10 @@ function dreamtails_setup() {
     // Register navigation menus.
     register_nav_menus(
             array(
-                    'primary' => esc_html__( 'Primary Menu', 'dreamtails' ),
-                    'footer'  => esc_html__( 'Footer Menu', 'dreamtails' ),
-                    'new-primary'  => esc_html__( 'New Primary Menu', 'dreamtails' ),
-                    'admin'  => esc_html__( 'Admin', 'dreamtails' ),
+                    'primary' => esc_html__( 'Primary Menu', 'happiness-is-pets' ),
+                    'footer'  => esc_html__( 'Footer Menu', 'happiness-is-pets' ),
+                    'new-primary'  => esc_html__( 'New Primary Menu', 'happiness-is-pets' ),
+                    'admin'  => esc_html__( 'Admin', 'happiness-is-pets' ),
             )
     );
 
@@ -105,19 +105,19 @@ function dreamtails_setup() {
     add_theme_support( 'custom-units' );
     add_theme_support( 'editor-font-sizes', array(
             array(
-                    'name'      => __( 'Small', 'dreamtails' ),
+                    'name'      => __( 'Small', 'happiness-is-pets' ),
                     'shortName' => 'S',
                     'size'      => 14,
                     'slug'      => 'small',
             ),
             array(
-                    'name'      => __( 'Normal', 'dreamtails' ),
+                    'name'      => __( 'Normal', 'happiness-is-pets' ),
                     'shortName' => 'M',
                     'size'      => 18,
                     'slug'      => 'normal',
             ),
             array(
-                    'name'      => __( 'Large', 'dreamtails' ),
+                    'name'      => __( 'Large', 'happiness-is-pets' ),
                     'shortName' => 'L',
                     'size'      => 24,
                     'slug'      => 'large',
@@ -125,17 +125,17 @@ function dreamtails_setup() {
     ) );
     add_theme_support( 'editor-color-palette', array(
             array(
-                    'name'  => __( 'Primary', 'dreamtails' ),
+                    'name'  => __( 'Primary', 'happiness-is-pets' ),
                     'slug'  => 'primary',
                     'color' => '#3D5155',
             ),
             array(
-                    'name'  => __( 'Accent', 'dreamtails' ),
+                    'name'  => __( 'Accent', 'happiness-is-pets' ),
                     'slug'  => 'accent',
                     'color' => '#F1E6B2',
             ),
             array(
-                    'name'  => __( 'Secondary', 'dreamtails' ),
+                    'name'  => __( 'Secondary', 'happiness-is-pets' ),
                     'slug'  => 'secondary',
                     'color' => '#F7BCAC',
             ),
@@ -154,12 +154,12 @@ function dreamtails_setup() {
     add_theme_support( 'yoast-seo-breadcrumbs' );
 
 }
-add_action( 'after_setup_theme', 'dreamtails_setup' );
+add_action( 'after_setup_theme', 'happiness_is_pets_setup' );
 
 /**
  * Enqueue scripts and styles.
  */
-function dreamtails_scripts() {
+function happiness_is_pets_scripts() {
     // Bootstrap CSS (CDN)
     wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3' );
 
@@ -167,10 +167,10 @@ function dreamtails_scripts() {
     wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css', array(), '6.5.2' );
 
     // Google Font: Poppins
-    wp_enqueue_style( 'dreamtails-google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap', array(), null );
+    wp_enqueue_style( 'happiness-is-pets-google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap', array(), null );
 
     // Enqueue main theme stylesheet. (Loads AFTER Bootstrap and Google Fonts to allow overrides)
-    wp_enqueue_style( 'dreamtails-style', get_stylesheet_uri(), array('bootstrap', 'dreamtails-google-fonts'), DREAMTAILS_VERSION );
+    wp_enqueue_style( 'happiness-is-pets-style', get_stylesheet_uri(), array('bootstrap', 'happiness-is-pets-google-fonts'), HAPPINESS_IS_PETS_VERSION );
 
     // Enqueue comment reply script (Essential for threaded comments)
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -181,22 +181,22 @@ function dreamtails_scripts() {
     wp_enqueue_script( 'bootstrap-bundle', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array(), '5.3.3', true );
 
     // Custom JS for theme interactions (e.g., mobile menu if not using Bootstrap's data attributes alone)
-    // wp_enqueue_script( 'dreamtails-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'bootstrap-bundle'), DREAMTAILS_VERSION, true );
+    // wp_enqueue_script( 'happiness-is-pets-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'bootstrap-bundle'), HAPPINESS_IS_PETS_VERSION, true );
 
 }
-add_action( 'wp_enqueue_scripts', 'dreamtails_scripts' );
+add_action( 'wp_enqueue_scripts', 'happiness_is_pets_scripts' );
 
 
 /**
  * Register widget area.
  */
-function dreamtails_widgets_init() {
+function happiness_is_pets_widgets_init() {
     // Footer Widget Areas (Using Bootstrap column classes)
     register_sidebar(
             array(
-                    'name'          => esc_html__( 'Footer Column 1', 'dreamtails' ),
+                    'name'          => esc_html__( 'Footer Column 1', 'happiness-is-pets' ),
                     'id'            => 'footer-1',
-                    'description'   => esc_html__( 'Add widgets here for the first footer column.', 'dreamtails' ),
+                    'description'   => esc_html__( 'Add widgets here for the first footer column.', 'happiness-is-pets' ),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">', // Removed default section tag
                     'after_widget'  => '</div>',
                     'before_title'  => '<h5 class="widget-title">', // Use h5 for footer widget titles
@@ -205,9 +205,9 @@ function dreamtails_widgets_init() {
     );
     register_sidebar(
             array(
-                    'name'          => esc_html__( 'Footer Column 2 (Info)', 'dreamtails' ),
+                    'name'          => esc_html__( 'Footer Column 2 (Info)', 'happiness-is-pets' ),
                     'id'            => 'footer-2',
-                    'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'dreamtails' ),
+                    'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'happiness-is-pets' ),
                     'before_widget' => '<div id="%1$s" class="widget %2$s footer-info">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h5 class="widget-title">',
@@ -216,9 +216,9 @@ function dreamtails_widgets_init() {
     );
     register_sidebar(
             array(
-                    'name'          => esc_html__( 'Footer Column 3', 'dreamtails' ),
+                    'name'          => esc_html__( 'Footer Column 3', 'happiness-is-pets' ),
                     'id'            => 'footer-3',
-                    'description'   => esc_html__( 'Add widgets here for the third footer column.', 'dreamtails' ),
+                    'description'   => esc_html__( 'Add widgets here for the third footer column.', 'happiness-is-pets' ),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h5 class="widget-title">',
@@ -227,9 +227,9 @@ function dreamtails_widgets_init() {
     );
     register_sidebar(
             array(
-                    'name'          => esc_html__( 'Footer Column 4', 'dreamtails' ),
+                    'name'          => esc_html__( 'Footer Column 4', 'happiness-is-pets' ),
                     'id'            => 'footer-4',
-                    'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'dreamtails' ),
+                    'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'happiness-is-pets' ),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h5 class="widget-title">',
@@ -239,9 +239,9 @@ function dreamtails_widgets_init() {
 
     // WooCommerce Sidebar
     register_sidebar( array(
-            'name'          => esc_html__( 'Shop Sidebar', 'dreamtails' ),
+            'name'          => esc_html__( 'Shop Sidebar', 'happiness-is-pets' ),
             'id'            => 'shop-sidebar',
-            'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'dreamtails' ),
+            'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'happiness-is-pets' ),
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
             'after_widget'  => '</div>',
             'before_title'  => '<h4 class="widget-title">',
@@ -250,16 +250,16 @@ function dreamtails_widgets_init() {
 
     // Offcanvas filter sidebar for WooCommerce archives
     register_sidebar( array(
-            'name'          => esc_html__( 'WooCommerce Filters', 'dreamtails' ),
+            'name'          => esc_html__( 'WooCommerce Filters', 'happiness-is-pets' ),
             'id'            => 'woocommerce-pets',
-            'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'dreamtails' ),
+            'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'happiness-is-pets' ),
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
             'after_widget'  => '</div>',
             'before_title'  => '<h5 class="widget-title">',
             'after_title'   => '</h5>',
     ) );
 }
-add_action( 'widgets_init', 'dreamtails_widgets_init' );
+add_action( 'widgets_init', 'happiness_is_pets_widgets_init' );
 
 /**
  * Add WooCommerce Wrappers.
@@ -270,15 +270,15 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wr
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
 // Add theme-specific wrappers
-add_action('woocommerce_before_main_content', 'dreamtails_woocommerce_wrapper_start', 10);
-add_action('woocommerce_after_main_content', 'dreamtails_woocommerce_wrapper_end', 10);
+add_action('woocommerce_before_main_content', 'happiness_is_pets_woocommerce_wrapper_start', 10);
+add_action('woocommerce_after_main_content', 'happiness_is_pets_woocommerce_wrapper_end', 10);
 
-function dreamtails_woocommerce_wrapper_start() {
+function happiness_is_pets_woocommerce_wrapper_start() {
     // Container and row for WooCommerce pages
     echo '<main id="primary" class="site-main py-5"><div class="main-container"><div class="row">';
 }
 
-function dreamtails_woocommerce_wrapper_end() {
+function happiness_is_pets_woocommerce_wrapper_end() {
     // Close row and container
     echo '</div></div></main>';
 }
@@ -321,22 +321,22 @@ add_action( 'wp', function() {
  * Optional: Walker class for more complex menu structures.
  */
 // Basic filter to add nav-link class to menu items
-function dreamtails_add_menu_link_class( $atts, $item, $args ) {
+function happiness_is_pets_add_menu_link_class( $atts, $item, $args ) {
     if (isset($args->theme_location) && $args->theme_location === 'primary') { // Target only primary menu
         $atts['class'] = 'nav-link'; // Bootstrap 5 nav link class
     }
     return $atts;
 }
-add_filter( 'nav_menu_link_attributes', 'dreamtails_add_menu_link_class', 1, 3 );
+add_filter( 'nav_menu_link_attributes', 'happiness_is_pets_add_menu_link_class', 1, 3 );
 
 // Filter to add nav-item class to menu list items
-function dreamtails_add_menu_li_class( $classes, $item, $args ) {
+function happiness_is_pets_add_menu_li_class( $classes, $item, $args ) {
     if (isset($args->theme_location) && $args->theme_location === 'primary') {
         $classes[] = 'nav-item'; // Bootstrap 5 nav item class
     }
     return $classes;
 }
-add_filter( 'nav_menu_css_class', 'dreamtails_add_menu_li_class', 1, 3 );
+add_filter( 'nav_menu_css_class', 'happiness_is_pets_add_menu_li_class', 1, 3 );
 
 
 // Include template tags file (optional, for helper functions)
@@ -351,22 +351,22 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Register the "reviews" custom post type.
  */
-function dreamtails_register_reviews_cpt() {
+function happiness_is_pets_register_reviews_cpt() {
     $labels = array(
-            'name'               => _x( 'Reviews', 'post type general name', 'dreamtails' ),
-            'singular_name'      => _x( 'Review', 'post type singular name', 'dreamtails' ),
-            'menu_name'          => _x( 'Reviews', 'admin menu', 'dreamtails' ),
-            'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'dreamtails' ),
-            'add_new'            => _x( 'Add New', 'review', 'dreamtails' ),
-            'add_new_item'       => __( 'Add New Review', 'dreamtails' ),
-            'new_item'           => __( 'New Review', 'dreamtails' ),
-            'edit_item'          => __( 'Edit Review', 'dreamtails' ),
-            'view_item'          => __( 'View Review', 'dreamtails' ),
-            'all_items'          => __( 'All Reviews', 'dreamtails' ),
-            'search_items'       => __( 'Search Reviews', 'dreamtails' ),
-            'parent_item_colon'  => __( 'Parent Reviews:', 'dreamtails' ),
-            'not_found'          => __( 'No reviews found.', 'dreamtails' ),
-            'not_found_in_trash' => __( 'No reviews found in Trash.', 'dreamtails' )
+            'name'               => _x( 'Reviews', 'post type general name', 'happiness-is-pets' ),
+            'singular_name'      => _x( 'Review', 'post type singular name', 'happiness-is-pets' ),
+            'menu_name'          => _x( 'Reviews', 'admin menu', 'happiness-is-pets' ),
+            'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'happiness-is-pets' ),
+            'add_new'            => _x( 'Add New', 'review', 'happiness-is-pets' ),
+            'add_new_item'       => __( 'Add New Review', 'happiness-is-pets' ),
+            'new_item'           => __( 'New Review', 'happiness-is-pets' ),
+            'edit_item'          => __( 'Edit Review', 'happiness-is-pets' ),
+            'view_item'          => __( 'View Review', 'happiness-is-pets' ),
+            'all_items'          => __( 'All Reviews', 'happiness-is-pets' ),
+            'search_items'       => __( 'Search Reviews', 'happiness-is-pets' ),
+            'parent_item_colon'  => __( 'Parent Reviews:', 'happiness-is-pets' ),
+            'not_found'          => __( 'No reviews found.', 'happiness-is-pets' ),
+            'not_found_in_trash' => __( 'No reviews found in Trash.', 'happiness-is-pets' )
     );
 
     $args = array(
@@ -387,30 +387,30 @@ function dreamtails_register_reviews_cpt() {
 
     register_post_type( 'reviews', $args );
 }
-add_action( 'init', 'dreamtails_register_reviews_cpt' );
+add_action( 'init', 'happiness_is_pets_register_reviews_cpt' );
 
 /**
  * Add meta box for star rating.
  */
-function dreamtails_reviews_add_meta_box() {
+function happiness_is_pets_reviews_add_meta_box() {
     add_meta_box(
-            'dreamtails_review_rating',
-            __( 'Star Rating', 'dreamtails' ),
-            'dreamtails_reviews_rating_meta_box_cb',
+            'happiness_is_pets_review_rating',
+            __( 'Star Rating', 'happiness-is-pets' ),
+            'happiness_is_pets_reviews_rating_meta_box_cb',
             'reviews',
             'side',
             'default'
     );
 }
-add_action( 'add_meta_boxes_reviews', 'dreamtails_reviews_add_meta_box' );
+add_action( 'add_meta_boxes_reviews', 'happiness_is_pets_reviews_add_meta_box' );
 
 /**
  * Callback to display star rating field.
  */
-function dreamtails_reviews_rating_meta_box_cb( $post ) {
-    $rating = get_post_meta( $post->ID, '_dreamtails_review_rating', true );
-    wp_nonce_field( 'dreamtails_save_review_rating', 'dreamtails_review_rating_nonce' );
-    echo '<select name="dreamtails_review_rating" id="dreamtails_review_rating" class="widefat">';
+function happiness_is_pets_reviews_rating_meta_box_cb( $post ) {
+    $rating = get_post_meta( $post->ID, '_happiness_is_pets_review_rating', true );
+    wp_nonce_field( 'happiness_is_pets_save_review_rating', 'happiness_is_pets_review_rating_nonce' );
+    echo '<select name="happiness_is_pets_review_rating" id="happiness_is_pets_review_rating" class="widefat">';
     for ( $i = 1; $i <= 5; $i++ ) {
         printf( '<option value="%1$d" %2$s>%1$d</option>', $i, selected( $rating, $i, false ) );
     }
@@ -420,8 +420,8 @@ function dreamtails_reviews_rating_meta_box_cb( $post ) {
 /**
  * Save star rating.
  */
-function dreamtails_reviews_save_meta( $post_id ) {
-    if ( ! isset( $_POST['dreamtails_review_rating_nonce'] ) || ! wp_verify_nonce( $_POST['dreamtails_review_rating_nonce'], 'dreamtails_save_review_rating' ) ) {
+function happiness_is_pets_reviews_save_meta( $post_id ) {
+    if ( ! isset( $_POST['happiness_is_pets_review_rating_nonce'] ) || ! wp_verify_nonce( $_POST['happiness_is_pets_review_rating_nonce'], 'happiness_is_pets_save_review_rating' ) ) {
         return;
     }
 
@@ -429,28 +429,28 @@ function dreamtails_reviews_save_meta( $post_id ) {
         return;
     }
 
-    if ( isset( $_POST['dreamtails_review_rating'] ) ) {
-        update_post_meta( $post_id, '_dreamtails_review_rating', intval( $_POST['dreamtails_review_rating'] ) );
+    if ( isset( $_POST['happiness_is_pets_review_rating'] ) ) {
+        update_post_meta( $post_id, '_happiness_is_pets_review_rating', intval( $_POST['happiness_is_pets_review_rating'] ) );
     }
 }
-add_action( 'save_post_reviews', 'dreamtails_reviews_save_meta' );
+add_action( 'save_post_reviews', 'happiness_is_pets_reviews_save_meta' );
 
 /**
  * Add rating column to admin list.
  */
-function dreamtails_reviews_columns( $columns ) {
-    $columns['review_rating'] = __( 'Rating', 'dreamtails' );
+function happiness_is_pets_reviews_columns( $columns ) {
+    $columns['review_rating'] = __( 'Rating', 'happiness-is-pets' );
     return $columns;
 }
-add_filter( 'manage_reviews_posts_columns', 'dreamtails_reviews_columns' );
+add_filter( 'manage_reviews_posts_columns', 'happiness_is_pets_reviews_columns' );
 
-function dreamtails_reviews_custom_column( $column, $post_id ) {
+function happiness_is_pets_reviews_custom_column( $column, $post_id ) {
     if ( 'review_rating' === $column ) {
-        $rating = intval( get_post_meta( $post_id, '_dreamtails_review_rating', true ) );
+        $rating = intval( get_post_meta( $post_id, '_happiness_is_pets_review_rating', true ) );
         echo str_repeat( '★', $rating );
     }
 }
-add_action( 'manage_reviews_posts_custom_column', 'dreamtails_reviews_custom_column', 10, 2 );
+add_action( 'manage_reviews_posts_custom_column', 'happiness_is_pets_reviews_custom_column', 10, 2 );
 
 // Disable WooCommerce page elements globally
 add_action( 'init', function() {
@@ -472,11 +472,11 @@ add_action( 'init', function() {
 
 
 // Testimonial slider
-function dreamtails_enqueue_swiper_assets() {
+function happiness_is_pets_enqueue_swiper_assets() {
     wp_enqueue_style( 'swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css' );
     wp_enqueue_script( 'swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), null, true );
 }
-add_action( 'wp_enqueue_scripts', 'dreamtails_enqueue_swiper_assets' );
+add_action( 'wp_enqueue_scripts', 'happiness_is_pets_enqueue_swiper_assets' );
 
 
 
@@ -595,13 +595,13 @@ add_filter('template_include', function($template) {
 
 /* Shortcode for the reviews slider */
 
-function dreamtails_testimonial_slider_shortcode() {
+function happiness_is_pets_testimonial_slider_shortcode() {
     ob_start();
     ?>
     <section class="front-page-section py-5" id="happy-tails">
         <div class="container">
             <h2 class="section-title text-center mb-5">
-                <?php echo esc_html( get_theme_mod( 'front_testimonial_heading', __( 'happy tails start here', 'dreamtails' ) ) ); ?>
+                <?php echo esc_html( get_theme_mod( 'front_testimonial_heading', __( 'happy tails start here', 'happiness-is-pets' ) ) ); ?>
             </h2>
 
             <?php
@@ -615,7 +615,7 @@ function dreamtails_testimonial_slider_shortcode() {
                 <div class="swiper testimonial-swiper">
                     <div class="swiper-wrapper">
                         <?php while ( $review_query->have_posts() ) : $review_query->the_post();
-                            $rating = intval( get_post_meta( get_the_ID(), '_dreamtails_review_rating', true ) );
+                            $rating = intval( get_post_meta( get_the_ID(), '_happiness_is_pets_review_rating', true ) );
                             ?>
                             <div class="swiper-slide">
                                 <div class="text-center testimonial-content px-4">
@@ -643,12 +643,12 @@ function dreamtails_testimonial_slider_shortcode() {
             <?php endif; ?>
         </div>
 
-        <!-- <img class="testimonial-decor" src="<?php //echo esc_url( get_theme_mod( 'front_testimonial_image', get_template_directory_uri() . '/assets/images/reviews-image.png' ) ); ?>" alt="<?php //esc_attr_e( 'Testimonial image', 'dreamtails' ); ?>" /> -->
+        <!-- <img class="testimonial-decor" src="<?php //echo esc_url( get_theme_mod( 'front_testimonial_image', get_template_directory_uri() . '/assets/images/reviews-image.png' ) ); ?>" alt="<?php //esc_attr_e( 'Testimonial image', 'happiness-is-pets' ); ?>" /> -->
     </section>
     <?php
     return ob_get_clean();
 }
-add_shortcode( 'dreamtails_testimonials', 'dreamtails_testimonial_slider_shortcode' );
+add_shortcode( 'happiness_is_pets_testimonials', 'happiness_is_pets_testimonial_slider_shortcode' );
 
 
 function dt_featured_pets_shortcode() {
@@ -657,7 +657,7 @@ function dt_featured_pets_shortcode() {
     <section class="front-page-section py-5 bg-light" id="featured-pets">
         <div class="container">
             <h2 class="section-title text-center mb-4">
-                <?php echo esc_html( get_theme_mod( 'front_featured_pets_heading', __( 'featured dream pets', 'dreamtails' ) ) ); ?>
+                <?php echo esc_html( get_theme_mod( 'front_featured_pets_heading', __( 'featured dream pets', 'happiness-is-pets' ) ) ); ?>
             </h2>
             <div class="row featured-pets-row align-items-center">
                 <div class="col-12 col-md-9">
@@ -671,7 +671,7 @@ function dt_featured_pets_shortcode() {
                                 <?php if ( $link ) : ?>
                                 <a href="<?php echo esc_url( $link ); ?>">
                                     <?php endif; ?>
-                                    <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Featured Pet %d', 'dreamtails' ), $i ) ); ?>" class="img-fluid">
+                                    <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Featured Pet %d', 'happiness-is-pets' ), $i ) ); ?>" class="img-fluid">
                                     <?php if ( $link ) : ?>
                                 </a>
                             <?php endif; ?>
@@ -681,7 +681,7 @@ function dt_featured_pets_shortcode() {
                 </div>
                 <div class="col-12 col-md-3 text-md-start text-center mt-3 mt-md-0 d-flex align-items-center justify-content-center">
                     <a href="/view-pets/" class="view-all-pets-link d-inline-flex align-items-center">
-                        <span class="me-2"><?php esc_html_e('View all Dream Pets', 'dreamtails'); ?></span>
+                        <span class="me-2"><?php esc_html_e('View all Dream Pets', 'happiness-is-pets'); ?></span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>

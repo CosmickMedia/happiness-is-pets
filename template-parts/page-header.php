@@ -23,7 +23,7 @@ if ( is_front_page() ) {
             </h1>
 
             <div class="breadcrumbs small">
-                <?php if ( function_exists( 'dreamtails_breadcrumb' ) ) { dreamtails_breadcrumb(); } ?>
+                <?php if ( function_exists( 'happiness_is_pets_breadcrumb' ) ) { happiness_is_pets_breadcrumb(); } ?>
             </div>
         </div>
     </div>
