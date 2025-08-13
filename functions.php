@@ -166,11 +166,8 @@ function happiness_is_pets_scripts() {
     // Font Awesome CSS (CDN)
     wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css', array(), '6.5.2' );
 
-    // Google Font: Poppins
-    wp_enqueue_style( 'happiness-is-pets-google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap', array(), null );
-
-    // Enqueue main theme stylesheet. (Loads AFTER Bootstrap and Google Fonts to allow overrides)
-    wp_enqueue_style( 'happiness-is-pets-style', get_stylesheet_uri(), array('bootstrap', 'happiness-is-pets-google-fonts'), HAPPINESS_IS_PETS_VERSION );
+    // Enqueue main theme stylesheet after Bootstrap
+    wp_enqueue_style( 'happiness-is-pets-style', get_stylesheet_uri(), array('bootstrap'), HAPPINESS_IS_PETS_VERSION );
 
     // Enqueue comment reply script (Essential for threaded comments)
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

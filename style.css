@@ -38,8 +38,66 @@ Text Domain: happiness-is-pets
     --color-link-hover: var(--color-primary-dark-teal);
 
     /* Font Families */
-    --font-primary: 'Poppins', sans-serif; /* Body text */
-    --font-secondary: 'Poppins', sans-serif; /* Headings */
+    --font-primary: 'Transcend', sans-serif; /* Body text */
+    --font-secondary: 'Transcend', sans-serif; /* Headings */
+}
+
+/* --- Transcend Font Faces --- */
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Thin.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Semibold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Ultra.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Transcend';
+    src: url('assets/fonts/Transcend Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* WooCommerce Blocks (Cart & Checkout) */
@@ -68,6 +126,7 @@ body {
     min-height: 100vh;
     font-size: 16px; /* Base font size */
     line-height: 1.6; /* Base line height */
+    font-weight: 400;
 }
 
 /* Apply secondary font to headings */
@@ -75,6 +134,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: var(--font-secondary);
     color: var(--color-heading);
     margin-top: 0;
+    font-weight: 700;
 }
 
 /* Link styling */
@@ -615,7 +675,7 @@ a:hover {
 .footer-menu {
     list-style: none;
     padding-left: 0; /* Remove default ul padding */
-    font-family: "Mollie Glaston", sans-serif;
+    font-family: var(--font-primary);
 }
 .footer-menu li {
     margin-bottom: 0.5rem;
@@ -722,7 +782,7 @@ a:hover {
 }
 #dreaming-of-you .icon-item p {
     color: var(--color-text); /* Ensure text color is set */
-    font-family: 'Mollie Glaston', sans-serif; /* Google font */
+    font-family: var(--font-secondary); /* Use theme heading font */
     font-size: 2rem; /* Larger text for icon captions */
 }
 
@@ -949,7 +1009,7 @@ display:none !important;
 }
 
 .footer-menu {
-   font-family: 'Helvetica', 'Arial', sans-serif;
+   font-family: var(--font-primary);
 }
 
 .akc-page-cust h2.wp-block-heading {
@@ -986,7 +1046,7 @@ display:none !important;
     padding: 40px 30px;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Georgia', serif;
+    font-family: var(--font-primary);
     color: #2d3e40;
     border-radius: 16px;
     border: 2px solid #2d3e40;
@@ -1559,7 +1619,7 @@ border-radius: 72px;
 }
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section {
     background-color: #fff;
-    font-family: "Roboto", sans-serif;
+    font-family: var(--font-primary);
     color: #2d3e40;
     border-radius: 16px;
     border: 2px solid #2d3e40;
@@ -1581,7 +1641,7 @@ border-radius: 72px;
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section h2.wp-block-heading {
     color: #000;
     font-weight: 900;
-    font-family: "Roboto", sans-serif;
+    font-family: var(--font-secondary);
 }
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section  p {
     max-width: 87%;
@@ -2005,10 +2065,10 @@ button#rmp_menu_trigger-166.is-active {
 color: #3d5155 !important;
     font-size: 32px !important;
     font-weight: 700 !important;
-    font-family: "Mollie Glaston" , sans-serif !important;
+    font-family: var(--font-secondary) !important;
 }
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section {
-   font-family: 'Georgia', serif !important;
+   font-family: var(--font-primary) !important;
 color: #2d3e40 !important;
 }
 .custom-finacing_sec p{
@@ -2021,7 +2081,7 @@ color: #2d3e40 !important;
 
         /* Apply theme fonts */
         body .product-primary-info h1.product_title {
-            font-family: "Mollie Glaston", sans-serif !important;
+            font-family: var(--font-secondary) !important;
             font-size: 2.5rem;
             font-weight: normal;
             margin-bottom: 0.25rem;
@@ -2500,7 +2560,7 @@ color: #2d3e40 !important;
         }
 
         .happiness-is-pets-difference-content h2 {
-            font-family: "Mollie Glaston", sans-serif;
+            font-family: var(--font-secondary);
             font-size: 2rem;
             color: #41545f;
             margin-bottom: 0;
