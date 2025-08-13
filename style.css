@@ -1,14 +1,14 @@
 /*
-Theme Name: Dream Tails
+Theme Name: Happiness Is Pets
 Theme URI: https://cosmickmedia.com/
 Author: Cosmick Media
 Author URI: https://cosmickmedia.com/
-Description: Custom theme for Dream Tails Boutique integrating Bootstrap 5, Font Awesome 6, and WooCommerce support.
+Description: Custom theme for Happiness Is Pets Boutique integrating Bootstrap 5, Font Awesome 6, and WooCommerce support.
 Version: 1.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-background, custom-logo, custom-menu, featured-images, theme-options, translation-ready, block-styles, responsive-layout, two-columns, left-sidebar, right-sidebar, woocommerce
-Text Domain: dreamtails
+Text Domain: happiness-is-pets
 */
 
 /* --- Variables --- */
@@ -203,7 +203,7 @@ a:hover {
 
 
 /* --- Hamburger Toggle in Top Bar --- */
-.dream-tails-toggler {
+.happiness-is-pets-toggler {
     border: none;
     background-color: transparent;
     border-radius: 8px;
@@ -213,14 +213,14 @@ a:hover {
     transition: background-color 0.3s ease;
 }
 
-.dream-tails-toggler:hover,
-.dream-tails-toggler:focus {
+.happiness-is-pets-toggler:hover,
+.happiness-is-pets-toggler:focus {
     background-color: rgba(61, 81, 85, 0.05);
     outline: none;
     box-shadow: none;
 }
 
-.dream-tails-toggler .navbar-toggler-icon {
+.happiness-is-pets-toggler .navbar-toggler-icon {
     width: 1.5em;
     height: 1.5em;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(61, 81, 85, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -294,29 +294,29 @@ a:hover {
 }
 
 /* --- Offcanvas Mobile Menu Styles --- */
-.dream-tails-offcanvas {
+.happiness-is-pets-offcanvas {
     max-width: 85%;
     background-color: #FFFFFF;
 }
 
 @media (min-width: 576px) {
-    .dream-tails-offcanvas {
+    .happiness-is-pets-offcanvas {
         max-width: 400px;
     }
 }
 
-.dream-tails-offcanvas .offcanvas-header {
+.happiness-is-pets-offcanvas .offcanvas-header {
     background-color: var(--color-primary-light-blue-grey);
     padding: 1.5rem;
     border-bottom: 3px solid var(--color-secondary-light-pink);
 }
 
-.dream-tails-offcanvas .offcanvas-logo img {
+.happiness-is-pets-offcanvas .offcanvas-logo img {
     max-height: 60px;
     width: auto;
 }
 
-.dream-tails-offcanvas .dream-tails-close {
+.happiness-is-pets-offcanvas .happiness-is-pets-close {
     background-color: white;
     border-radius: 50%;
     opacity: 1;
@@ -325,12 +325,12 @@ a:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.dream-tails-offcanvas .dream-tails-close:hover {
+.happiness-is-pets-offcanvas .happiness-is-pets-close:hover {
     transform: rotate(90deg);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
-.dream-tails-offcanvas .offcanvas-body {
+.happiness-is-pets-offcanvas .offcanvas-body {
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -547,7 +547,7 @@ a:hover {
 }
 
 /* Transition Animation */
-.dream-tails-offcanvas.show {
+.happiness-is-pets-offcanvas.show {
     animation: slideIn 0.3s ease-out;
 }
 
@@ -945,7 +945,7 @@ display:none !important;
     padding-top: 20px;
     padding-bottom: 20px;
     margin-bottom: 60px;
-    background-image: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg)
+    background-image: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg)
 }
 
 .footer-menu {
@@ -976,7 +976,7 @@ display:none !important;
  
 .about-us-para {
     padding: 40px 40px;
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     border-radius: 20px;
     color: #2e334e;
 }
@@ -1015,7 +1015,7 @@ border-radius: 10px;
  
 .wp-block-group.akc-page-cust:nth-child(2n) {
     background: #ffd3d2;
-    background-image: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background-image: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
 }
  
 .wp-block-group.akc-page-cust {
@@ -1320,7 +1320,7 @@ form#gform_3 {
 }
 .form-heading {
     padding: 20px;
-    background-image: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background-image: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     border-radius: 10px 10px 0 0;
     border: 1px solid #ffb7b5;
     border-bottom: none;
@@ -1387,7 +1387,7 @@ color:#3d5155;
 
 
 .wp-block-group.apply-on-cust {
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     height: 400px;
     padding: 150px 0 0 0;
     width: 100%;
@@ -1421,7 +1421,7 @@ figure.wp-block-image.size-full.financing-cat {
     line-height: 30px;
 }
 /* .wp-block-group.apply-on-cust {
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     height: 300px;
     padding: 80px 0 0 0;
     width: 100%;
@@ -1443,7 +1443,7 @@ figure.wp-block-image.size-full.financing-cat {
     color: #000;
 }
 .need-help-group{
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     margin-top: 80px;
     padding: 80px 0 !important;
     margin-bottom: 0 !important;
@@ -1497,7 +1497,7 @@ figure.wp-block-image.size-full.financing-cat {
     font-size: 18px;
 }
 .book-appointment-cust {
-    background: url('https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg');
+    background: url('https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg');
     padding: 70px 0 !important;
 }
 .book-appointment-cust p {
@@ -1550,7 +1550,7 @@ border-radius: 72px;
     height: 450px;margin:0px;
 }
 .wp-block-group.our-goals.category-image-content-main-group {
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     padding: 120px 0 0 0 !important;
     height: 300px;
     width: 100%;
@@ -1798,7 +1798,7 @@ figure.wp-block-image.size-full.financing-cat {
     grid-template-columns: auto;
 }
 .wp-block-group.apply-on-cust {
-    background: url(https://dreamtails.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
     height: auto;
     padding: 60px 0 60px 0;
    
@@ -2486,20 +2486,20 @@ color: #2d3e40 !important;
             text-align: center;
         }
 
-        /* --- Dreamtails Difference Section --- */
-        .dreamtails-difference-section {
+        /* --- Happiness Is Pets Difference Section --- */
+        .happiness-is-pets-difference-section {
             background-color: #f8f9fa;
             padding: 4rem 0;
             margin-top: 0;
         }
 
-        .dreamtails-difference-content {
+        .happiness-is-pets-difference-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
-        .dreamtails-difference-content h2 {
+        .happiness-is-pets-difference-content h2 {
             font-family: "Mollie Glaston", sans-serif;
             font-size: 2rem;
             color: #41545f;
@@ -2508,7 +2508,7 @@ color: #2d3e40 !important;
             align-items: center;
         }
 
-        .dreamtails-difference-content h2 i {
+        .happiness-is-pets-difference-content h2 i {
             color: #41545f;
             margin-right: 1rem;
             font-size: 2.5rem;
@@ -2542,10 +2542,10 @@ color: #2d3e40 !important;
                 padding: 4rem 0;
                 margin-top: 4rem;
             }
-            .dreamtails-difference-section {
+            .happiness-is-pets-difference-section {
                 padding: 3rem 0;
             }
-            .dreamtails-difference-content h2 {
+            .happiness-is-pets-difference-content h2 {
                 font-size: 1.75rem;
             }
         }
@@ -2561,13 +2561,13 @@ color: #2d3e40 !important;
                 padding: 3rem 0;
                 margin-top: 3rem;
             }
-            .dreamtails-difference-section {
+            .happiness-is-pets-difference-section {
                 padding: 2.5rem 0;
             }
-            .dreamtails-difference-content h2 {
+            .happiness-is-pets-difference-content h2 {
                 font-size: 1.5rem;
             }
-            .dreamtails-difference-content h2 i {
+            .happiness-is-pets-difference-content h2 i {
                 font-size: 2rem;
             }
         }
@@ -2577,12 +2577,12 @@ color: #2d3e40 !important;
             .product-primary-info h1 { font-size: 2rem; }
             .product-primary-info .breed-info { font-size: 1.1rem; }
             #nav-breedinfo .row.row-cols-lg-4 > .col { width: 100%; }
-            .dreamtails-difference-content h2 {
+            .happiness-is-pets-difference-content h2 {
                 font-size: 1.25rem;
                 flex-direction: column;
                 text-align: center;
             }
-            .dreamtails-difference-content h2 i {
+            .happiness-is-pets-difference-content h2 i {
                 margin-bottom: 0.5rem;
             }
         }

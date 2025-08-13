@@ -3,7 +3,7 @@
  * Template Name: All Pets
  * Description: Displays all products excluding the Accessories category.
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();
@@ -12,7 +12,7 @@ get_template_part( 'template-parts/page', 'header' );
 
 <div class="main-container">
     <div class="breadcrumbs small mb-4">
-        <?php if ( function_exists( 'dreamtails_breadcrumb' ) ) { dreamtails_breadcrumb(); } ?>
+        <?php if ( function_exists( 'happiness_is_pets_breadcrumb' ) ) { happiness_is_pets_breadcrumb(); } ?>
     </div>
 </div>
 

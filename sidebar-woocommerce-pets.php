@@ -2,7 +2,7 @@
 /**
  * Sidebar used inside the pets filter offcanvas.
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 if ( is_active_sidebar( 'woocommerce-pets' ) ) : ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * The template for displaying all static pages
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();

@@ -2,7 +2,7 @@
 /**
  * Sidebar for WooCommerce shop and product category pages.
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 if ( is_active_sidebar( 'shop-sidebar' ) ) : ?>

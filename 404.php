@@ -2,7 +2,7 @@
 /**
  * The template for displaying 404 pages (not found)
  *
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();
@@ -21,7 +21,7 @@ get_header();
                 }
                 ?>
             </div>
-            <h1 class="display-5 fw-bold"><?php esc_html_e( 'We are sorry we must be dreaming, but this page cannot be found.', 'dreamtails' ); ?></h1>
+            <h1 class="display-5 fw-bold"><?php esc_html_e( 'We are sorry we must be dreaming, but this page cannot be found.', 'happiness-is-pets' ); ?></h1>
         </div>
     </div>
 </main>

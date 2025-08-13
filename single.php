@@ -1,7 +1,7 @@
 <?php
 /**
  * The template for displaying all single posts
- * @package Dream_Tails
+ * @package happiness-is-pets
  */
 
 get_header();
@@ -20,8 +20,8 @@ get_template_part( 'template-parts/page', 'header' );
 
                     // Previous/next post navigation.
                     the_post_navigation( array(
-                        'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'dreamtails' ) . '</span> <span class="nav-title">%title</span>',
-                        'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'dreamtails' ) . '</span> <span class="nav-title">%title</span>',
+                        'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'happiness-is-pets' ) . '</span> <span class="nav-title">%title</span>',
+                        'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'happiness-is-pets' ) . '</span> <span class="nav-title">%title</span>',
                     ) );
 
 

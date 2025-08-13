@@ -613,14 +613,14 @@ if ( 'Male' === $gender ) {
         </div>
     </div>
 
-    <!-- Dreamtails Difference Section -->
-    <div class="dreamtails-difference-section">
-        <div class="dreamtails-difference-content">
+    <!-- Happiness Is Pets Difference Section -->
+    <div class="happiness-is-pets-difference-section">
+        <div class="happiness-is-pets-difference-content">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h2>
                         <i class="fas fa-star"></i>
-                        What's The Dreamtails Difference?
+                        What's The Happiness Is Pets Difference?
                     </h2>
                 </div>
                 <div class="col-md-4 text-md-end mt-3 mt-md-0">
