@@ -665,7 +665,7 @@ a:hover {
 /* --- Front Page Specific Styles --- */
 .front-page-hero {
     background-color: var(--color-secondary-light-pink);
-    min-height: 60vh;
+    height: 700px;
     display: flex;
     align-items: center;
     overflow: visible; /* allow hero image to overlap */
