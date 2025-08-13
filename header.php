@@ -55,7 +55,7 @@
 
         <?php // --- Top Header Bar with Hamburger Menu --- ?>
         <div class="top-header-bar py-3" style="background-color: var(--color-header-bg);">
-            <div class="container d-flex justify-content-between align-items-center">
+            <div class="container d-flex align-items-center">
 
                 <?php // Left side: Hamburger + Logo ?>
                 <div class="d-flex align-items-center">
@@ -87,8 +87,22 @@
                     </div>
                 </div>
 
+                <div class="navbar-horizontal-menu d-none d-md-flex flex-grow-1 justify-content-center">
+                    <?php
+                    wp_nav_menu(
+                            array(
+                                    'theme_location' => 'primary',
+                                    'menu_class'     => 'navbar-nav-horizontal',
+                                    'container'      => false,
+                                    'fallback_cb'    => false,
+                                    'depth'          => 1,
+                            )
+                    );
+                    ?>
+                </div>
+
                 <?php // Right side: Contact info and CTA button ?>
-                <div class="header-top-button">
+                <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
                         <?php
                         $phone = get_theme_mod( 'header_phone_number', '941-203-1196' );
@@ -110,25 +124,6 @@
 
             </div>
         </div>
-
-        <?php // --- Main Navigation Bar (No hamburger - horizontal menu on all devices) --- ?>
-        <nav class="navbar main-navbar bg-white shadow-sm d-none d-md-block">
-            <div class="container">
-                <div class="navbar-horizontal-menu w-100">
-                    <?php
-                    wp_nav_menu(
-                            array(
-                                    'theme_location' => 'new-primary',
-                                    'menu_class'     => 'navbar-nav-horizontal',
-                                    'container'      => false,
-                                    'fallback_cb'    => false,
-                                    'depth'          => 1, // Only show top level items for mobile compatibility
-                            )
-                    );
-                    ?>
-                </div>
-            </div>
-        </nav>
 
         <?php // --- Offcanvas Menu (Triggered by hamburger in top bar) --- ?>
         <div class="offcanvas offcanvas-start dream-tails-offcanvas" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">

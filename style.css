@@ -129,9 +129,15 @@ a:hover {
 
 /* Control Logo Size using the wrapper div */
 .top-bar-logo img { /* Target any img inside the wrapper */
-    max-height: 80px; /* Smaller logo on desktop */
     width: auto;       /* Maintain aspect ratio */
     display: block;    /* Ensure it behaves as a block element */
+}
+
+@media (min-width: 768px) {
+    .top-bar-logo img {
+        width: 300px;
+        height: auto;
+    }
 }
 
 /* Style Top Right "Book Appointment" Button */
