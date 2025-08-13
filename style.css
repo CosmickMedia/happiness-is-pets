@@ -26,7 +26,7 @@ Text Domain: dreamtails
     --color-primary-light-yellow: #F1E6B2; /* Primary 2 */
     --color-primary-light-peach: #EECCAA; /* Primary 3 */
     --color-primary-dark-teal: #3D5155; /* Primary 4 - Headings, Buttons */
-    --color-primary-dark-grey: #646862; /* Primary 5 - Body Text */
+    --color-primary-dark-grey: #585956; /* Primary 5 - Body Text */
 
     --color-secondary-teal: #3e5155; /* Secondary 1 - Links, Icons */
     --color-secondary-light-beige: #DBC8B6; /* Secondary 2 */
@@ -39,7 +39,7 @@ Text Domain: dreamtails
     --color-heading: var(--color-primary-dark-teal);
     --color-background: #FFFFFF;
     --color-light-background: #FAFAFA; /* For alternating sections */
-    --color-header-bg: var(--color-primary-light-blue-grey);
+    --color-header-bg: #FFFFFF;
     --color-footer-bg: var(--color-primary-light-blue-grey);
     --color-button: var(--color-primary-dark-teal); /* Default button bg */
     --color-button-text: #FFFFFF;
@@ -129,7 +129,7 @@ a:hover {
 
 /* Control Logo Size using the wrapper div */
 .top-bar-logo img { /* Target any img inside the wrapper */
-    max-height: 130px; /* Larger logo on desktop */
+    max-height: 80px; /* Smaller logo on desktop */
     width: auto;       /* Maintain aspect ratio */
     display: block;    /* Ensure it behaves as a block element */
 }
@@ -196,7 +196,7 @@ a:hover {
 
     /* Adjust logo size on mobile when hamburger is present */
     .top-bar-logo img {
-        max-height: 50px;
+        max-height: 40px;
     }
 
     /* Ensure consistent button border radius on mobile */

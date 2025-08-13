@@ -61,7 +61,7 @@
                 <div class="d-flex align-items-center">
                     <?php // Hamburger Menu Toggle ?>
                     <button
-                            class="navbar-toggler dream-tails-toggler me-2 me-md-3"
+                            class="navbar-toggler dream-tails-toggler me-2 me-md-3 d-md-none"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#mobileNavOffcanvas"
@@ -91,10 +91,7 @@
                 <div class="header-top-button">
                     <div class="header-contact d-flex align-items-center justify-content-end">
                         <?php
-                        $phone      = get_theme_mod( 'header_phone_number', '941-203-1196' );
-                        $book_url   = get_theme_mod( 'header_book_button_url', '' );
-                        $book_text  = get_theme_mod( 'header_book_button_text', __( 'Make a Reservation', 'dreamtails' ) );
-                        $book_icon  = get_theme_mod( 'header_book_button_icon', 'fa-regular fa-calendar-check' );
+                        $phone = get_theme_mod( 'header_phone_number', '941-203-1196' );
                         if ( $phone ) : ?>
                             <a class="header-phone-number me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>" aria-label="<?php echo esc_attr( $phone ); ?>">
                                 <i class="fas fa-phone me-2 header-icon"></i><span class="phone-text d-none d-md-inline"><?php echo esc_html( $phone ); ?></span>
@@ -109,18 +106,13 @@
                             </a>
                         <?php endif; ?>
                     </div>
-                    <?php if ( $book_url ) : ?>
-                        <a href="<?php echo esc_url( $book_url ); ?>" class="btn btn-lg btn-book-appointment d-inline-flex align-items-center">
-                            <?php if ( $book_icon ) : ?><i class="<?php echo esc_attr( $book_icon ); ?> me-2"></i><?php endif; ?><?php echo esc_html( $book_text ); ?>
-                        </a>
-                    <?php endif; ?>
                 </div>
 
             </div>
         </div>
 
         <?php // --- Main Navigation Bar (No hamburger - horizontal menu on all devices) --- ?>
-        <nav class="navbar main-navbar bg-white shadow-sm">
+        <nav class="navbar main-navbar bg-white shadow-sm d-none d-md-block">
             <div class="container">
                 <div class="navbar-horizontal-menu w-100">
                     <?php
@@ -216,19 +208,7 @@
                     </a>
                 </div>
 
-                <?php // Mobile CTA Button ?>
-                <?php
-                $book_url = get_theme_mod( 'header_book_button_url', '' );
-                $book_text = get_theme_mod( 'header_book_button_text', __( 'Make a Reservation', 'dreamtails' ) );
-                $book_icon = get_theme_mod( 'header_book_button_icon', 'fa-regular fa-calendar-check' );
-                if ( $book_url ) : ?>
-                    <div class="mobile-cta-button">
-                        <a href="<?php echo esc_url( $book_url ); ?>" class="btn btn-book-appointment-mobile w-100">
-                            <?php if ( $book_icon ) : ?><i class="<?php echo esc_attr( $book_icon ); ?> me-2"></i><?php endif; ?>
-                            <?php echo esc_html( $book_text ); ?>
-                        </a>
-                    </div>
-                <?php endif; ?>
+                <?php // Mobile CTA Button removed ?>
             </div>
         </div>
 
