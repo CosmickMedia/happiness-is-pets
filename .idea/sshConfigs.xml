@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="35.224.70.159" id="8126ab81-49b7-4d66-b3d2-f096f386b380" port="58010" customName="Happiness Is Pets" nameFormat="CUSTOM" username="happinessispets" useOpenSSHConfig="true">
+        <option name="customName" value="Happiness Is Pets" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>
