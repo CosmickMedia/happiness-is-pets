@@ -215,18 +215,19 @@ a:hover {
     display: flex;
     align-items: center;
     text-decoration: none;
+    font-family: var(--font-primary);
 }
 .header-phone-number i {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 
 .header-icon {
     color: var(--color-primary-dark-teal);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 .header-icon i {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 .header-icon + .header-icon {
     margin-left: 0.5rem;
@@ -321,11 +322,12 @@ a:hover {
     padding: 0.5rem 0.75rem;
     transition: color 0.3s ease, background-color 0.3s ease;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1.25rem;
     border-radius: 5px;
     display: inline-block;
     white-space: nowrap;
     text-decoration: none;
+    font-family: var(--font-primary);
 }
 
 .navbar-nav-horizontal a:hover,
@@ -341,14 +343,14 @@ a:hover {
     }
 
     .navbar-nav-horizontal a {
-        font-size: 0.75rem;
+        font-size: 1.25rem;
         padding: 0.4rem 0.5rem;
     }
 }
 
 @media (max-width: 400px) {
     .navbar-nav-horizontal a {
-        font-size: 0.7rem;
+        font-size: 1.25rem;
         padding: 0.35rem 0.4rem;
     }
 }
@@ -732,6 +734,7 @@ a:hover {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 }
 
 .hero-image {
@@ -754,9 +757,49 @@ a:hover {
 
 /* Style the white overlay box */
 .hero-content {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.6) !important;
     border-radius: 1.5rem; /* more rounded edges */
     /* Padding handled by Bootstrap utilities p-4 p-md-5 */
+}
+
+.front-page-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.front-page-hero .paw-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.front-page-hero .paw-background i {
+    position: absolute;
+    font-size: 6rem;
+    color: var(--color-primary-dark-teal);
+    opacity: 0.05;
+}
+
+.front-page-hero .paw-background i:nth-child(1) {
+    top: 10%;
+    left: 5%;
+    transform: rotate(-20deg);
+}
+
+.front-page-hero .paw-background i:nth-child(2) {
+    top: 50%;
+    right: 10%;
+    transform: rotate(15deg);
+}
+
+.front-page-hero .paw-background i:nth-child(3) {
+    bottom: 5%;
+    left: 40%;
+    transform: rotate(-10deg);
 }
 .hero-content h1 {
     color: var(--color-primary-dark-teal);

@@ -12,11 +12,16 @@ get_header();
 
 <?php // --- Hero Section --- ?>
     <section class="front-page-hero">
+        <div class="paw-background">
+            <i class="fas fa-paw"></i>
+            <i class="fas fa-paw"></i>
+            <i class="fas fa-paw"></i>
+        </div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
                 <div class="col-md-6">
-                    <div class="hero-content bg-light bg-opacity-75 p-4 p-md-5 rounded text-center">
+                    <div class="hero-content p-4 p-md-5 rounded text-center">
                         <h1 class="display-4" style="color: var(--color-primary-dark-teal);">
                             <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'where pets find their people', 'happiness-is-pets' ) ) ); ?>
                         </h1>
