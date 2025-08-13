@@ -11,15 +11,6 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, theme-option
 Text Domain: dreamtails
 */
 
-@font-face {
-    font-family: "Mollie Glaston";
-    src: url("assets/fonts/mollie_glaston.otf") format("opentype"),
-    url("assets/fonts/mollie_glaston.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* --- Variables --- */
 :root {
     --color-primary-light-blue-grey: #BCC9C5; /* Primary 1 - Header/Footer BG */
@@ -46,9 +37,9 @@ Text Domain: dreamtails
     --color-link: var(--color-secondary-teal);
     --color-link-hover: var(--color-primary-dark-teal);
 
-    /* Font Families (Examples - Replace with actual choices if available) */
-    --font-primary: 'Lato', sans-serif; /* Body text */
-    --font-secondary: 'Playfair Display', serif; /* Headings */
+    /* Font Families */
+    --font-primary: 'Poppins', sans-serif; /* Body text */
+    --font-secondary: 'Poppins', sans-serif; /* Headings */
 }
 
 /* WooCommerce Blocks (Cart & Checkout) */
@@ -84,9 +75,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: var(--font-secondary);
     color: var(--color-heading);
     margin-top: 0;
-}
-h1, h2 {
-    font-family: "Mollie Glaston", sans-serif;
 }
 
 /* Link styling */
