@@ -32,31 +32,113 @@ get_header();
         </div>
     </section>
 
-<?php // --- Icon Section --- ?>
-    <section class="front-page-section py-5" id="dreaming-of-you">
+<?php // --- Available Puppies Slider --- ?>
+    <section class="front-page-section py-5 my-5" id="available-puppies">
         <div class="container">
-            <div class="row text-center gy-4">
-                <div class="col-md-4 icon-item">
-                    <a href="<?php echo esc_url( get_theme_mod( 'front_icon1_link', '#' ) ); ?>" class="text-decoration-none d-block">
-                        <img src="<?php echo esc_url( get_theme_mod( 'front_icon1_img', get_template_directory_uri() . '/assets/images/puppy_ico.png' ) ); ?>" alt="<?php esc_attr_e( 'Puppy icon', 'happiness-is-pets' ); ?>" class="mb-3" />
-                        <p class="fw-bold mb-0"><?php echo esc_html( get_theme_mod( 'front_icon1_text', __( 'puppies dreaming of you', 'happiness-is-pets' ) ) ); ?></p>
-                    </a>
+            <h2 class="section-title text-center fw-bold mb-5"><?php esc_html_e( 'Available Puppies', 'happiness-is-pets' ); ?></h2>
+
+            <?php
+            $products = wc_get_products(
+                array(
+                    'status'   => 'publish',
+                    'limit'    => -1,
+                    'category' => array( 'puppies-for-sale' ),
+                )
+            );
+
+            usort(
+                $products,
+                function( $a, $b ) {
+                    $get_breed = function ( $product_id ) {
+                        $breed       = '';
+                        $categories  = get_the_terms( $product_id, 'product_cat' );
+                        if ( $categories && ! is_wp_error( $categories ) ) {
+                            foreach ( $categories as $cat ) {
+                                if ( 'puppies-for-sale' !== $cat->slug ) {
+                                    $breed = $cat->name;
+                                    break;
+                                }
+                            }
+                        }
+                        return $breed;
+                    };
+
+                    return strcasecmp( $get_breed( $a->get_id() ), $get_breed( $b->get_id() ) );
+                }
+            );
+            ?>
+
+            <div class="swiper available-puppies-swiper">
+                <div class="swiper-wrapper">
+                    <?php foreach ( $products as $product ) :
+                        $product_id = $product->get_id();
+                        $sku        = $product->get_sku();
+                        $gender     = get_field( 'gender', $product_id );
+                        $pet        = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
+                        $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
+                        $location   = ! empty( $pet->location ) ? $pet->location : '';
+                        $breed      = '';
+                        $categories = get_the_terms( $product_id, 'product_cat' );
+                        if ( $categories && ! is_wp_error( $categories ) ) {
+                            foreach ( $categories as $cat ) {
+                                if ( 'puppies-for-sale' !== $cat->slug ) {
+                                    $breed = $cat->name;
+                                    break;
+                                }
+                            }
+                        }
+                        ?>
+                        <div class="swiper-slide">
+                            <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="available-puppy-card d-block position-relative">
+                                <?php echo $product->get_image( 'medium', array( 'class' => 'img-fluid rounded' ) ); ?>
+                                <div class="available-puppy-info position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-center align-items-center text-center">
+                                    <?php if ( $breed ) : ?>
+                                        <h5 class="fw-bold mb-2"><?php echo esc_html( $breed ); ?></h5>
+                                    <?php endif; ?>
+                                    <ul class="list-unstyled small mb-0">
+                                        <?php if ( $sku ) : ?>
+                                            <li><strong><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> #<?php echo esc_html( $sku ); ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $birth_date ) : ?>
+                                            <li><strong><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $birth_date ); ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $gender ) : ?>
+                                            <li><strong><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $gender ); ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $location ) : ?>
+                                            <li><strong><?php esc_html_e( 'Location:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $location ); ?></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="col-md-4 icon-item">
-                    <a href="<?php echo esc_url( get_theme_mod( 'front_icon2_link', '#' ) ); ?>" class="text-decoration-none d-block">
-                        <img src="<?php echo esc_url( get_theme_mod( 'front_icon2_img', get_template_directory_uri() . '/assets/images/kittens_ico.png' ) ); ?>" alt="<?php esc_attr_e( 'Kitten icon', 'happiness-is-pets' ); ?>" class="mb-3" />
-                        <p class="fw-bold mb-0"><?php echo esc_html( get_theme_mod( 'front_icon2_text', __( 'kittens dreaming of you', 'happiness-is-pets' ) ) ); ?></p>
-                    </a>
-                </div>
-                <div class="col-md-4 icon-item">
-                    <a href="<?php echo esc_url( get_theme_mod( 'front_icon3_link', '#' ) ); ?>" class="text-decoration-none d-block">
-                        <img src="<?php echo esc_url( get_theme_mod( 'front_icon3_img', get_template_directory_uri() . '/assets/images/concierge.png' ) ); ?>" alt="<?php esc_attr_e( 'Concierge icon', 'happiness-is-pets' ); ?>" class="mb-3" />
-                        <p class="fw-bold mb-0"><?php echo esc_html( get_theme_mod( 'front_icon3_text', __( 'concierge service', 'happiness-is-pets' ) ) ); ?></p>
-                    </a>
-                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </section>
+
+<script>
+document.addEventListener( 'DOMContentLoaded', function() {
+    new Swiper( '.available-puppies-swiper', {
+        slidesPerView: 6,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.available-puppies-swiper .swiper-button-next',
+            prevEl: '.available-puppies-swiper .swiper-button-prev',
+        },
+        breakpoints: {
+            0: { slidesPerView: 1 },
+            576: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            992: { slidesPerView: 4 },
+            1200: { slidesPerView: 6 },
+        },
+    } );
+} );
+</script>
 
 <?php // --- Featured Pets Section --- ?>
     <section class="front-page-section py-5 bg-light mb-5" id="featured-pets">
