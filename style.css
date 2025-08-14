@@ -2862,6 +2862,7 @@ body .product-primary-info h1.product_title {
 .cssFooter .footer-bottom a {
     font-size: 14px;
     color: #FFFFFF;
+    text-align: left;
 }
 
 .btn-flex {
