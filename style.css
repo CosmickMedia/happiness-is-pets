@@ -215,6 +215,22 @@ input[type="reset"]:hover,
     margin-left: 0.5rem;
 }
 
+.header-phone-dropdown .dropdown-toggle::after {
+    display: none;
+}
+.header-phone-dropdown .dropdown-menu {
+    min-width: 12rem;
+    padding: 0.5rem 0;
+}
+.header-phone-dropdown .dropdown-item {
+    color: var(--color-primary-dark-teal);
+    font-family: var(--font-primary);
+}
+.header-phone-dropdown .dropdown-item:hover {
+    background-color: var(--color-primary-dark-teal);
+    color: #fff;
+}
+
 
 .header-contact {
     margin-bottom: 0.25rem;
@@ -2032,6 +2048,32 @@ button#rmp_menu_trigger-166.is-active {
 .product-page-wrapper { padding-top: 1.5rem !important; }
 .woocommerce-breadcrumb { font-size: 0.875rem !important; padding-bottom: 0px !important; margin-bottom: 1rem !important; margin-top: 0px !important; }
 
+/* WooCommerce Pagination */
+.woocommerce nav.woocommerce-pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+.woocommerce nav.woocommerce-pagination ul {
+    display: inline-flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-primary-dark-teal);
+    color: var(--color-primary-dark-teal);
+    border-radius: 0.25rem;
+}
+.woocommerce nav.woocommerce-pagination ul li a:hover,
+.woocommerce nav.woocommerce-pagination ul li span.current {
+    background-color: var(--color-primary-dark-teal);
+    color: #fff;
+}
+
 /* Apply theme fonts */
 body .product-primary-info h1.product_title {
     font-family: var(--font-secondary) !important;
@@ -2858,7 +2900,7 @@ body .product-primary-info h1.product_title {
     background: #00c8ba;
     padding: 20px 0;
     border-top: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
+    text-align: left;
 }
 .cssFooter .footer-bottom p,
 .cssFooter .footer-bottom a {
