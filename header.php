@@ -104,13 +104,15 @@
                 <?php // Right side: Contact info and CTA button ?>
                 <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
-                        <?php
-                        $phone = get_theme_mod( 'header_phone_number', '941-203-1196' );
-                        if ( $phone ) : ?>
-                            <a class="header-phone-number me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>" aria-label="<?php echo esc_attr( $phone ); ?>">
-                                <i class="fas fa-phone me-2 header-icon"></i><span class="phone-text d-none d-md-inline"><?php echo esc_html( $phone ); ?></span>
+                        <div class="dropdown header-phone-dropdown me-3">
+                            <a class="header-icon dropdown-toggle" href="#" id="headerPhoneDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="<?php esc_attr_e( 'Call Us', 'happiness-is-pets' ); ?>">
+                                <i class="fas fa-phone"></i>
                             </a>
-                        <?php endif; ?>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerPhoneDropdown">
+                                <li><a class="dropdown-item" href="tel:317-537-2480"><?php esc_html_e( 'Indianapolis: 317-537-2480', 'happiness-is-pets' ); ?></a></li>
+                                <li><a class="dropdown-item" href="tel:219-865-3078"><?php esc_html_e( 'Schererville: 219-865-3078', 'happiness-is-pets' ); ?></a></li>
+                            </ul>
+                        </div>
                         <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'happiness-is-pets' ); ?>">
                             <i class="fas fa-user"></i>
                         </a>
