@@ -20,14 +20,12 @@ Text Domain: happiness-is-pets
     --color-primary-light-peach: #EECCAA; /* Primary 3 */
     --color-primary-dark-teal: #3D5155; /* Primary 4 - Headings, Buttons */
     --color-primary-dark-grey: #585956; /* Primary 5 - Body Text */
-
     --color-secondary-teal: #3e5155; /* Secondary 1 - Links, Icons */
     --color-secondary-light-beige: #DBC8B6; /* Secondary 2 */
     --color-secondary-light-pink: #d9b2af; /* Secondary 3 - Accent Button BG */
-    --color-secondary-dark-pink: #ffb3b3; /* Darker shade for hover states */
+    /* --color-secondary-dark-pink: #ffb3b3; */ /* Darker shade for hover states */
     --color-secondary-dark-blue: #2E334E; /* Secondary 4 - Footer Titles */
     --color-secondary-dark-maroon: #503B3D; /* Secondary 5 */
-
     --color-text: var(--color-primary-dark-grey);
     --color-heading: var(--color-primary-dark-teal);
     --color-background: #FFFFFF;
@@ -38,7 +36,6 @@ Text Domain: happiness-is-pets
     --color-button-text: #FFFFFF;
     --color-link: var(--color-secondary-teal);
     --color-link-hover: var(--color-primary-dark-teal);
-
     --global-secondary-color: var(--color-primary-dark-teal);
 
     /* Font Families */
@@ -958,6 +955,8 @@ input[type="reset"]:hover,
 
 .header-title {
     padding-top: 120px;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
     background-image: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
 }
 
@@ -2856,7 +2855,6 @@ body .product-primary-info h1.product_title {
     background: #00c8ba;
     padding: 20px 0;
     border-top: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
 }
 .cssFooter .footer-bottom p,
 .cssFooter .footer-bottom a {
