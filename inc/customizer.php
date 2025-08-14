@@ -7,6 +7,9 @@
 
 function happiness_is_pets_customize_register( $wp_customize ) {
 
+    // Remove duplicate default WordPress Homepage Settings section.
+    $wp_customize->remove_section( 'static_front_page' );
+
     // =========================================
     // HEADER SETTINGS PANEL
     // =========================================
@@ -202,7 +205,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'hero_heading', array(
-            'default'           => 'Meet Your New Best Friend',
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'hero_heading', array(
@@ -212,7 +214,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'hero_text', array(
-            'default'           => 'Stop by either of our locations to meet our adorable puppies in person. Our friendly team is ready to help you find the perfect match and guide you through bringing home a healthy, happy companion today!',
             'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'hero_text', array(
@@ -222,7 +223,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'hero_button_text', array(
-            'default'           => 'Available Puppies',
             'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'hero_button_text', array(
@@ -232,7 +232,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'hero_button_url', array(
-            'default'           => '#available-puppies',
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( 'hero_button_url', array(
@@ -242,7 +241,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'hero_image', array(
-            'default'           => get_template_directory_uri() . '/assets/images/homepage_hero.png',
             'sanitize_callback' => 'esc_url_raw',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_image', array(
@@ -251,11 +249,18 @@ function happiness_is_pets_customize_register( $wp_customize ) {
     ) ) );
 
     $wp_customize->add_setting( 'hero_background_color', array(
-            'default'           => '#FFD6D4',
             'sanitize_callback' => 'sanitize_hex_color',
     ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'hero_background_color', array(
             'label'   => __( 'Hero Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+    ) ) );
+
+    $wp_customize->add_setting( 'hero_background_image', array(
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_background_image', array(
+            'label'   => __( 'Hero Background Image', 'happiness-is-pets' ),
             'section' => 'homepage_hero',
     ) ) );
 
@@ -834,9 +839,20 @@ function happiness_is_pets_customizer_css() {
         }
 
         /* Hero Section */
+        <?php
+        $hero_bg_color = get_theme_mod( 'hero_background_color' );
+        $hero_bg_image = get_theme_mod( 'hero_background_image' );
+        if ( $hero_bg_color || $hero_bg_image ) :
+        ?>
         .front-page-hero {
-            background-color: <?php echo esc_attr( get_theme_mod( 'hero_background_color', '#FFD6D4' ) ); ?>;
+            <?php if ( $hero_bg_color ) : ?>
+            background-color: <?php echo esc_attr( $hero_bg_color ); ?>;
+            <?php endif; ?>
+            <?php if ( $hero_bg_image ) : ?>
+            background-image: url('<?php echo esc_url( $hero_bg_image ); ?>');
+            <?php endif; ?>
         }
+        <?php endif; ?>
 
         /* Available Puppies Section */
         #available-puppies {
