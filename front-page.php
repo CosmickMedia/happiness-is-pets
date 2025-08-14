@@ -237,7 +237,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 <?php // --- Reviews Section --- ?>
     <section class="front-page-section py-5" id="reviews">
-        <div class="container text-center" style="background-color: #FAF7F1; border-radius: 4px; margin-bottom: 90px; margin-top: 10px; padding-top: 81px; padding-bottom: 1px;">
+        <div class="container text-center">
             <div class="container carousel-5007 carousel-plugin px-4 mb-80">
                 <div class="h2-theme-bold carous-title-5007 text-center title_text">See What Our Customers Say</div>
                 <div class="mt-4">
