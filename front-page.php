@@ -188,10 +188,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
                                             <p>Quick and easy financing is available. Apply Now!</p>
                                         </div>
                                         <div class="info-layout-action d-flex btn-flex">
-                                            <a style="white-space:nowrap" class="mt-1 F2 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true" target="_blank">
+                                            <a style="white-space:nowrap" class="theme-primary-btn mt-1 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true" target="_blank">
                                                 Apply Now - Schereville
                                             </a>
-                                            <a style="white-space:nowrap" class="mt-1 F2 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa" target="_blank">
+                                            <a style="white-space:nowrap" class="theme-primary-btn mt-1 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa" target="_blank">
                                                 Apply Now - Indianapolis
                                             </a>
                                         </div>
