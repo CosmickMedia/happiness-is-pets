@@ -6,8 +6,8 @@
  * @package happiness-is-pets
  */
 
-// Get the active phone number based on selected location
-$active_phone = happiness_is_pets_get_active_phone();
+// Get all available locations for the phone dropdown
+$locations = happiness_is_pets_get_locations();
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -103,10 +103,21 @@ $active_phone = happiness_is_pets_get_active_phone();
                 <?php // Right side: Contact info and CTA button ?>
                 <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
-                        <?php if ( $active_phone ) : ?>
-                            <a class="header-icon header-phone-icon me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $active_phone ) ); ?>" aria-label="<?php echo esc_attr( $active_phone ); ?>">
-                                <i class="fas fa-phone"></i>
-                            </a>
+                        <?php if ( ! empty( $locations ) ) : ?>
+                            <div class="dropdown me-3">
+                                <button class="header-icon header-phone-icon dropdown-toggle" type="button" id="headerPhoneDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-phone"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerPhoneDropdown">
+                                    <?php foreach ( $locations as $loc ) :
+                                        if ( ! empty( $loc['phone'] ) ) :
+                                            $tel = preg_replace( '/[^0-9+]/', '', $loc['phone'] );
+                                            ?>
+                                            <li><a class="dropdown-item" href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $loc['name'] ); ?></a></li>
+                                        <?php endif;
+                                    endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endif; ?>
                         <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'happiness-is-pets' ); ?>">
                             <i class="fas fa-user"></i>
@@ -173,25 +184,23 @@ $active_phone = happiness_is_pets_get_active_phone();
 
                 <?php // Mobile Contact Info ?>
                 <div class="mobile-contact-info">
-                    <?php
-                    // Get the active location details
-                    $active_location = get_theme_mod( 'active_location', 'indianapolis' );
-                    if ( $active_location === 'schererville' ) {
-                        $location_address = get_theme_mod( 'location_2_address', "1525 US 41,\nSchererville, IN 46375" );
-                    } else {
-                        $location_address = get_theme_mod( 'location_1_address', "5905 E 82nd St,\nIndianapolis, IN 46250" );
-                    }
-                    ?>
-                    <?php if ( $active_phone ) : ?>
+                    <?php foreach ( $locations as $loc ) : ?>
                         <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $active_phone ) ); ?>"><?php echo esc_html( $active_phone ); ?></a>
+                            <strong><?php echo esc_html( $loc['name'] ); ?></strong>
                         </div>
-                    <?php endif; ?>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span><?php echo nl2br( esc_html( $location_address ) ); ?></span>
-                    </div>
+                        <?php if ( ! empty( $loc['phone'] ) ) : ?>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $loc['phone'] ) ); ?>"><?php echo esc_html( $loc['phone'] ); ?></a>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ( ! empty( $loc['address'] ) ) : ?>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><?php echo nl2br( esc_html( $loc['address'] ) ); ?></span>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
 
                 <?php // Mobile Social Links ?>
