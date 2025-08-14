@@ -132,10 +132,14 @@ input[type="reset"],
     background-color: #00c8ba !important;
     color: white !important;
     border: 2px solid #009489 !important;
-    padding: 0.75rem 1.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 15px;
+    text-transform: none;
 }
 
 .btn:hover,
