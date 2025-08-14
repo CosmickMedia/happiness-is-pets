@@ -232,6 +232,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
                             <p class="primary1-bold"><?php esc_html_e( '7 day veterinary check', 'happiness-is-pets' ); ?></p>
                             <p><?php esc_html_e( 'Bring your new puppy to any of our in-network clinics within 7 days of purchase for a complimentary wellness check-up.', 'happiness-is-pets' ); ?></p>
                         </div>
+                        <a href="/veterinary-check/" class="theme-primary-btn" style="display: block; width: fit-content; "><?php esc_html_e( 'Veterinary Check', 'happiness-is-pets' ); ?></a>
                     </div>
                 </div>
             </div>

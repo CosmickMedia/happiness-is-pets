@@ -86,7 +86,7 @@
                     <div class="col-sm-6 text-sm-end">
                         <ul class="footer-bottom-links">
                             <li><a href="/privacy-policy">Privacy Policy</a></li>
-                            <li><a href="/terms-of-use">Terms of Use</a></li>
+                            <li><a href="/contact/">Contact</a></li>
                         </ul>
                     </div>
                 </div>
