@@ -11,30 +11,8 @@ get_header();
     <main id="primary" class="site-main">
 
 <?php // --- Hero Section --- ?>
-    <section class="front-page-hero">
-        <div class="paw-background">
-            <i class="fas fa-paw"></i>
-            <i class="fas fa-paw"></i>
-            <i class="fas fa-paw"></i>
-        </div>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
-                <div class="col-md-6">
-                    <div class="hero-content p-4 p-md-5 rounded text-center">
-                        <h1 class="display-4" style="color: var(--color-primary-dark-teal);">
-                            <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'where pets find their people', 'happiness-is-pets' ) ) ); ?>
-                        </h1>
-                        <?php $hero_url = get_theme_mod( 'header_book_button_url', '' ); ?>
-                        <?php if ( $hero_url ) : ?>
-                            <a href="<?php echo esc_url( $hero_url ); ?>" class="btn btn-lg mt-3 btn-book-appointment d-inline-flex align-items-center mt-2" style="background-color: var(--color-button); color: var(--color-button-text);">
-                                <i class="fa-regular fa-calendar-check me-2"></i> <?php echo esc_html( get_theme_mod( 'front_hero_button_text', __( 'Book an Appointment', 'happiness-is-pets' ) ) ); ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="hero-section" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');">
+        <h1><?php esc_html_e( 'Meet Your New Best Friend', 'happiness-is-pets' ); ?></h1>
     </section>
 
 <?php // --- Available Puppies Slider --- ?>
@@ -121,6 +99,9 @@ get_header();
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
+            </div>
+            <div class="text-center">
+                <a href="/all-pets/" class="see-all-puppies">See All Puppies</a>
             </div>
         </div>
     </section>
@@ -281,6 +262,25 @@ document.addEventListener( 'DOMContentLoaded', function() {
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+<?php // --- Google Reviews Section --- ?>
+    <section class="front-page-section google-reviews" id="google-reviews">
+        <div class="container">
+            <h2 class="section-title text-center"><?php esc_html_e( 'Check Out Our Google Reviews', 'happiness-is-pets' ); ?></h2>
+            <div class="row justify-content-center">
+                <?php for ( $i = 0; $i < 4; $i++ ) : ?>
+                    <div class="col-md-3 mb-4">
+                        <div class="google-review-card">
+                            <img src="https://www.gstatic.com/images/branding/product/1x/googlelogo_color_74x24dp.png" alt="Google" class="google-logo" />
+                            <div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <div class="rating-number">5.0</div>
+                            <div class="review-count">100+ reviews</div>
+                            <a class="read-more" href="https://g.page/r/XXXXXXXX">Read More</a>
+                        </div>
+                    </div>
+                <?php endfor; ?>
             </div>
         </div>
     </section>
