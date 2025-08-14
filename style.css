@@ -2876,6 +2876,12 @@ body .product-primary-info h1.product_title {
     object-fit: cover;
 }
 
+@media (min-width: 768px) {
+    .infofirst-img {
+        margin-right: 30px;
+    }
+}
+
 .cssFooter .footer-bottom-links {
     list-style: none;
     display: flex;

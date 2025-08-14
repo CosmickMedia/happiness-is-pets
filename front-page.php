@@ -22,15 +22,11 @@ get_header();
                 <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
                 <div class="col-md-6">
                     <div class="hero-content p-4 p-md-5 rounded text-center">
-                        <h1 class="display-4" style="color: var(--color-primary-dark-teal);">
-                            <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'where pets find their people', 'happiness-is-pets' ) ) ); ?>
+                        <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal);">
+                            <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'Meet Your New Best Friend', 'happiness-is-pets' ) ) ); ?>
                         </h1>
-                        <?php $hero_url = get_theme_mod( 'header_book_button_url', '' ); ?>
-                        <?php if ( $hero_url ) : ?>
-                            <a href="<?php echo esc_url( $hero_url ); ?>" class="btn btn-lg mt-3 btn-book-appointment d-inline-flex align-items-center mt-2">
-                                <i class="fa-regular fa-calendar-check me-2"></i> <?php echo esc_html( get_theme_mod( 'front_hero_button_text', __( 'Book an Appointment', 'happiness-is-pets' ) ) ); ?>
-                            </a>
-                        <?php endif; ?>
+                        <p class="lead mb-4"><?php esc_html_e( 'Come meet a cute puppy today.', 'happiness-is-pets' ); ?></p>
+                        <a href="#available-puppies" class="theme-primary-btn mt-2"><?php esc_html_e( 'Available Puppies', 'happiness-is-pets' ); ?></a>
                     </div>
                 </div>
             </div>
