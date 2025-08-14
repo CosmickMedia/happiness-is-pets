@@ -81,7 +81,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-sm-6">
-                        <p class="mb-0">Pinogy Corporation &amp; Happiness Is Pets Indianapolis &copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?></p>
+                        <p class="mb-0"><a href="https://www.cosmickmedia.com" target="_blank" rel="noopener">Cosmick Media</a> &amp; Happiness Is Pets Indianapolis &copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?></p>
                     </div>
                     <div class="col-sm-6 text-sm-end">
                         <ul class="footer-bottom-links">

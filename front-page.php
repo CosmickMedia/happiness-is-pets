@@ -22,10 +22,10 @@ get_header();
                 <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
                 <div class="col-md-6">
                     <div class="hero-content p-4 p-md-5 rounded text-center">
-                        <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal);">
+                        <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal); font-size: 2rem;">
                             <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'Meet Your New Best Friend', 'happiness-is-pets' ) ) ); ?>
                         </h1>
-                        <p class="lead mb-4"><?php esc_html_e( 'Come meet a cute puppy today.', 'happiness-is-pets' ); ?></p>
+                        <p class="lead mb-4"><?php esc_html_e( 'Stop by either of our locations to meet our adorable puppies in person. Our friendly team is ready to help you find the perfect match and guide you through bringing home a healthy, happy companion today!', 'happiness-is-pets' ); ?></p>
                         <a href="#available-puppies" class="theme-primary-btn mt-2"><?php esc_html_e( 'Available Puppies', 'happiness-is-pets' ); ?></a>
                     </div>
                 </div>
@@ -77,7 +77,6 @@ get_header();
                         $gender     = get_field( 'gender', $product_id );
                         $pet        = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
                         $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
-                        $location   = ! empty( $pet->location ) ? $pet->location : '';
                         $breed      = '';
                         $categories = get_the_terms( $product_id, 'product_cat' );
                         if ( $categories && ! is_wp_error( $categories ) ) {
@@ -90,27 +89,22 @@ get_header();
                         }
                         ?>
                         <div class="swiper-slide">
-                            <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="available-puppy-card d-block position-relative">
+                            <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="available-puppy-card d-block text-center">
                                 <?php echo $product->get_image( 'medium', array( 'class' => 'img-fluid rounded' ) ); ?>
-                                <div class="available-puppy-info position-absolute top-0 start-0 w-100 h-100 p-3 d-flex flex-column justify-content-center align-items-center text-center">
-                                    <?php if ( $breed ) : ?>
-                                        <h5 class="fw-bold mb-2"><?php echo esc_html( $breed ); ?></h5>
+                                <?php if ( $breed ) : ?>
+                                    <h5 class="fw-bold mt-2 mb-1"><?php echo esc_html( $breed ); ?></h5>
+                                <?php endif; ?>
+                                <ul class="list-unstyled small mb-0">
+                                    <?php if ( $sku ) : ?>
+                                        <li><strong><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> #<?php echo esc_html( $sku ); ?></li>
                                     <?php endif; ?>
-                                    <ul class="list-unstyled small mb-0">
-                                        <?php if ( $sku ) : ?>
-                                            <li><strong><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> #<?php echo esc_html( $sku ); ?></li>
-                                        <?php endif; ?>
-                                        <?php if ( $birth_date ) : ?>
-                                            <li><strong><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $birth_date ); ?></li>
-                                        <?php endif; ?>
-                                        <?php if ( $gender ) : ?>
-                                            <li><strong><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $gender ); ?></li>
-                                        <?php endif; ?>
-                                        <?php if ( $location ) : ?>
-                                            <li><strong><?php esc_html_e( 'Location:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $location ); ?></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
+                                    <?php if ( $birth_date ) : ?>
+                                        <li><strong><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $birth_date ); ?></li>
+                                    <?php endif; ?>
+                                    <?php if ( $gender ) : ?>
+                                        <li><strong><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $gender ); ?></li>
+                                    <?php endif; ?>
+                                </ul>
                             </a>
                         </div>
                     <?php endforeach; ?>
