@@ -2699,3 +2699,14 @@ color: #2d3e40 !important;
         .available-puppies-swiper .swiper-button-next,
         .available-puppies-swiper .swiper-button-prev { color: var(--color-primary-dark-teal); }
 
+        /* Canine Care Certified Section */
+        .canine-care-certified .section-title { color: var(--color-primary-dark-teal); }
+        .canine-care-certified .btn-primary {
+            background-color: var(--color-primary-dark-teal);
+            border-color: var(--color-primary-dark-teal);
+        }
+        .canine-care-certified .btn-primary:hover {
+            background-color: var(--color-secondary-teal);
+            border-color: var(--color-secondary-teal);
+        }
+

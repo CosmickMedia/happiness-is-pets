@@ -145,6 +145,23 @@ document.addEventListener( 'DOMContentLoaded', function() {
 } );
 </script>
 
+<?php // --- Canine Care Certified Section --- ?>
+    <section class="front-page-section canine-care-certified py-5 my-5" id="canine-care-certified">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0 text-center text-md-start">
+                    <h2 class="section-title fw-bold mb-3"><?php esc_html_e( 'Canine Care Certified', 'happiness-is-pets' ); ?></h2>
+                    <p class="text-muted mb-3"><?php esc_html_e( 'Administered by Purdue University', 'happiness-is-pets' ); ?></p>
+                    <p><?php esc_html_e( 'With an emphasis on offering the best puppies possible from the healthiest and most socially adjusted dogs, we visit many of our breeders on a monthly basis. If you are looking for a purebred puppy with us, you can do so with confidence. We are proud to be Canine Care Certified – Canine Care Certified goes above and beyond currently available canine welfare standards programs. The program sets forth rigorous, science-based, expert-reviewed standards for canine physical and behavioral welfare in areas such as nutrition, veterinary care, housing, handling and exercise.', 'happiness-is-pets' ); ?></p>
+                    <a href="/breeders/" class="btn btn-primary mt-3"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="/media/background/caninecare.webp" alt="<?php esc_attr_e( 'Canine Care Certified', 'happiness-is-pets' ); ?>" class="img-fluid rounded" />
+                </div>
+            </div>
+        </div>
+    </section>
+
 <?php // --- Featured Pets Section --- ?>
     <section class="front-page-section py-5 bg-light mb-5" id="featured-pets">
         <div class="container">
