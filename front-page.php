@@ -162,6 +162,49 @@ document.addEventListener( 'DOMContentLoaded', function() {
         </div>
     </section>
 
+    <div class="d-none d-md-block">
+        <div class="info-preview-section py-3 infofirst-4991">
+            <div class="info-layout-wrap no-hover">
+                <div class="info-layout-wrap-inner">
+                    <div class="info-layout-box container">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 d-flex align-items-center">
+                                <div class="info-layout-content-img">
+                                    <img src="/media/background/ourpuppies.webp" alt="" class="info_placeholder img-fluid infofirst-img" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-8 align-items-center d-flex order-2 order-md-2">
+                                <div class="info-layout-content">
+                                    <div class="info-layout-content-inner">
+                                        <h2 class="h2-theme-bold mb-3 infofirst-title">
+                                            <p>Take Home Your Newest Addition!</p>
+                                        </h2>
+                                        <div class="h3-theme-bold mb-3 infofirst-sub-title infofirst-sub-title"></div>
+                                        <div class="infofirst-message">
+                                            <p><span style="color:#B8B8B8;font-size:20px;">Healthy, Happy, and Adorable</span></p>
+                                            <p>Quick and easy financing is available. Apply Now!</p>
+                                        </div>
+                                        <div class="info-layout-action d-flex btn-flex">
+                                            <a style="white-space:nowrap" class="mt-1 F2 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true" target="_blank">
+                                                Apply Now - Schereville
+                                            </a>
+                                            <a style="white-space:nowrap" class="mt-1 F2 sw-100" href="https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa" target="_blank">
+                                                Apply Now - Indianapolis
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- half image and half text and button area -->
+
+    </div>
+
 <?php // --- Featured Pets Section --- ?>
     <section class="front-page-section py-5 bg-light mb-5" id="featured-pets">
         <div class="container">
