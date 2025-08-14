@@ -51,7 +51,7 @@
 <div id="page" class="site">
     <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'happiness-is-pets' ); ?></a>
 
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header cssHeader">
 
         <?php // --- Top Header Bar with Hamburger Menu --- ?>
         <div class="top-header-bar py-3" style="background-color: var(--color-header-bg);">
@@ -61,7 +61,7 @@
                 <div class="d-flex align-items-center">
                     <?php // Hamburger Menu Toggle ?>
                     <button
-                            class="navbar-toggler happiness-is-pets-toggler me-2 me-md-3 d-md-none"
+                            class="navbar-toggler happiness-is-pets-toggler me-2 me-md-3 d-md-none mobile-menu-toggle"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#mobileNavOffcanvas"

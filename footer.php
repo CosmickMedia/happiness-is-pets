@@ -8,7 +8,7 @@
 
     </div><!-- #content -->
 
-    <footer id="footer" class="site-footer">
+    <footer id="footer" class="site-footer cssFooter">
         <div class="container">
             <div class="footer-top">
                 <div class="row">
