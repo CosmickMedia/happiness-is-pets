@@ -1,14 +1,13 @@
 <?php
 /**
- * The header for the Happiness Is Pets theme (Two-Bar Structure with Top Offcanvas)
- *
- * Displays all of the <head> section and everything up till <div id="content">
- * Implements a two-bar header:
- * 1) Top bar: Hamburger + Logo left, Contact info and Button right
- * 2) Nav bar: Menu items displayed horizontally on all devices (no hamburger)
+ * The header for the Happiness Is Pets theme
+ * Fully integrated with customizer settings
  *
  * @package happiness-is-pets
  */
+
+// Get the active phone number based on selected location
+$active_phone = happiness_is_pets_get_active_phone();
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -54,7 +53,7 @@
     <header id="masthead" class="site-header cssHeader">
 
         <?php // --- Top Header Bar with Hamburger Menu --- ?>
-        <div class="top-header-bar py-3" style="background-color: var(--color-header-bg);">
+        <div class="top-header-bar py-3">
             <div class="container d-flex align-items-center">
 
                 <?php // Left side: Hamburger + Logo ?>
@@ -104,10 +103,8 @@
                 <?php // Right side: Contact info and CTA button ?>
                 <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
-                        <?php
-                        $phone = get_theme_mod( 'header_phone_number', '941-203-1196' );
-                        if ( $phone ) : ?>
-                            <a class="header-icon header-phone-icon me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>" aria-label="<?php echo esc_attr( $phone ); ?>">
+                        <?php if ( $active_phone ) : ?>
+                            <a class="header-icon header-phone-icon me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $active_phone ) ); ?>" aria-label="<?php echo esc_attr( $active_phone ); ?>">
                                 <i class="fas fa-phone"></i>
                             </a>
                         <?php endif; ?>
@@ -145,10 +142,9 @@
                 <?php // Full Navigation Menu in Offcanvas ?>
                 <nav class="mobile-nav-menu">
                     <?php
-                    // You can use a different menu here if needed, like 'primary' instead of 'new-primary'
                     wp_nav_menu(
                             array(
-                                    'theme_location' => 'primary', // Using full primary menu in offcanvas
+                                    'theme_location' => 'primary',
                                     'menu_class'     => 'mobile-menu-list',
                                     'container'      => false,
                                     'fallback_cb'    => false,
@@ -178,32 +174,54 @@
                 <?php // Mobile Contact Info ?>
                 <div class="mobile-contact-info">
                     <?php
-                    $phone = get_theme_mod( 'header_phone_number' );
-                    $address = get_theme_mod( 'footer_col2_address', "6453 Lockwood Ridge Rd\nSarasota, FL 34243" );
+                    // Get the active location details
+                    $active_location = get_theme_mod( 'active_location', 'indianapolis' );
+                    if ( $active_location === 'schererville' ) {
+                        $location_address = get_theme_mod( 'location_2_address', "1525 US 41,\nSchererville, IN 46375" );
+                    } else {
+                        $location_address = get_theme_mod( 'location_1_address', "5905 E 82nd St,\nIndianapolis, IN 46250" );
+                    }
                     ?>
-                    <?php if ( $phone ) : ?>
+                    <?php if ( $active_phone ) : ?>
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
+                            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $active_phone ) ); ?>"><?php echo esc_html( $active_phone ); ?></a>
                         </div>
                     <?php endif; ?>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span><?php echo nl2br( esc_html( $address ) ); ?></span>
+                        <span><?php echo nl2br( esc_html( $location_address ) ); ?></span>
                     </div>
                 </div>
 
                 <?php // Mobile Social Links ?>
                 <div class="mobile-social-links">
-                    <a href="<?php echo esc_url( get_theme_mod( 'footer_facebook_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Facebook', 'happiness-is-pets' ); ?>">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="<?php echo esc_url( get_theme_mod( 'footer_instagram_url', '#' ) ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Instagram', 'happiness-is-pets' ); ?>">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+                    <?php if ( $facebook = get_theme_mod( 'social_facebook', '#' ) ) : ?>
+                        <a href="<?php echo esc_url( $facebook ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Facebook', 'happiness-is-pets' ); ?>">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ( $instagram = get_theme_mod( 'social_instagram', '#' ) ) : ?>
+                        <a href="<?php echo esc_url( $instagram ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Instagram', 'happiness-is-pets' ); ?>">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ( $twitter = get_theme_mod( 'social_twitter' ) ) : ?>
+                        <a href="<?php echo esc_url( $twitter ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'Twitter', 'happiness-is-pets' ); ?>">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ( $youtube = get_theme_mod( 'social_youtube' ) ) : ?>
+                        <a href="<?php echo esc_url( $youtube ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'YouTube', 'happiness-is-pets' ); ?>">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ( $tiktok = get_theme_mod( 'social_tiktok' ) ) : ?>
+                        <a href="<?php echo esc_url( $tiktok ); ?>" class="social-link" aria-label="<?php esc_attr_e( 'TikTok', 'happiness-is-pets' ); ?>">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    <?php endif; ?>
                 </div>
-
-                <?php // Mobile CTA Button removed ?>
             </div>
         </div>
 

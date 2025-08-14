@@ -1,545 +1,887 @@
 <?php
 /**
- * Theme Customizer additions for Happiness Is Pets.
+ * Theme Customizer - Complete rebuild with all settings
+ *
+ * @package happiness-is-pets
  */
 
 function happiness_is_pets_customize_register( $wp_customize ) {
-    // Panel for front page settings
-    $wp_customize->add_panel( 'happiness_is_pets_front_page', array(
-            'title'    => __( 'Front Page', 'happiness-is-pets' ),
-            'priority' => 160,
+
+    // =========================================
+    // HEADER SETTINGS PANEL
+    // =========================================
+    $wp_customize->add_panel( 'happiness_is_pets_header_panel', array(
+            'title'       => __( 'Header Settings', 'happiness-is-pets' ),
+            'priority'    => 20,
+            'description' => __( 'Configure all header elements including logo, locations, and contact info', 'happiness-is-pets' ),
     ) );
 
-    /* Hero Section */
-    $wp_customize->add_section( 'happiness_is_pets_hero', array(
-            'title' => __( 'Hero Section', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
+    // --- Logo Section ---
+    $wp_customize->add_section( 'happiness_is_pets_header_logo', array(
+            'title' => __( 'Logo', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_header_panel',
+            'priority' => 10,
     ) );
 
-    $wp_customize->add_setting( 'front_hero_image', array(
-            'default'           => get_template_directory_uri() . '/assets/images/homepage_hero.png',
-            'sanitize_callback' => 'esc_url_raw',
+    // Logo is handled by WordPress core custom_logo support
+    // But we can add additional logo settings if needed
+
+    // --- Header Style Section ---
+    $wp_customize->add_section( 'happiness_is_pets_header_style', array(
+            'title' => __( 'Header Style', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_header_panel',
+            'priority' => 20,
     ) );
 
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_hero_image', array(
-            'label'   => __( 'Hero Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_hero',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_hero_heading', array(
-            'default'           => __( 'where pets find their people', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_hero_heading', array(
-            'label'   => __( 'Hero Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_hero',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_hero_button_text', array(
-            'default'           => __( 'Book an Appointment', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_hero_button_text', array(
-            'label'   => __( 'Hero Button Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_hero',
-            'type'    => 'text',
-    ) );
-
-    // Background options for Hero Section
-    $wp_customize->add_setting( 'front_hero_bg_image', array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_hero_bg_image', array(
-            'label'   => __( 'Hero Background Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_hero',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_hero_bg_color', array(
-            'default'           => '#ffcfcd',
+    $wp_customize->add_setting( 'header_background_color', array(
+            'default'           => '#FFFFFF',
             'sanitize_callback' => 'sanitize_hex_color',
     ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'front_hero_bg_color', array(
-            'label'   => __( 'Hero Background Color', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_hero',
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_background_color', array(
+            'label'   => __( 'Header Background Color', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_header_style',
     ) ) );
 
-    /* Header Settings */
-    $wp_customize->add_section( 'happiness_is_pets_header_settings', array(
-            'title'    => __( 'Header Settings', 'happiness-is-pets' ),
+    // --- Locations Section ---
+    $wp_customize->add_section( 'happiness_is_pets_locations', array(
+            'title' => __( 'Store Locations', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_header_panel',
             'priority' => 30,
+            'description' => __( 'Configure multiple store locations. Phone numbers will be selectable in header.', 'happiness-is-pets' ),
     ) );
 
-    $wp_customize->add_setting( 'header_phone_number', array(
-            'default'           => '941-203-1196',
+    $wp_customize->add_setting( 'active_location', array(
+            'default'           => 'indianapolis',
             'sanitize_callback' => 'sanitize_text_field',
     ) );
-    $wp_customize->add_control( 'header_phone_number', array(
-            'label'   => __( 'Phone Number', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_header_settings',
+    $wp_customize->add_control( 'active_location', array(
+            'label'   => __( 'Active Location for Header', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'select',
+            'choices' => array(
+                    'indianapolis' => __( 'Indianapolis', 'happiness-is-pets' ),
+                    'schererville' => __( 'Schererville', 'happiness-is-pets' ),
+            ),
+    ) );
+
+    // Location 1 - Indianapolis
+    $wp_customize->add_setting( 'location_1_name', array(
+            'default'           => 'Happiness Is Pets Indianapolis',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'location_1_name', array(
+            'label'   => __( 'Location 1 Name', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
             'type'    => 'text',
     ) );
 
-    $wp_customize->add_setting( 'header_book_button_url', array(
-            'default'           => '',
+    $wp_customize->add_setting( 'location_1_phone', array(
+            'default'           => '317-537-2480',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'location_1_phone', array(
+            'label'   => __( 'Location 1 Phone', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'location_1_email', array(
+            'default'           => 'Karenhip7330@gmail.com',
+            'sanitize_callback' => 'sanitize_email',
+    ) );
+    $wp_customize->add_control( 'location_1_email', array(
+            'label'   => __( 'Location 1 Email', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'email',
+    ) );
+
+    $wp_customize->add_setting( 'location_1_address', array(
+            'default'           => "5905 E 82nd St,\nIndianapolis, IN 46250",
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'location_1_address', array(
+            'label'   => __( 'Location 1 Address', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'textarea',
+    ) );
+
+    // Location 2 - Schererville
+    $wp_customize->add_setting( 'location_2_name', array(
+            'default'           => 'Happiness Is Pets Schererville',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'location_2_name', array(
+            'label'   => __( 'Location 2 Name', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'location_2_phone', array(
+            'default'           => '219-865-3078',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'location_2_phone', array(
+            'label'   => __( 'Location 2 Phone', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'location_2_email', array(
+            'default'           => 'Erika.Happinessispets@gmail.com',
+            'sanitize_callback' => 'sanitize_email',
+    ) );
+    $wp_customize->add_control( 'location_2_email', array(
+            'label'   => __( 'Location 2 Email', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'email',
+    ) );
+
+    $wp_customize->add_setting( 'location_2_address', array(
+            'default'           => "1525 US 41,\nSchererville, IN 46375",
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'location_2_address', array(
+            'label'   => __( 'Location 2 Address', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'textarea',
+    ) );
+
+    // Store Hours
+    $wp_customize->add_setting( 'store_hours', array(
+            'default'           => "Monday: 11:00 AM - 09:00 PM\nTuesday: 11:00 AM - 09:00 PM\nWednesday: 11:00 AM - 09:00 PM\nThursday: 11:00 AM - 09:00 PM\nFriday: 11:00 AM - 09:00 PM\nSaturday: 11:00 AM - 06:00 PM\nSunday: 11:00 AM - 05:00 PM",
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'store_hours', array(
+            'label'   => __( 'Store Hours (for all locations)', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_locations',
+            'type'    => 'textarea',
+            'description' => __( 'Enter one day per line', 'happiness-is-pets' ),
+    ) );
+
+    // =========================================
+    // NAVIGATION MENUS SECTION
+    // =========================================
+    $wp_customize->add_section( 'happiness_is_pets_menus', array(
+            'title'       => __( 'Navigation Menus', 'happiness-is-pets' ),
+            'priority'    => 25,
+            'description' => __( 'Configure menu settings. Assign menus in Appearance > Menus', 'happiness-is-pets' ),
+    ) );
+
+    $wp_customize->add_setting( 'menu_text_color', array(
+            'default'           => '#333333',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'menu_text_color', array(
+            'label'   => __( 'Menu Text Color', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_menus',
+    ) ) );
+
+    $wp_customize->add_setting( 'menu_hover_color', array(
+            'default'           => '#00BCD4',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'menu_hover_color', array(
+            'label'   => __( 'Menu Hover Color', 'happiness-is-pets' ),
+            'section' => 'happiness_is_pets_menus',
+    ) ) );
+
+    // =========================================
+    // HOMEPAGE SECTIONS PANEL
+    // =========================================
+    $wp_customize->add_panel( 'happiness_is_pets_homepage', array(
+            'title'       => __( 'Homepage Sections', 'happiness-is-pets' ),
+            'priority'    => 30,
+            'description' => __( 'Configure all homepage sections', 'happiness-is-pets' ),
+    ) );
+
+    // --- Hero Section ---
+    $wp_customize->add_section( 'homepage_hero', array(
+            'title' => __( 'Hero Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 10,
+    ) );
+
+    $wp_customize->add_setting( 'hero_heading', array(
+            'default'           => 'Meet Your New Best Friend',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'hero_heading', array(
+            'label'   => __( 'Hero Heading', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'hero_text', array(
+            'default'           => 'Stop by either of our locations to meet our adorable puppies in person. Our friendly team is ready to help you find the perfect match and guide you through bringing home a healthy, happy companion today!',
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'hero_text', array(
+            'label'   => __( 'Hero Text', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+            'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'hero_button_text', array(
+            'default'           => 'Available Puppies',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'hero_button_text', array(
+            'label'   => __( 'Hero Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'hero_button_url', array(
+            'default'           => '#available-puppies',
             'sanitize_callback' => 'esc_url_raw',
     ) );
-    $wp_customize->add_control( 'header_book_button_url', array(
-            'label'   => __( 'Reservation Button URL', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_header_settings',
+    $wp_customize->add_control( 'hero_button_url', array(
+            'label'   => __( 'Hero Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
             'type'    => 'url',
     ) );
 
-    $wp_customize->add_setting( 'header_book_button_text', array(
-            'default'           => __( 'Make a Reservation', 'happiness-is-pets' ),
+    $wp_customize->add_setting( 'hero_image', array(
+            'default'           => get_template_directory_uri() . '/assets/images/homepage_hero.png',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_image', array(
+            'label'   => __( 'Hero Image', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+    ) ) );
+
+    $wp_customize->add_setting( 'hero_background_color', array(
+            'default'           => '#FFD6D4',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'hero_background_color', array(
+            'label'   => __( 'Hero Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+    ) ) );
+
+    // --- Available Puppies Section ---
+    $wp_customize->add_section( 'homepage_puppies', array(
+            'title' => __( 'Available Puppies Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 20,
+    ) );
+
+    $wp_customize->add_setting( 'puppies_section_title', array(
+            'default'           => 'Available Puppies',
             'sanitize_callback' => 'sanitize_text_field',
     ) );
-    $wp_customize->add_control( 'header_book_button_text', array(
-            'label'   => __( 'Reservation Button Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_header_settings',
+    $wp_customize->add_control( 'puppies_section_title', array(
+            'label'   => __( 'Section Title', 'happiness-is-pets' ),
+            'section' => 'homepage_puppies',
             'type'    => 'text',
     ) );
 
-    $wp_customize->add_setting( 'header_book_button_icon', array(
-            'default'           => 'fa-regular fa-calendar-check',
+    $wp_customize->add_setting( 'puppies_button_text', array(
+            'default'           => 'See All Puppies',
             'sanitize_callback' => 'sanitize_text_field',
     ) );
-    $wp_customize->add_control( 'header_book_button_icon', array(
-            'label'       => __( 'Reservation Button Icon', 'happiness-is-pets' ),
-            'section'     => 'happiness_is_pets_header_settings',
-            'type'        => 'text',
-            'description' => __( 'Font Awesome class, e.g. fa-calendar-check', 'happiness-is-pets' ),
+    $wp_customize->add_control( 'puppies_button_text', array(
+            'label'   => __( 'Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_puppies',
+            'type'    => 'text',
     ) );
 
-    /* Shop Settings */
-    $wp_customize->add_section( 'happiness_is_pets_shop_settings', array(
-            'title' => __( 'Shop Settings', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
+    $wp_customize->add_setting( 'puppies_button_url', array(
+            'default'           => '/all-pets/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'puppies_button_url', array(
+            'label'   => __( 'Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_puppies',
+            'type'    => 'url',
     ) );
 
-    // FIXED: Changed to boolean handling for checkbox
+    $wp_customize->add_setting( 'puppies_background_color', array(
+            'default'           => '#F7F7F7',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'puppies_background_color', array(
+            'label'   => __( 'Section Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_puppies',
+    ) ) );
+
+    // --- Canine Care Section ---
+    $wp_customize->add_section( 'homepage_canine_care', array(
+            'title' => __( 'Canine Care Certified Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 30,
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_title', array(
+            'default'           => 'Canine Care Certified',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'canine_care_title', array(
+            'label'   => __( 'Section Title', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_subtitle', array(
+            'default'           => 'Administered by Purdue University',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'canine_care_subtitle', array(
+            'label'   => __( 'Subtitle', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_text', array(
+            'default'           => 'With an emphasis on offering the best puppies possible from the healthiest and most socially adjusted dogs, we visit many of our breeders on a monthly basis. If you are looking for a purebred puppy with us, you can do so with confidence. We are proud to be Canine Care Certified – Canine Care Certified goes above and beyond currently available canine welfare standards programs. The program sets forth rigorous, science-based, expert-reviewed standards for canine physical and behavioral welfare in areas such as nutrition, veterinary care, housing, handling and exercise.',
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'canine_care_text', array(
+            'label'   => __( 'Section Text', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+            'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_button_text', array(
+            'default'           => 'Learn More',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'canine_care_button_text', array(
+            'label'   => __( 'Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_button_url', array(
+            'default'           => '/breeders/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'canine_care_button_url', array(
+            'label'   => __( 'Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'canine_care_image', array(
+            'default'           => get_template_directory_uri() . '/assets/images/caninecare.webp',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'canine_care_image', array(
+            'label'   => __( 'Section Image', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+    ) ) );
+
+    $wp_customize->add_setting( 'canine_care_background_color', array(
+            'default'           => '#FFFFFF',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'canine_care_background_color', array(
+            'label'   => __( 'Section Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_canine_care',
+    ) ) );
+
+    // --- Financing Section ---
+    $wp_customize->add_section( 'homepage_financing', array(
+            'title' => __( 'Financing Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 40,
+    ) );
+
+    $wp_customize->add_setting( 'financing_title', array(
+            'default'           => 'Take Home Your Newest Addition!',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'financing_title', array(
+            'label'   => __( 'Section Title', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'financing_subtitle', array(
+            'default'           => 'Healthy, Happy, and Adorable',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'financing_subtitle', array(
+            'label'   => __( 'Subtitle', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'financing_text', array(
+            'default'           => 'Quick and easy financing is available. Apply Now!',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'financing_text', array(
+            'label'   => __( 'Section Text', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'financing_image', array(
+            'default'           => get_template_directory_uri() . '/assets/images/ourpuppies.webp',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'financing_image', array(
+            'label'   => __( 'Section Image', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+    ) ) );
+
+    $wp_customize->add_setting( 'financing_button1_text', array(
+            'default'           => 'Apply Now - Schereville',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'financing_button1_text', array(
+            'label'   => __( 'Button 1 Text', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'financing_button1_url', array(
+            'default'           => 'https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'financing_button1_url', array(
+            'label'   => __( 'Button 1 URL', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'financing_button2_text', array(
+            'default'           => 'Apply Now - Indianapolis',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'financing_button2_text', array(
+            'label'   => __( 'Button 2 Text', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'financing_button2_url', array(
+            'default'           => 'https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'financing_button2_url', array(
+            'label'   => __( 'Button 2 URL', 'happiness-is-pets' ),
+            'section' => 'homepage_financing',
+            'type'    => 'url',
+    ) );
+
+    // --- Our Guarantee Section ---
+    $wp_customize->add_section( 'homepage_guarantee', array(
+            'title' => __( 'Our Guarantee Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 50,
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_title', array(
+            'default'           => 'Our Guarantee',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_title', array(
+            'label'   => __( 'Section Title', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_subtitle', array(
+            'default'           => 'Peace of mind for you and your puppy',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_subtitle', array(
+            'label'   => __( 'Subtitle', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    // Guarantee Item 1
+    $wp_customize->add_setting( 'guarantee_1_title', array(
+            'default'           => '2 year health warranty',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_1_title', array(
+            'label'   => __( 'Guarantee 1 Title', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_1_text', array(
+            'default'           => 'Since many, but not all congenital defects arise within the first year, we go the extra mile to ensure you and your new puppy are covered.',
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_1_text', array(
+            'label'   => __( 'Guarantee 1 Text', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_1_button_text', array(
+            'default'           => 'Health Warranty',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_1_button_text', array(
+            'label'   => __( 'Guarantee 1 Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_1_button_url', array(
+            'default'           => '/health-warranty/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'guarantee_1_button_url', array(
+            'label'   => __( 'Guarantee 1 Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_1_image', array(
+            'default'           => get_template_directory_uri() . '/assets/images/health-warranty.webp__88.0x77.0_subsampling-2.webp',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'guarantee_1_image', array(
+            'label'   => __( 'Guarantee 1 Image', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+    ) ) );
+
+    // Guarantee Item 2
+    $wp_customize->add_setting( 'guarantee_2_title', array(
+            'default'           => '7 day veterinary check',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_2_title', array(
+            'label'   => __( 'Guarantee 2 Title', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_2_text', array(
+            'default'           => 'Bring your new puppy to any of our in-network clinics within 7 days of purchase for a complimentary wellness check-up.',
+            'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_2_text', array(
+            'label'   => __( 'Guarantee 2 Text', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_2_button_text', array(
+            'default'           => 'Veterinary Check',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'guarantee_2_button_text', array(
+            'label'   => __( 'Guarantee 2 Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_2_button_url', array(
+            'default'           => '/veterinary-check/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'guarantee_2_button_url', array(
+            'label'   => __( 'Guarantee 2 Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'guarantee_2_image', array(
+            'default'           => get_template_directory_uri() . '/assets/images/veterinary-check.webp__81.0x68.0_subsampling-2.webp',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'guarantee_2_image', array(
+            'label'   => __( 'Guarantee 2 Image', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+    ) ) );
+
+    $wp_customize->add_setting( 'guarantee_background_color', array(
+            'default'           => '#FFFFFF',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'guarantee_background_color', array(
+            'label'   => __( 'Section Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_guarantee',
+    ) ) );
+
+    // --- Reviews Section ---
+    $wp_customize->add_section( 'homepage_reviews', array(
+            'title' => __( 'Reviews Section', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_homepage',
+            'priority' => 60,
+    ) );
+
+    $wp_customize->add_setting( 'reviews_title', array(
+            'default'           => 'See What Our Customers Say',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'reviews_title', array(
+            'label'   => __( 'Section Title', 'happiness-is-pets' ),
+            'section' => 'homepage_reviews',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'reviews_button_text', array(
+            'default'           => 'Submit Your Own Story',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'reviews_button_text', array(
+            'label'   => __( 'Button Text', 'happiness-is-pets' ),
+            'section' => 'homepage_reviews',
+            'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'reviews_button_url', array(
+            'default'           => '/testimonials/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'reviews_button_url', array(
+            'label'   => __( 'Button URL', 'happiness-is-pets' ),
+            'section' => 'homepage_reviews',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'reviews_background_color', array(
+            'default'           => '#FFFFFF',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'reviews_background_color', array(
+            'label'   => __( 'Section Background Color', 'happiness-is-pets' ),
+            'section' => 'homepage_reviews',
+    ) ) );
+
+    // =========================================
+    // FOOTER SETTINGS PANEL
+    // =========================================
+    $wp_customize->add_panel( 'happiness_is_pets_footer_panel', array(
+            'title'       => __( 'Footer Settings', 'happiness-is-pets' ),
+            'priority'    => 40,
+            'description' => __( 'Configure footer elements including social media, copyright, and styling', 'happiness-is-pets' ),
+    ) );
+
+    // --- Footer Style Section ---
+    $wp_customize->add_section( 'footer_style', array(
+            'title' => __( 'Footer Style', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer_panel',
+            'priority' => 10,
+    ) );
+
+    $wp_customize->add_setting( 'footer_background_color', array(
+            'default'           => '#00c8baff',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'footer_background_color', array(
+            'label'   => __( 'Footer Background Color', 'happiness-is-pets' ),
+            'section' => 'footer_style',
+    ) ) );
+
+    $wp_customize->add_setting( 'footer_text_color', array(
+            'default'           => '#000000',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'footer_text_color', array(
+            'label'   => __( 'Footer Text Color', 'happiness-is-pets' ),
+            'section' => 'footer_style',
+    ) ) );
+
+    // --- Social Media Section ---
+    $wp_customize->add_section( 'footer_social', array(
+            'title' => __( 'Social Media Links', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer_panel',
+            'priority' => 20,
+            'description' => __( 'Social media icons will appear under the logo in footer', 'happiness-is-pets' ),
+    ) );
+
+    $wp_customize->add_setting( 'social_facebook', array(
+            'default'           => '#',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'social_facebook', array(
+            'label'   => __( 'Facebook URL', 'happiness-is-pets' ),
+            'section' => 'footer_social',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'social_instagram', array(
+            'default'           => '#',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'social_instagram', array(
+            'label'   => __( 'Instagram URL', 'happiness-is-pets' ),
+            'section' => 'footer_social',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'social_twitter', array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'social_twitter', array(
+            'label'   => __( 'Twitter URL', 'happiness-is-pets' ),
+            'section' => 'footer_social',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'social_youtube', array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'social_youtube', array(
+            'label'   => __( 'YouTube URL', 'happiness-is-pets' ),
+            'section' => 'footer_social',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'social_tiktok', array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'social_tiktok', array(
+            'label'   => __( 'TikTok URL', 'happiness-is-pets' ),
+            'section' => 'footer_social',
+            'type'    => 'url',
+    ) );
+
+    // --- Footer Copyright Section ---
+    $wp_customize->add_section( 'footer_copyright', array(
+            'title' => __( 'Copyright & Links', 'happiness-is-pets' ),
+            'panel' => 'happiness_is_pets_footer_panel',
+            'priority' => 30,
+    ) );
+
+    $wp_customize->add_setting( 'footer_copyright_text', array(
+            'default'           => 'Cosmick Media & Happiness Is Pets Indianapolis',
+            'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'footer_copyright_text', array(
+            'label'   => __( 'Copyright Text', 'happiness-is-pets' ),
+            'section' => 'footer_copyright',
+            'type'    => 'text',
+            'description' => __( 'Year will be added automatically', 'happiness-is-pets' ),
+    ) );
+
+    $wp_customize->add_setting( 'footer_copyright_url', array(
+            'default'           => 'https://www.cosmickmedia.com',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'footer_copyright_url', array(
+            'label'   => __( 'Copyright Link URL', 'happiness-is-pets' ),
+            'section' => 'footer_copyright',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'footer_privacy_url', array(
+            'default'           => '/privacy-policy',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'footer_privacy_url', array(
+            'label'   => __( 'Privacy Policy URL', 'happiness-is-pets' ),
+            'section' => 'footer_copyright',
+            'type'    => 'url',
+    ) );
+
+    $wp_customize->add_setting( 'footer_contact_url', array(
+            'default'           => '/contact/',
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'footer_contact_url', array(
+            'label'   => __( 'Contact Page URL', 'happiness-is-pets' ),
+            'section' => 'footer_copyright',
+            'type'    => 'url',
+    ) );
+
+    // =========================================
+    // SHOP SETTINGS
+    // =========================================
+    $wp_customize->add_section( 'happiness_is_pets_shop', array(
+            'title'       => __( 'Shop Settings', 'happiness-is-pets' ),
+            'priority'    => 50,
+            'description' => __( 'Configure WooCommerce shop settings', 'happiness-is-pets' ),
+    ) );
+
     $wp_customize->add_setting( 'enable_catalog_mode', array(
             'default'           => false,
             'sanitize_callback' => function( $value ) {
                 return (bool) $value;
             },
     ) );
-
     $wp_customize->add_control( 'enable_catalog_mode', array(
-            'label'   => __( 'Enable Catalog Mode', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_shop_settings',
-            'type'    => 'checkbox',
-    ) );
-
-    /* Icon Section */
-    $wp_customize->add_section( 'happiness_is_pets_icons', array(
-            'title' => __( 'Icon Section', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon1_img', array(
-            'default'           => get_template_directory_uri() . '/assets/images/puppy_ico.png',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon1_img', array(
-            'label'   => __( 'First Icon Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_icon1_link', array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'front_icon1_link', array(
-            'label'   => __( 'First Icon Link', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'url',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon1_text', array(
-            'default'           => __( 'puppies dreaming of you', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_icon1_text', array(
-            'label'   => __( 'First Icon Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon2_img', array(
-            'default'           => get_template_directory_uri() . '/assets/images/kittens_ico.png',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon2_img', array(
-            'label'   => __( 'Second Icon Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_icon2_link', array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'front_icon2_link', array(
-            'label'   => __( 'Second Icon Link', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'url',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon2_text', array(
-            'default'           => __( 'kittens dreaming of you', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_icon2_text', array(
-            'label'   => __( 'Second Icon Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon3_img', array(
-            'default'           => get_template_directory_uri() . '/assets/images/concierge.png',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_icon3_img', array(
-            'label'   => __( 'Third Icon Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_icon3_link', array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'front_icon3_link', array(
-            'label'   => __( 'Third Icon Link', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'url',
-    ) );
-
-    $wp_customize->add_setting( 'front_icon3_text', array(
-            'default'           => __( 'concierge service', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_icon3_text', array(
-            'label'   => __( 'Third Icon Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_icons',
-            'type'    => 'text',
-    ) );
-
-    /* Featured Pets */
-    $wp_customize->add_section( 'happiness_is_pets_featured_pets', array(
-            'title' => __( 'Featured Pets', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
-    ) );
-
-    $wp_customize->add_setting( 'front_featured_pets_heading', array(
-            'default'           => __( 'featured dream pets', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_featured_pets_heading', array(
-            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_featured_pets',
-            'type'    => 'text',
-    ) );
-
-    // Featured Pet Images
-    for ( $i = 1; $i <= 3; $i++ ) {
-        $wp_customize->add_setting( "front_featured_pet_image{$i}", array(
-                'default'           => get_template_directory_uri() . "/assets/images/pet-placeholder-{$i}.jpg",
-                'sanitize_callback' => 'esc_url_raw',
-        ) );
-        $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "front_featured_pet_image{$i}", array(
-                'label'   => sprintf( __( 'Featured Pet Image %d', 'happiness-is-pets' ), $i ),
-                'section' => 'happiness_is_pets_featured_pets',
-        ) ) );
-
-        $wp_customize->add_setting( "front_featured_pet_link{$i}", array(
-                'default'           => '',
-                'sanitize_callback' => 'esc_url_raw',
-        ) );
-        $wp_customize->add_control( "front_featured_pet_link{$i}", array(
-                'label'   => sprintf( __( 'Featured Pet Link %d', 'happiness-is-pets' ), $i ),
-                'section' => 'happiness_is_pets_featured_pets',
-                'type'    => 'url',
-        ) );
-    }
-
-    /* Testimonials */
-    $wp_customize->add_section( 'happiness_is_pets_testimonials', array(
-            'title' => __( 'Testimonials', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
-    ) );
-
-    $wp_customize->add_setting( 'front_testimonial_heading', array(
-            'default'           => __( 'happy tails start here', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_testimonial_heading', array(
-            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_testimonials',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_testimonial_image', array(
-            'default'           => get_template_directory_uri() . '/assets/images/reviews-image.png',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_testimonial_image', array(
-            'label'   => __( 'Testimonial Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_testimonials',
-    ) ) );
-
-    // Background options for Testimonials Section
-    $wp_customize->add_setting( 'front_testimonial_bg_image', array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'front_testimonial_bg_image', array(
-            'label'   => __( 'Testimonials Background Image', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_testimonials',
-    ) ) );
-
-    $wp_customize->add_setting( 'front_testimonial_bg_color', array(
-            'default'           => '#ffcfcd',
-            'sanitize_callback' => 'sanitize_hex_color',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'front_testimonial_bg_color', array(
-            'label'   => __( 'Testimonials Background Color', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_testimonials',
-    ) ) );
-
-    /* Concierge Section */
-    $wp_customize->add_section( 'happiness_is_pets_concierge', array(
-            'title' => __( 'Concierge Section', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_front_page',
-    ) );
-
-    $wp_customize->add_setting( 'front_concierge_heading', array(
-            'default'           => __( 'concierge level care', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_concierge_heading', array(
-            'label'   => __( 'Section Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_concierge',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_concierge_lead', array(
-            'default'           => __( 'Our service and environment are designed to match the high quality of puppies and kittens in our store and meet your expectations.', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_textarea_field',
-    ) );
-    $wp_customize->add_control( 'front_concierge_lead', array(
-            'label'   => __( 'Lead Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_concierge',
-            'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'front_concierge_desc', array(
-            'default'           => __( 'We think the puppies and kittens are worth it and so are you!', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_textarea_field',
-    ) );
-    $wp_customize->add_control( 'front_concierge_desc', array(
-            'label'   => __( 'Secondary Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_concierge',
-            'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'front_concierge_button_text', array(
-            'default'           => __( 'Learn more about Happiness Is Pets Boutique', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'front_concierge_button_text', array(
-            'label'   => __( 'Button Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_concierge',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'front_concierge_button_url', array(
-            'default'           => '/about/',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'front_concierge_button_url', array(
-            'label'   => __( 'Button URL', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_concierge',
-            'type'    => 'url',
-    ) );
-
-    /* Footer Panel */
-    $wp_customize->add_panel( 'happiness_is_pets_footer', array(
-            'title'    => __( 'Footer', 'happiness-is-pets' ),
-            'priority' => 200,
-    ) );
-
-    /* Footer Column 1 */
-    $wp_customize->add_section( 'happiness_is_pets_footer_col1', array(
-            'title' => __( 'Column 1', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_footer',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col1_heading', array(
-            'default'           => __( 'Navigation', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'footer_col1_heading', array(
-            'label'   => __( 'Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col1',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col1_text', array(
-            'default'           => '',
-            'sanitize_callback' => 'wp_kses_post',
-    ) );
-    $wp_customize->add_control( 'footer_col1_text', array(
-            'label'   => __( 'Additional Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col1',
-            'type'    => 'textarea',
-    ) );
-
-    /* Footer Column 2 */
-    $wp_customize->add_section( 'happiness_is_pets_footer_col2', array(
-            'title' => __( 'Column 2', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_footer',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col2_heading', array(
-            'default'           => __( 'Happiness Is Pets Sarasota', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'footer_col2_heading', array(
-            'label'   => __( 'Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col2',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col2_address', array(
-            'default'           => "6453 Lockwood Ridge Rd\nSarasota, FL 34243",
-            'sanitize_callback' => 'sanitize_textarea_field',
-    ) );
-    $wp_customize->add_control( 'footer_col2_address', array(
-            'label'   => __( 'Address', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col2',
-            'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col2_phone', array(
-            'default'           => '941-203-1196',
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'footer_col2_phone', array(
-            'label'   => __( 'Phone Number', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col2',
-            'type'    => 'text',
-    ) );
-
-    /* Footer Column 3 */
-    $wp_customize->add_section( 'happiness_is_pets_footer_col3', array(
-            'title' => __( 'Column 3', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_footer',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col3_heading', array(
-            'default'           => __( 'Store Hours', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'footer_col3_heading', array(
-            'label'   => __( 'Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col3',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col3_hours', array(
-            'default'           => "Mon - Sat: 10am - 8pm\nSun: 11am - 7pm",
-            'sanitize_callback' => 'sanitize_textarea_field',
-    ) );
-    $wp_customize->add_control( 'footer_col3_hours', array(
-            'label'   => __( 'Hours', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col3',
-            'type'    => 'textarea',
-    ) );
-
-    /* Footer Column 4 */
-    $wp_customize->add_section( 'happiness_is_pets_footer_col4', array(
-            'title' => __( 'Column 4', 'happiness-is-pets' ),
-            'panel' => 'happiness_is_pets_footer',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col4_heading', array(
-            'default'           => __( 'About Us', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'footer_col4_heading', array(
-            'label'   => __( 'Heading', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col4',
-            'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'footer_col4_text', array(
-            'default'           => __( 'Part of the Petland family of stores.', 'happiness-is-pets' ),
-            'sanitize_callback' => 'sanitize_textarea_field',
-    ) );
-    $wp_customize->add_control( 'footer_col4_text', array(
-            'label'   => __( 'Text', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col4',
-            'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'footer_facebook_url', array(
-            'default'           => '#',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'footer_facebook_url', array(
-            'label'   => __( 'Facebook URL', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col4',
-            'type'    => 'url',
-    ) );
-
-    $wp_customize->add_setting( 'footer_instagram_url', array(
-            'default'           => '#',
-            'sanitize_callback' => 'esc_url_raw',
-    ) );
-    $wp_customize->add_control( 'footer_instagram_url', array(
-            'label'   => __( 'Instagram URL', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_footer_col4',
-            'type'    => 'url',
+            'label'       => __( 'Enable Catalog Mode', 'happiness-is-pets' ),
+            'section'     => 'happiness_is_pets_shop',
+            'type'        => 'checkbox',
+            'description' => __( 'Hide prices and add to cart buttons', 'happiness-is-pets' ),
     ) );
 }
 add_action( 'customize_register', 'happiness_is_pets_customize_register' );
 
 /**
- * Output dynamic CSS based on customizer settings.
+ * Output dynamic CSS based on customizer settings
  */
 function happiness_is_pets_customizer_css() {
-    $hero            = get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' );
-    $hero_bg_image   = get_theme_mod( 'front_hero_bg_image', '' );
-    $hero_bg_color   = get_theme_mod( 'front_hero_bg_color', '#ffcfcd' );
-    $test_bg_image   = get_theme_mod( 'front_testimonial_bg_image', '' );
-    $test_bg_color   = get_theme_mod( 'front_testimonial_bg_color', '#ffcfcd' );
     ?>
     <style type="text/css">
-        @media (min-width: 768px) {
-            .hero-image { background-image: url('<?php echo esc_url( $hero ); ?>'); }
+        /* Header Styles */
+        .cssHeader,
+        .top-header-bar {
+            background-color: <?php echo esc_attr( get_theme_mod( 'header_background_color', '#FFFFFF' ) ); ?>;
         }
 
+        /* Menu Colors */
+        .navbar-nav-horizontal a {
+            color: <?php echo esc_attr( get_theme_mod( 'menu_text_color', '#333333' ) ); ?> !important;
+        }
+        .navbar-nav-horizontal a:hover,
+        .navbar-nav-horizontal .current-menu-item > a {
+            color: <?php echo esc_attr( get_theme_mod( 'menu_hover_color', '#00BCD4' ) ); ?> !important;
+        }
+
+        /* Hero Section */
         .front-page-hero {
-            background-color: <?php echo esc_attr( $hero_bg_color ); ?>;
-        <?php if ( $hero_bg_image ) : ?>
-            background-image: url('<?php echo esc_url( $hero_bg_image ); ?>');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        <?php endif; ?>
+            background-color: <?php echo esc_attr( get_theme_mod( 'hero_background_color', '#FFD6D4' ) ); ?>;
         }
 
-        #happy-tails {
-            background-color: <?php echo esc_attr( $test_bg_color ); ?>;
-        <?php if ( $test_bg_image ) : ?>
-            background-image: url('<?php echo esc_url( $test_bg_image ); ?>');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        <?php endif; ?>
+        /* Available Puppies Section */
+        #available-puppies {
+            background-color: <?php echo esc_attr( get_theme_mod( 'puppies_background_color', '#F7F7F7' ) ); ?>;
+        }
+
+        /* Canine Care Section */
+        .canine-care-certified {
+            background-color: <?php echo esc_attr( get_theme_mod( 'canine_care_background_color', '#FFFFFF' ) ); ?>;
+        }
+
+        /* Our Guarantee Section */
+        #our-guarantee {
+            background-color: <?php echo esc_attr( get_theme_mod( 'guarantee_background_color', '#FFFFFF' ) ); ?>;
+        }
+
+        /* Reviews Section */
+        #reviews {
+            background-color: <?php echo esc_attr( get_theme_mod( 'reviews_background_color', '#FFFFFF' ) ); ?>;
+        }
+
+        /* Footer Styles */
+        .cssFooter {
+            background-color: <?php echo esc_attr( get_theme_mod( 'footer_background_color', '#00c8baff' ) ); ?>;
+            color: <?php echo esc_attr( get_theme_mod( 'footer_text_color', '#000000' ) ); ?>;
+        }
+        .cssFooter a,
+        .cssFooter .footer-title,
+        .cssFooter .footer-contact-list li,
+        .cssFooter .footer-hours-list li,
+        .cssFooter .footer-menu li a {
+            color: <?php echo esc_attr( get_theme_mod( 'footer_text_color', '#000000' ) ); ?>;
         }
     </style>
     <?php
 }
 add_action( 'wp_head', 'happiness_is_pets_customizer_css' );
+
+/**
+ * Helper function to get active location phone
+ */
+function happiness_is_pets_get_active_phone() {
+    $active = get_theme_mod( 'active_location', 'indianapolis' );
+    if ( $active === 'schererville' ) {
+        return get_theme_mod( 'location_2_phone', '219-865-3078' );
+    }
+    return get_theme_mod( 'location_1_phone', '317-537-2480' );
+}
