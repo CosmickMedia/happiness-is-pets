@@ -53,20 +53,6 @@ function happiness_is_pets_customize_register( $wp_customize ) {
             'description' => __( 'Configure multiple store locations. Phone numbers will be selectable in header.', 'happiness-is-pets' ),
     ) );
 
-    $wp_customize->add_setting( 'active_location', array(
-            'default'           => 'indianapolis',
-            'sanitize_callback' => 'sanitize_text_field',
-    ) );
-    $wp_customize->add_control( 'active_location', array(
-            'label'   => __( 'Active Location for Header', 'happiness-is-pets' ),
-            'section' => 'happiness_is_pets_locations',
-            'type'    => 'select',
-            'choices' => array(
-                    'indianapolis' => __( 'Indianapolis', 'happiness-is-pets' ),
-                    'schererville' => __( 'Schererville', 'happiness-is-pets' ),
-            ),
-    ) );
-
     // Location 1 - Indianapolis
     $wp_customize->add_setting( 'location_1_name', array(
             'default'           => 'Happiness Is Pets Indianapolis',
@@ -892,12 +878,21 @@ function happiness_is_pets_customizer_css() {
 add_action( 'wp_head', 'happiness_is_pets_customizer_css' );
 
 /**
- * Helper function to get active location phone
+ * Retrieve all configured locations with phone and address.
+ *
+ * @return array[] Array of locations containing name, phone, and address.
  */
-function happiness_is_pets_get_active_phone() {
-    $active = get_theme_mod( 'active_location', 'indianapolis' );
-    if ( $active === 'schererville' ) {
-        return get_theme_mod( 'location_2_phone', '219-865-3078' );
-    }
-    return get_theme_mod( 'location_1_phone', '317-537-2480' );
+function happiness_is_pets_get_locations() {
+    return array(
+        array(
+            'name'    => get_theme_mod( 'location_1_name', 'Happiness Is Pets Indianapolis' ),
+            'phone'   => get_theme_mod( 'location_1_phone', '317-537-2480' ),
+            'address' => get_theme_mod( 'location_1_address', "5905 E 82nd St,\nIndianapolis, IN 46250" ),
+        ),
+        array(
+            'name'    => get_theme_mod( 'location_2_name', 'Happiness Is Pets Schererville' ),
+            'phone'   => get_theme_mod( 'location_2_phone', '219-865-3078' ),
+            'address' => get_theme_mod( 'location_2_address', "1525 US 41,\nSchererville, IN 46375" ),
+        ),
+    );
 }
