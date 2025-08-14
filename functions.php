@@ -616,9 +616,9 @@ function happiness_is_pets_testimonial_slider_shortcode() {
                             ?>
                             <div class="swiper-slide">
                                 <div class="text-center testimonial-content px-4">
-                                    <i class="fas fa-quote-left fa-2x mb-3" style="color: var(--color-secondary-light-pink);"></i>
+                                    <i class="fas fa-quote-left fa-2x mb-3" style="color: var(--color-primary-light-peach);"></i>
                                     <blockquote class="blockquote fs-5 fst-italic mb-3"><?php the_content(); ?></blockquote>
-                                    <div class="mb-2" style="color: var(--color-secondary-light-pink);">
+                                    <div class="mb-2" style="color: var(--color-primary-light-peach);">
                                         <?php
                                         for ( $i = 1; $i <= 5; $i++ ) {
                                             echo $i <= $rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
