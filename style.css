@@ -190,7 +190,7 @@ input[type="reset"]:hover,
 
 /* Phone number displayed in the top header bar */
 .header-phone-number {
-    color: #3d5155;
+    color: #000;
     font-weight: bold;
     white-space: nowrap;
     font-size: 1.25rem;
@@ -204,7 +204,7 @@ input[type="reset"]:hover,
 }
 
 .header-icon {
-    color: #3d5155;
+    color: var(--color-primary-dark-teal);
     text-decoration: none;
     font-size: 1.25rem;
 }
@@ -779,7 +779,7 @@ input[type="reset"]:hover,
 }
 .hero-content h1 {
     color: var(--color-primary-dark-teal);
-    font-size: 4rem; /* slightly larger tagline */
+    font-size: 2rem; /* slightly larger tagline */
 }
 /* Style the button within the hero */
 
@@ -2602,12 +2602,10 @@ body .product-primary-info h1.product_title {
     border-bottom: 2px solid transparent;
 }
 .cssHeader .navbar-nav-horizontal li a:hover {
-    color: #00c8ba;
-    border-bottom-color: #00c8ba;
+    color: #00BCD4;
 }
 .cssHeader .navbar-nav-horizontal li.current-menu-item > a {
-    color: #00c8ba;
-    border-bottom-color: #00c8ba;
+    border-bottom-color: #00BCD4;
 }
 .cssHeader .mobile-menu-toggle {
     display: none;
@@ -2694,7 +2692,7 @@ body .product-primary-info h1.product_title {
     text-transform: none;
 }
 .canine-care-certified img {
-    width: 360px;
+    width: 430px;
     margin: 0 auto;
 }
 
