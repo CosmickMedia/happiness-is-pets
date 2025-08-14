@@ -47,11 +47,6 @@ Text Domain: happiness-is-pets
 }
 
 
-/* Hide dropdown arrow on header phone icon */
-.header-phone-icon.dropdown-toggle::after {
-    display: none;
-}
-
 /* WooCommerce Blocks (Cart & Checkout) */
 .wp-block-woocommerce-cart,
 .wp-block-woocommerce-checkout {
