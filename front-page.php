@@ -287,32 +287,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
             </div>
         </div>
     </section>
-<?php // --- Google Reviews Section --- ?>
-    <section class="front-page-section google-reviews" id="google-reviews">
-        <div class="container">
-            <h2 class="section-title text-center"><?php esc_html_e( 'Check Out Our Google Reviews', 'happiness-is-pets' ); ?></h2>
-            <div class="row justify-content-center">
-                <?php for ( $i = 0; $i < 4; $i++ ) : ?>
-                    <div class="col-md-3 mb-4">
-                        <div class="google-review-card">
-                            <img src="https://www.gstatic.com/images/branding/product/1x/googlelogo_color_74x24dp.png" alt="Google" class="google-logo" />
-                            <div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                            <div class="rating-number">5.0</div>
-                            <div class="review-count">100+ reviews</div>
-                            <a class="read-more" href="https://g.page/r/XXXXXXXX">Read More</a>
-                        </div>
-                    </div>
-                <?php endfor; ?>
-            </div>
-        </div>
-    </section>
-<?php // Optional: WP Editor Content for Front Page
-// while ( have_posts() ) : the_post();
-//  echo '<div class="container py-5 wp-content">';
-//  the_content();
-//  echo '</div>';
-// endwhile;
-?>
 
     </main><?php
 get_footer();

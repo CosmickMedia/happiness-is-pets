@@ -74,6 +74,7 @@ body {
     font-size: 16px; /* Base font size */
     line-height: 1.6; /* Base line height */
     font-weight: 400;
+    background: #f7f7f7;
 }
 
 /* Apply secondary font to headings */
@@ -120,9 +121,9 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"],
 .theme-primary-btn {
-    background-color: var(--global-secondary-color) !important;
+    background-color: #00c8ba !important;
     color: white !important;
-    border: 2px solid var(--global-secondary-color) !important;
+    border: 2px solid #009489 !important;
     padding: 0.75rem 1.25rem;
     display: inline-flex;
     align-items: center;
@@ -926,23 +927,18 @@ input[type="reset"]:hover,
 }
 
 .empty-cart-cust{
-display:none !important;
+    display:none !important;
 }
 
 /* Home page padding */
 .front-page-section {
-    padding-top: 6rem !important;
-    padding-bottom: 6rem !important;
 }
 /* Home page testimoial icon */
 .fa-quote-left-alt:before, .fa-quote-left:before {
     content: "\f10d";
     color: #3d5155 !important;
 }
-/*  removed padding betwwen page title and content puppies,kittens page*/
-.py-5 {
-    padding-top: 0 !important;
-}
+
 /* financing */
 .page-id-64 .py-5 {
     padding-bottom: 0 !important;
@@ -956,7 +952,7 @@ display:none !important;
 }
 
 .footer-menu {
-   font-family: var(--font-primary);
+    font-family: var(--font-primary);
 }
 
 .akc-page-cust h2.wp-block-heading {
@@ -970,17 +966,17 @@ display:none !important;
     background: #3d5155;
     bottom: 0
 }
-.entry-content img, 
+.entry-content img,
 .comment-content img {
     border-radius: 25px;
     /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
 }
-.entry-content img:hover, 
+.entry-content img:hover,
 .comment-content img:hover {
     border-radius: 25px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
- 
+
 .about-us-para {
     padding: 40px 40px;
     background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
@@ -997,10 +993,10 @@ display:none !important;
     color: #2d3e40;
     border-radius: 16px;
     border: 2px solid #2d3e40;
- box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
 .apply-online img{
-border-radius: 10px;
+    border-radius: 10px;
 }
 /* AKC page css start */
 
@@ -1019,52 +1015,52 @@ border-radius: 10px;
     padding-left: 1rem;
     padding-right: 1rem;
 }
- 
+
 .wp-block-group.akc-page-cust:nth-child(2n) {
     background: #ffd3d2;
     background-image: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
 }
- 
+
 .wp-block-group.akc-page-cust {
     padding: 40px 0;
 }
- 
+
 .page-id-275 .header-title {
     margin: 0;
 }
- 
+
 .page-id-275 main#primary {
     padding: 0 !important;
 }
 .akc-img img{
-/* transition: transform 0.4s ease, box-shadow 0.4s ease;
-  border-radius: 4px;
-border: 1px solid #fbe6eb;
-  border-radius: 10px;
-  padding: 4px;
-  background: white; */
+    /* transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border-radius: 4px;
+    border: 1px solid #fbe6eb;
+      border-radius: 10px;
+      padding: 4px;
+      background: white; */
     margin-bottom: 0px !important;
 }
 .akc-img img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(219, 158, 158, 0.3); /* soft pink glow */
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(219, 158, 158, 0.3); /* soft pink glow */
 }
 .akc-img {
     margin-bottom: 0px !important;
 }
 .cols-structure{
- margin-bottom:0px !important;   
+    margin-bottom:0px !important;
 }
 /*AKC page css end*/
 /* Financing page css start*/
 
 .financing-cat img {
-/*   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  border-radius: 4px;
-border: 1.5px solid #fbe6eb;
-  border-radius: 10px;
-  padding: 4px;
-  background: white; */
+    /*   transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border-radius: 4px;
+    border: 1.5px solid #fbe6eb;
+      border-radius: 10px;
+      padding: 4px;
+      background: white; */
 }
 
 /* Financing page css end*/
@@ -1096,13 +1092,13 @@ section#concierge-care {
 }
 .fas.fa-star {
     color: #3d5155;
-  margin-bottom:20px;
+    margin-bottom:20px;
 }
 #menu-header .menu-item {
     margin: 0px 20px;
 }
 .collapse.navbar-collapse.justify-content-center.new-primary{
-justify-content: center !important;
+    justify-content: center !important;
 }
 #rmp-container-166 {
     max-width: 100% !important;
@@ -1243,7 +1239,7 @@ justify-content: center !important;
     border-bottom: 1px solid #3d5155 !important;
     border-radius: 0 !important;
 }
-.faqs-first-cust .aagb__accordion_head.aagb_left_icon, 
+.faqs-first-cust .aagb__accordion_head.aagb_left_icon,
 .faqs-first-cust .aagb__accordion_head.aagb_left_icon h5.aagb__accordion_title {
     color: #3d5155 !important;
 }
@@ -1298,7 +1294,7 @@ div#topbar {
     flex-grow: unset !important;
 }
 .about-us-desc .col-1-cust{
-     width: calc(100% - 120px);
+    width: calc(100% - 120px);
     flex-basis: unset !important;
     flex-grow: unset !important;
 }
@@ -1350,8 +1346,8 @@ form#gform_3 label{
     font-size: 16px;
     font-weight: 700;
 }
- .pet-inquiry-cust{
-  font-size: 14px;
+.pet-inquiry-cust{
+    font-size: 14px;
 }
 input#gform_submit_button_3 {
     min-width: 120px;
@@ -1381,7 +1377,7 @@ input#gform_submit_button_3 {
     font-size:12px;
 }
 .privacy-cust{
-color:#3d5155;
+    color:#3d5155;
 }
 .breadcrumb-wrapper a {
     color: #3d5155 !important
@@ -1399,7 +1395,7 @@ color:#3d5155;
     display: inline-block;
     background-size: cover;
 }
- 
+
 .page-id-306 main#primary {
     padding: 0 !important;
 }
@@ -1492,7 +1488,7 @@ figure.wp-block-image.size-full.financing-cat {
     margin: auto;
     padding-bottom: 50px;
 }
- .wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
+.wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
     color: #000;
     font-size: 18px;
 }
@@ -1525,7 +1521,7 @@ section#happy-tails {
 }
 .testimonial-swiper .testimonial-content {
     border: 2px solid #ffcfcd;
-border-radius: 72px;
+    border-radius: 72px;
 }
 
 .testimonial-swiper .swiper-wrapper .swiper-slide {
@@ -1644,267 +1640,267 @@ border-radius: 72px;
 
 @media (max-width: 1599px) {
 
-#happy-tails .testimonial-decor {
-    width: 420px;
-    bottom: -40px;
-}
-.about-us-desc p.has-text-align-center {
-    max-width: 79%;
+    #happy-tails .testimonial-decor {
+        width: 420px;
+        bottom: -40px;
+    }
+    .about-us-desc p.has-text-align-center {
+        max-width: 79%;
 
-}
+    }
 }
 
 @media (max-width: 1366px) {
-.about-us-desc {
-  
-    margin: 30px 70px;
-}
-.about-us-desc p.has-text-align-center {
-    max-width: 78%;
- }
-.wp-block-columns.image-left-section {
-    gap: 50px;
-}
-.page-id-292 .about-us-desc {
-    padding: 25px 40px !important;
-   
-}
-.page-id-292 .image-left-section img {
-    height: auto;
-    object-fit: contain;
-}
+    .about-us-desc {
+
+        margin: 30px 70px;
+    }
+    .about-us-desc p.has-text-align-center {
+        max-width: 78%;
+    }
+    .wp-block-columns.image-left-section {
+        gap: 50px;
+    }
+    .page-id-292 .about-us-desc {
+        padding: 25px 40px !important;
+
+    }
+    .page-id-292 .image-left-section img {
+        height: auto;
+        object-fit: contain;
+    }
 }
 
 @media (max-width: 1299px) {
 
-#happy-tails .testimonial-decor {
-    width: 340px;
-    bottom: -75px;
-}
+    #happy-tails .testimonial-decor {
+        width: 340px;
+        bottom: -75px;
+    }
 
 }
 @media (max-width: 1299px) {
-.wp-block-columns.custom-finacing_sec {
-    gap: 70px;
-    padding-right: 20px;
-}
-.wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
-    padding-right: 0;
-}
+    .wp-block-columns.custom-finacing_sec {
+        gap: 70px;
+        padding-right: 20px;
+    }
+    .wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
+        padding-right: 0;
+    }
 }
 
 
 @media (max-width: 1024px) {
-.wp-block-group.image-content-main-group .wp-block-columns.custom-finacing_sec {
-    flex-direction: column;
-    padding: 0 15px;
-}
-.wp-block-group.fetured-image-shortcode {
-    padding-top: 60px !important;
-}
-.category-image-content-main-group .custom-finacing_sec {
-    padding-left: 30px;
-  
-}
-.wp-block-group__inner-container.is-layout-constrained.wp-block-group-is-layout-constrained .wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
-    padding-right: 15px;padding-bottom:60px;
-}
-.wp-block-group__inner-container.is-layout-constrained.wp-block-group-is-layout-constrained .wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
-    text-align: center;
-}
-#happy-tails .testimonial-decor {
-    width: 250px;
-    right: 0;
-    bottom: -62px;
-}
-.about-us-desc p.has-text-align-center {
-    max-width: 94%;
-}
-.about-us-desc {
-    margin: 30px 40px;
-}
-.page-id-292 .wp-block-columns.image-left-section {
-    gap: 50px;
-    flex-direction: column;
-    padding: 0 15px;
-}
-.page-id-292 .about-us-desc {
-    margin-right: 0;
-}
+    .wp-block-group.image-content-main-group .wp-block-columns.custom-finacing_sec {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    .wp-block-group.fetured-image-shortcode {
+        padding-top: 60px !important;
+    }
+    .category-image-content-main-group .custom-finacing_sec {
+        padding-left: 30px;
+
+    }
+    .wp-block-group__inner-container.is-layout-constrained.wp-block-group-is-layout-constrained .wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
+        padding-right: 15px;padding-bottom:60px;
+    }
+    .wp-block-group__inner-container.is-layout-constrained.wp-block-group-is-layout-constrained .wp-block-columns.custom-finacing_sec.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
+        text-align: center;
+    }
+    #happy-tails .testimonial-decor {
+        width: 250px;
+        right: 0;
+        bottom: -62px;
+    }
+    .about-us-desc p.has-text-align-center {
+        max-width: 94%;
+    }
+    .about-us-desc {
+        margin: 30px 40px;
+    }
+    .page-id-292 .wp-block-columns.image-left-section {
+        gap: 50px;
+        flex-direction: column;
+        padding: 0 15px;
+    }
+    .page-id-292 .about-us-desc {
+        margin-right: 0;
+    }
 }
 @media (max-width: 881px) {
-.wp-block-columns.custom-finacing_sec {
-    gap: 30px;
-    padding-right: 20px;
-    padding-left: 20px;
-}
-figure.wp-block-image.size-full.financing-cat {
-    margin: 0;
-}
-.minimum-payments {
-    max-width: 97%;
-    padding: 60px 0 0px 0;
- }
-.need-more-section h2.wp-block-heading {
-    text-align: center;
+    .wp-block-columns.custom-finacing_sec {
+        gap: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    figure.wp-block-image.size-full.financing-cat {
+        margin: 0;
+    }
+    .minimum-payments {
+        max-width: 97%;
+        padding: 60px 0 0px 0;
+    }
+    .need-more-section h2.wp-block-heading {
+        text-align: center;
 
-}
-.need-more-section .wp-block-buttons.is-layout-flex.wp-block-buttons-is-layout-flex {
-    justify-content: center;
-}
-.custom-online-sec p.has-text-align-center {
-    min-height: auto;
-}
-.page-id-292 .wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
-    padding: 0 15px 40px 15px;
-}
-.wp-block-columns.image-left-section {
-    gap: 40px;
-    padding: 15px;
-}
-.image-left-section img {
-    height: auto;
-    margin: 0;
-}
-.page-id-292 .about-us-desc {
-    padding: 40px 40px !important;
-    margin-left: 0;margin-right:0px;
- 
-    display: flex;
-    flex-wrap: nowrap !important;
-}
-.about-us-desc p.has-text-align-center {
-    max-width: 100%;
-    font-size: 16px;
-}
+    }
+    .need-more-section .wp-block-buttons.is-layout-flex.wp-block-buttons-is-layout-flex {
+        justify-content: center;
+    }
+    .custom-online-sec p.has-text-align-center {
+        min-height: auto;
+    }
+    .page-id-292 .wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex {
+        padding: 0 15px 40px 15px;
+    }
+    .wp-block-columns.image-left-section {
+        gap: 40px;
+        padding: 15px;
+    }
+    .image-left-section img {
+        height: auto;
+        margin: 0;
+    }
+    .page-id-292 .about-us-desc {
+        padding: 40px 40px !important;
+        margin-left: 0;margin-right:0px;
 
-.about-us-desc .col-2-cust figure {
-    margin-right: 0;
-}
-.wp-block-columns.image-left-section {
+        display: flex;
+        flex-wrap: nowrap !important;
+    }
+    .about-us-desc p.has-text-align-center {
+        max-width: 100%;
+        font-size: 16px;
+    }
 
-    margin-bottom: 50px;
-}
+    .about-us-desc .col-2-cust figure {
+        margin-right: 0;
+    }
+    .wp-block-columns.image-left-section {
+
+        margin-bottom: 50px;
+    }
 
 }
 @media (max-width: 781px) {
-.page-id-460 .wp-block-group.our-goals.category-image-content-main-group{margin-bottom:60px !important;}
-.wp-block-group.our-goals.category-image-content-main-group {
-    height: auto;
-    padding: 60px 0 !important;
-}
-.wp-block-group.category-image-content-main-group {
-    padding: 60px 0 !important;
-}
-.page-id-306 .wp-block-columns.custom-finacing_sec {
-    padding-bottom: 60px;
-}
-.wp-block-group.our-goals.category-image-content-main-group .are-vertically-aligned-center.custom-finacing_sec {
-    grid-template-columns: auto;
-}
-.wp-block-group.apply-on-cust {
-    background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
-    height: auto;
-    padding: 60px 0 60px 0;
-   
-}
-#featured-pets .section-title {
-    font-size: 40px;
-}
-.need-help-group {
-    padding: 60px 0 !important;
- }
-.page-id-306 .wp-block-group.apply-on-cust .custom-online-sec {
-    display: flex;
-    flex-wrap: nowrap !important;
-    gap: 30px;
-}
+    .page-id-460 .wp-block-group.our-goals.category-image-content-main-group{margin-bottom:60px !important;}
+    .wp-block-group.our-goals.category-image-content-main-group {
+        height: auto;
+        padding: 60px 0 !important;
+    }
+    .wp-block-group.category-image-content-main-group {
+        padding: 60px 0 !important;
+    }
+    .page-id-306 .wp-block-columns.custom-finacing_sec {
+        padding-bottom: 60px;
+    }
+    .wp-block-group.our-goals.category-image-content-main-group .are-vertically-aligned-center.custom-finacing_sec {
+        grid-template-columns: auto;
+    }
+    .wp-block-group.apply-on-cust {
+        background: url(https://happiness-is-pets.kinsta.cloud/wp-content/uploads/2025/06/clouds.jpg);
+        height: auto;
+        padding: 60px 0 60px 0;
+
+    }
+    #featured-pets .section-title {
+        font-size: 40px;
+    }
+    .need-help-group {
+        padding: 60px 0 !important;
+    }
+    .page-id-306 .wp-block-group.apply-on-cust .custom-online-sec {
+        display: flex;
+        flex-wrap: nowrap !important;
+        gap: 30px;
+    }
 }
 @media (max-width: 767.98px) {
-.about-us-desc .col-1-cust {
-    width: 100%;
-    
-}
-.wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
-    font-size: 16px;
-    margin: 0;
-}
-.book-appointment-cust {
-    padding: 50px 15px !important;
-}
-section#happy-tails .container {
-    max-width: 100%;
-}
-footer#colophon .container {
-    max-width: 100%;
-}
-#happy-tails .section-title{font-size:40px;}
-.testimonial-swiper {
-    max-width: 100% !important;
-}
-.page-id-292 .about-us-desc {
-    padding: 30px 30px;
-    flex-direction: column-reverse;gap:10px;
-}
+    .about-us-desc .col-1-cust {
+        width: 100%;
 
-.contact-cust> .wp-block-columns {
-    max-width: 100%;
-}
-.about-us-desc {
-    padding: 20px;
-    border-radius: 20px;
-}
-.about-us-desc {
-    margin: 0 0 20px;
-}
+    }
+    .wp-block-columns.are-vertically-aligned-top.about-us-cust.is-layout-flex.wp-container-core-columns-is-layout-9d6595d7.wp-block-columns-is-layout-flex p {
+        font-size: 16px;
+        margin: 0;
+    }
+    .book-appointment-cust {
+        padding: 50px 15px !important;
+    }
+    section#happy-tails .container {
+        max-width: 100%;
+    }
+    footer#colophon .container {
+        max-width: 100%;
+    }
+    #happy-tails .section-title{font-size:40px;}
+    .testimonial-swiper {
+        max-width: 100% !important;
+    }
+    .page-id-292 .about-us-desc {
+        padding: 30px 30px;
+        flex-direction: column-reverse;gap:10px;
+    }
+
+    .contact-cust> .wp-block-columns {
+        max-width: 100%;
+    }
+    .about-us-desc {
+        padding: 20px;
+        border-radius: 20px;
+    }
+    .about-us-desc {
+        margin: 0 0 20px;
+    }
     .header-top-button {
         align-items: flex-start!important;
         text-align: right;
     }
-#happy-tails .testimonial-decor {
-    width: 200px;
-    right: 0;
-    bottom: -62px;
-}
-#happy-tails .swiper-button-next:after,
-#happy-tails .swiper-button-prev:after {
-    font-size: 30px;
-}
-.about-us-desc .col-2-cust figure img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: cover;
-}
-#happy-tails .blockquote {
-    font-size: 16px !important;
-}
-.book-appointment-cust p {
-    font-size: 16px;
-}
+    #happy-tails .testimonial-decor {
+        width: 200px;
+        right: 0;
+        bottom: -62px;
+    }
+    #happy-tails .swiper-button-next:after,
+    #happy-tails .swiper-button-prev:after {
+        font-size: 30px;
+    }
+    .about-us-desc .col-2-cust figure img {
+        width: 80px !important;
+        height: 80px !important;
+        object-fit: cover;
+    }
+    #happy-tails .blockquote {
+        font-size: 16px !important;
+    }
+    .book-appointment-cust p {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 1024px) {
-#dreaming-of-you .icon-item img {
-    max-width: 13rem;
-  
-}
+    #dreaming-of-you .icon-item img {
+        max-width: 13rem;
+
+    }
 }
 
 
 @media screen and (max-width: 2560px) and (min-width: 1024px) {
-#rmp-container-166 {
-    width: 25%;
-}
+    #rmp-container-166 {
+        width: 25%;
+    }
 }
 
 @media (min-width: 992px){
-/*     .header-top-button {
-    padding-right: 50px;
-} */
- 
-button#rmp_menu_trigger-166 {
-    top: 30px !important;
-}
+    /*     .header-top-button {
+        padding-right: 50px;
+    } */
+
+    button#rmp_menu_trigger-166 {
+        top: 30px !important;
+    }
 }
 /* @media (min-width: 768px) and (max-width: 991px) {
     .header-top-button {
@@ -1912,59 +1908,59 @@ button#rmp_menu_trigger-166 {
 }
 } */
 @media (max-width: 380px) {
- 
-.top-bar-logo img {
-    max-width: 140px;
-    
-}
+
+    .top-bar-logo img {
+        max-width: 140px;
+
+    }
 }
 @media (max-width: 575px){
-.page-id-306 .wp-block-group.apply-on-cust .custom-online-sec {
-    flex-wrap: wrap !important;
- }
-.testimonial-swiper .swiper-wrapper .swiper-slide {
-    padding: 0 0px;
-}
-#happy-tails .section-title {
-    font-size: 30px;
-    margin-bottom: 30px !important;
-}
+    .page-id-306 .wp-block-group.apply-on-cust .custom-online-sec {
+        flex-wrap: wrap !important;
+    }
+    .testimonial-swiper .swiper-wrapper .swiper-slide {
+        padding: 0 0px;
+    }
+    #happy-tails .section-title {
+        font-size: 30px;
+        margin-bottom: 30px !important;
+    }
     .headerContent {
-    flex-direction: column;
+        flex-direction: column;
+    }
+    .minimum-payments {
+        font-size: 16px;
+        line-height: 28px;
+    }.need-more-section{gap:10px;}
+    .custom-finacing_sec p {
+
+        font-size: 16px;
+        line-height: 28px;
+    }
+    .pet-toggle-cust .headerContent .search {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .pet-toggle-cust .headerContent form {
+        width: 100%;
+    }
+
 }
-.minimum-payments {
-    font-size: 16px;
-    line-height: 28px;
-}.need-more-section{gap:10px;}
- .custom-finacing_sec p {
-  
-    font-size: 16px;
-    line-height: 28px;
-}
-.pet-toggle-cust .headerContent .search {
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
- 
-.pet-toggle-cust .headerContent form {
-    width: 100%;
-}
-    
-}
-  @media (max-width: 575px) {
-.wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section {
-    padding: 30px 25px;
-}
-.featured-pets-images .featured-pet-image {
-    flex: 100%;
-    max-width: 100%;margin:0px !important;
-}
-.pet-toggle-cust .headerContent {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    display: block;
-}}
+@media (max-width: 575px) {
+    .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section {
+        padding: 30px 25px;
+    }
+    .featured-pets-images .featured-pet-image {
+        flex: 100%;
+        max-width: 100%;margin:0px !important;
+    }
+    .pet-toggle-cust .headerContent {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        display: block;
+    }}
 /* @media (max-width: 1300px) {
 #happy-tails .fa-quote-left-alt:before,
 #happy-tails .fa-quote-left:before,
@@ -1999,566 +1995,566 @@ button#rmp_menu_trigger-166.is-active {
 }
 @media (max-width: 1023px){
     button#rmp_menu_trigger-166.is-active {
-    left: 90%;
-}
+        left: 90%;
+    }
 }
 .rounded {
     border-radius: 16px !important;
 }
 
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section h2.wp-block-heading {
-color: #3d5155 !important;
+    color: #3d5155 !important;
     font-size: 32px !important;
     font-weight: 700 !important;
     font-family: var(--font-secondary) !important;
 }
 .wp-block-group.our-goals.category-image-content-main-group .custom-finacing_sec .content-col-section {
-   font-family: var(--font-primary) !important;
-color: #2d3e40 !important;
+    font-family: var(--font-primary) !important;
+    color: #2d3e40 !important;
 }
 .custom-finacing_sec p{
-color: #2d3e40 !important;
+    color: #2d3e40 !important;
 }
 
-        /* --- General & Layout --- */
-        .product-page-wrapper { padding-top: 1.5rem !important; }
-        .woocommerce-breadcrumb { font-size: 0.875rem !important; padding-bottom: 0px !important; margin-bottom: 1rem !important; margin-top: 0px !important; }
+/* --- General & Layout --- */
+.product-page-wrapper { padding-top: 1.5rem !important; }
+.woocommerce-breadcrumb { font-size: 0.875rem !important; padding-bottom: 0px !important; margin-bottom: 1rem !important; margin-top: 0px !important; }
 
-        /* Apply theme fonts */
-        body .product-primary-info h1.product_title {
-            font-family: var(--font-secondary) !important;
-            font-size: 2.5rem;
-            font-weight: normal;
-            margin-bottom: 0.25rem;
-            color: var(--color-secondary-light-pink);
-        }
+/* Apply theme fonts */
+body .product-primary-info h1.product_title {
+    font-family: var(--font-secondary) !important;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 0.25rem;
+    color: var(--color-secondary-light-pink);
+}
 
-        /* Product details styling with white background */
-        .product-details-box {
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+/* Product details styling with white background */
+.product-details-box {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
 
-        .product-details-box h4 {
-            color: var(--color-secondary-light-pink);
-            font-family: var(--font-secondary);
-        }
+.product-details-box h4 {
+    color: var(--color-secondary-light-pink);
+    font-family: var(--font-secondary);
+}
 
-        .product-primary-info .short-details { list-style: none; padding: 0; margin-bottom: 1.5rem; }
-        .product-primary-info .short-details li { margin-bottom: 0.5rem; font-size: 1rem; display: flex; align-items: center; font-family: var(--font-primary); }
-        .product-primary-info .short-details li i { color: var(--color-secondary-light-pink); margin-right: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
-        .product-primary-info .short-details li strong { font-weight: 700 !important; color: var(--color-heading); }
+.product-primary-info .short-details { list-style: none; padding: 0; margin-bottom: 1.5rem; }
+.product-primary-info .short-details li { margin-bottom: 0.5rem; font-size: 1rem; display: flex; align-items: center; font-family: var(--font-primary); }
+.product-primary-info .short-details li i { color: var(--color-secondary-light-pink); margin-right: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
+.product-primary-info .short-details li strong { font-weight: 700 !important; color: var(--color-heading); }
 
-        .product-primary-info .breed-info {
-            font-size: 1.3rem;
-            color: var(--color-text);
-            margin-bottom: 1rem;
-            font-family: var(--font-secondary);
-        }
-        .product-primary-info .ref-id {
-            font-size: 0.9rem;
-            color: var(--color-text);
-            display: block;
-            margin-bottom: 1rem;
-            font-family: var(--font-primary);
-        }
+.product-primary-info .breed-info {
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    font-family: var(--font-secondary);
+}
+.product-primary-info .ref-id {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 1rem;
+    font-family: var(--font-primary);
+}
 
-        /* Detail list styling with theme colors */
-        .detail-list { list-style: none; padding: 0; margin: 0; }
-        .detail-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #dee2e6;
-            font-size: 0.95rem;
-            font-family: var(--font-primary);
-        }
-        .detail-list li:last-child { border-bottom: none; }
-        .detail-list .detail-label { font-weight: 600; color: var(--color-heading); margin-right: 1rem; flex-shrink: 0; }
-        .detail-list .detail-label i { width: 1.2em; text-align: center; color: var(--color-secondary-light-pink); }
-        .detail-list .detail-value { color: var(--color-text); text-align: right; flex-grow: 1; word-break: break-word; }
+/* Detail list styling with theme colors */
+.detail-list { list-style: none; padding: 0; margin: 0; }
+.detail-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.95rem;
+    font-family: var(--font-primary);
+}
+.detail-list li:last-child { border-bottom: none; }
+.detail-list .detail-label { font-weight: 600; color: var(--color-heading); margin-right: 1rem; flex-shrink: 0; }
+.detail-list .detail-label i { width: 1.2em; text-align: center; color: var(--color-secondary-light-pink); }
+.detail-list .detail-value { color: var(--color-text); text-align: right; flex-grow: 1; word-break: break-word; }
 
-        /* Parent info with theme colors */
-        .parent-info .card {
-            border: 1px solid var(--color-primary-light-blue-grey);
-            background-color: #ffffff;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .parent-info img.rounded-circle {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border: 3px solid var(--color-secondary-light-pink);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .parent-info h5 {
-            font-weight: 700 !important;
-            font-size: 1.25rem;
-            font-family: var(--font-secondary);
-            color: var(--color-secondary-light-pink);
-        }
-        .parent-info p {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-            color: var(--color-text);
-            font-family: var(--font-primary);
-        }
-        .parent-info p strong { color: var(--color-heading); font-weight: 700 !important; }
+/* Parent info with theme colors */
+.parent-info .card {
+    border: 1px solid var(--color-primary-light-blue-grey);
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.parent-info img.rounded-circle {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid var(--color-secondary-light-pink);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.parent-info h5 {
+    font-weight: 700 !important;
+    font-size: 1.25rem;
+    font-family: var(--font-secondary);
+    color: var(--color-secondary-light-pink);
+}
+.parent-info p {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+    font-family: var(--font-primary);
+}
+.parent-info p strong { color: var(--color-heading); font-weight: 700 !important; }
 
-        /* --- Product Gallery & Badges --- */
-        .product-gallery { position: relative; border: 1px solid #dee2e6; border-radius: 0.5rem; overflow: hidden; }
-        .product-gallery .carousel-item { aspect-ratio: 1 / 1; background-color: #f8f9fa; }
-        .product-gallery .carousel-item img { width: 100%; height: 100%; object-fit: cover; }
-        .product-gallery .carousel-control-prev,
-        .product-gallery .carousel-control-next {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            opacity: 0.9;
-            transition: opacity 0.2s ease, background-color 0.2s ease;
-            top: 50%;
-            transform: translateY(-50%);
-            position: absolute;
-        }
-        .product-gallery .carousel-control-prev:hover,
-        .product-gallery .carousel-control-next:hover {
-            opacity: 1;
-        }
-        .product-gallery .carousel-control-prev { left: 1rem; }
-        .product-gallery .carousel-control-next { right: 1rem; }
-        .product-gallery .carousel-indicators { bottom: 10px; z-index: 6; }
-        .product-gallery .carousel-indicators button {
-            background-color: #dee2e6;
-        }
-        .product-gallery .carousel-indicators button.active {
-            background-color: var(--color-secondary-light-pink);
-        }
+/* --- Product Gallery & Badges --- */
+.product-gallery { position: relative; border: 1px solid #dee2e6; border-radius: 0.5rem; overflow: hidden; }
+.product-gallery .carousel-item { aspect-ratio: 1 / 1; background-color: #f8f9fa; }
+.product-gallery .carousel-item img { width: 100%; height: 100%; object-fit: cover; }
+.product-gallery .carousel-control-prev,
+.product-gallery .carousel-control-next {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+}
+.product-gallery .carousel-control-prev:hover,
+.product-gallery .carousel-control-next:hover {
+    opacity: 1;
+}
+.product-gallery .carousel-control-prev { left: 1rem; }
+.product-gallery .carousel-control-next { right: 1rem; }
+.product-gallery .carousel-indicators { bottom: 10px; z-index: 6; }
+.product-gallery .carousel-indicators button {
+    background-color: #dee2e6;
+}
+.product-gallery .carousel-indicators button.active {
+    background-color: var(--color-secondary-light-pink);
+}
 
-        /* Status badges with theme colors */
-        .product-gallery .badge-base {
-            position: absolute;
-            top: 1rem;
-            font-size: 0.9rem;
-            color: #fff;
-            text-transform: uppercase;
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.25rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            font-weight: 600;
-            z-index: 5;
-        }
-        .product-gallery .badge-status {
-            left: 1rem;
-            background-color: var(--color-primary-dark-grey);
-        }
-        .product-gallery .badge-coming-soon {
-            right: 1rem;
-            background-color: var(--color-secondary-light-pink);
-            color: var(--color-primary-dark-teal);
-            text-decoration: none;
-        }
-        .product-gallery .badge-coming-soon:hover {
-            background-color: var(--color-secondary-dark-pink);
-            color: var(--color-primary-dark-teal);
-        }
-        .product-gallery .badge-status.status-sold { background-color: var(--color-secondary-dark-maroon); }
-        .product-gallery .badge-status.status-on-hold { background-color: var(--color-primary-light-yellow); color: var(--color-primary-dark-teal); }
-        .product-gallery .badge-status.status-coming-soon { background-color: var(--color-secondary-light-pink); color: var(--color-primary-dark-teal); }
+/* Status badges with theme colors */
+.product-gallery .badge-base {
+    position: absolute;
+    top: 1rem;
+    font-size: 0.9rem;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    z-index: 5;
+}
+.product-gallery .badge-status {
+    left: 1rem;
+    background-color: var(--color-primary-dark-grey);
+}
+.product-gallery .badge-coming-soon {
+    right: 1rem;
+    background-color: var(--color-secondary-light-pink);
+    color: var(--color-primary-dark-teal);
+    text-decoration: none;
+}
+.product-gallery .badge-coming-soon:hover {
+    background-color: var(--color-secondary-dark-pink);
+    color: var(--color-primary-dark-teal);
+}
+.product-gallery .badge-status.status-sold { background-color: var(--color-secondary-dark-maroon); }
+.product-gallery .badge-status.status-on-hold { background-color: var(--color-primary-light-yellow); color: var(--color-primary-dark-teal); }
+.product-gallery .badge-status.status-coming-soon { background-color: var(--color-secondary-light-pink); color: var(--color-primary-dark-teal); }
 
-        /* --- Action Buttons --- */
-        .action-buttons .btn {
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            border-radius: 15px;
-        }
+/* --- Action Buttons --- */
+.action-buttons .btn {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 15px;
+}
 
-        .gallery-action-buttons {
-            margin-top: 1.5rem;
-        }
+.gallery-action-buttons {
+    margin-top: 1.5rem;
+}
 
-        /* Finance and video icons */
-        .product-primary-info .finance-video-icons a {
-            color: var(--color-secondary-light-pink);
-            text-decoration: none;
-            margin-right: 1rem;
-            display: inline-flex;
-            align-items: center;
-            transition: color 0.2s ease;
-            font-family: var(--font-primary);
-        }
-        .product-primary-info .finance-video-icons a:hover { color: var(--color-secondary-dark-pink); }
-        .product-primary-info .finance-video-icons .finance-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
-        .product-primary-info .finance-video-icons .youtube-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
+/* Finance and video icons */
+.product-primary-info .finance-video-icons a {
+    color: var(--color-secondary-light-pink);
+    text-decoration: none;
+    margin-right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    font-family: var(--font-primary);
+}
+.product-primary-info .finance-video-icons a:hover { color: var(--color-secondary-dark-pink); }
+.product-primary-info .finance-video-icons .finance-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
+.product-primary-info .finance-video-icons .youtube-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
 
-        /* Info badges */
-        .product-primary-info .info-badges img { height: 30px; width: auto; vertical-align: middle; }
+/* Info badges */
+.product-primary-info .info-badges img { height: 30px; width: auto; vertical-align: middle; }
 
-        /* --- Tabs with theme colors --- */
-        #product-tab { border-bottom: 1px solid #dee2e6; }
-        #product-tab .nav-link {
-            color: var(--color-text);
-            font-weight: 500;
-            background-color: white;
-            border: 1px solid #dee2e6;
-            border-bottom-color: transparent;
-            transition: all 0.2s ease;
-            border-top-left-radius: 0.25rem;
-            border-top-right-radius: 0.25rem;
-            margin-right: 2px;
-            margin-bottom: -1px;
-            padding: 0.75rem 1.25rem;
-            font-family: var(--font-primary);
-        }
-        #product-tab .nav-link:hover {
-            color: var(--color-secondary-light-pink);
-            background-color: #f8f9fa;
-            border-color: #dee2e6 #dee2e6 transparent;
-        }
-        #product-tab .nav-link.active {
-            color: white !important;
-            font-weight: 600 !important;
-            background-color: var(--color-secondary-light-pink) !important;
-            border-color: var(--color-secondary-light-pink) var(--color-secondary-light-pink) var(--color-secondary-light-pink) !important;
-        }
-        #nav-tabContent {
-            border: 1px solid #dee2e6;
-            border-top: none;
-            border-radius: 0 0 0.25rem 0.25rem;
-            background-color: #fff;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            margin-bottom: 1rem;
-        }
-        #nav-tabContent .tab-pane { padding: 2rem; }
+/* --- Tabs with theme colors --- */
+#product-tab { border-bottom: 1px solid #dee2e6; }
+#product-tab .nav-link {
+    color: var(--color-text);
+    font-weight: 500;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-bottom-color: transparent;
+    transition: all 0.2s ease;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    margin-right: 2px;
+    margin-bottom: -1px;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-primary);
+}
+#product-tab .nav-link:hover {
+    color: var(--color-secondary-light-pink);
+    background-color: #f8f9fa;
+    border-color: #dee2e6 #dee2e6 transparent;
+}
+#product-tab .nav-link.active {
+    color: white !important;
+    font-weight: 600 !important;
+    background-color: var(--color-secondary-light-pink) !important;
+    border-color: var(--color-secondary-light-pink) var(--color-secondary-light-pink) var(--color-secondary-light-pink) !important;
+}
+#nav-tabContent {
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+}
+#nav-tabContent .tab-pane { padding: 2rem; }
 
-        /* All tab headings pink */
-        .tab-pane h4,
-        .tab-pane h5 {
-            color: var(--color-secondary-light-pink) !important;
-            font-family: var(--font-secondary);
-        }
+/* All tab headings pink */
+.tab-pane h4,
+.tab-pane h5 {
+    color: var(--color-secondary-light-pink) !important;
+    font-family: var(--font-secondary);
+}
 
-        /* --- Breed Info Tab Specific Styles --- */
-        #nav-breedinfo h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem !important;
-            font-weight: 600;
-            font-family: var(--font-secondary);
-            color: var(--color-secondary-light-pink);
-        }
-        #nav-breedinfo h5 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            font-family: var(--font-secondary);
-            color: var(--color-secondary-light-pink);
-        }
+/* --- Breed Info Tab Specific Styles --- */
+#nav-breedinfo h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem !important;
+    font-weight: 600;
+    font-family: var(--font-secondary);
+    color: var(--color-secondary-light-pink);
+}
+#nav-breedinfo h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: var(--font-secondary);
+    color: var(--color-secondary-light-pink);
+}
 
-        /* Carousel within Breed Info */
-        #nav-breedinfo .carousel-column-container {
-            height: 350px;
-            margin-bottom: 1rem;
-            position: relative;
-            background-color: #ffffff;
-            border: 1px solid var(--color-primary-light-blue-grey);
-            border-radius: 0.5rem;
-        }
-        #nav-breedinfo #petKbImageCarousel, #nav-breedinfo #petKbVideoCarousel { height: 100%; overflow: hidden; position: relative; }
-        #nav-breedinfo .carousel-inner { height: 100%; }
-        #nav-breedinfo .carousel-item { height: 100%; text-align: center; display: flex; align-items: center; justify-content: center; }
-        #nav-breedinfo #petKbImageCarousel .carousel-item img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; }
-        #nav-breedinfo #petKbVideoCarousel .carousel-item iframe { width: 100%; height: 100%; border: 0; }
-        #nav-breedinfo .carousel-control-prev,
-        #nav-breedinfo .carousel-control-next {
-            background-color: var(--color-primary-light-blue-grey);
-            width: 8%;
-            opacity: 0.7;
-            transition: opacity 0.15s ease;
-            border-radius: 0;
-        }
-        #nav-breedinfo .carousel-control-prev:hover,
-        #nav-breedinfo .carousel-control-next:hover {
-            opacity: 0.9;
-            background-color: var(--color-secondary-light-pink);
-        }
-        #nav-breedinfo .media-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-primary-dark-grey);
-            text-align: center;
-            font-style: italic;
-            padding: 1rem;
-        }
+/* Carousel within Breed Info */
+#nav-breedinfo .carousel-column-container {
+    height: 350px;
+    margin-bottom: 1rem;
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid var(--color-primary-light-blue-grey);
+    border-radius: 0.5rem;
+}
+#nav-breedinfo #petKbImageCarousel, #nav-breedinfo #petKbVideoCarousel { height: 100%; overflow: hidden; position: relative; }
+#nav-breedinfo .carousel-inner { height: 100%; }
+#nav-breedinfo .carousel-item { height: 100%; text-align: center; display: flex; align-items: center; justify-content: center; }
+#nav-breedinfo #petKbImageCarousel .carousel-item img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; }
+#nav-breedinfo #petKbVideoCarousel .carousel-item iframe { width: 100%; height: 100%; border: 0; }
+#nav-breedinfo .carousel-control-prev,
+#nav-breedinfo .carousel-control-next {
+    background-color: var(--color-primary-light-blue-grey);
+    width: 8%;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+    border-radius: 0;
+}
+#nav-breedinfo .carousel-control-prev:hover,
+#nav-breedinfo .carousel-control-next:hover {
+    opacity: 0.9;
+    background-color: var(--color-secondary-light-pink);
+}
+#nav-breedinfo .media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-dark-grey);
+    text-align: center;
+    font-style: italic;
+    padding: 1rem;
+}
 
-        /* Stats Icons within Breed Info */
-        #nav-breedinfo .stat-icon { color: var(--color-secondary-light-pink); }
-        #nav-breedinfo .stat-box {
-            background-color: #ffffff;
-            border: 1px solid var(--color-primary-light-blue-grey);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            height: 100%;
-            transition: transform 0.2s ease;
-        }
-        #nav-breedinfo .stat-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+/* Stats Icons within Breed Info */
+#nav-breedinfo .stat-icon { color: var(--color-secondary-light-pink); }
+#nav-breedinfo .stat-box {
+    background-color: #ffffff;
+    border: 1px solid var(--color-primary-light-blue-grey);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 100%;
+    transition: transform 0.2s ease;
+}
+#nav-breedinfo .stat-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
-        /* Color Swatches within Breed Info */
-        #nav-breedinfo .color-swatch {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            border: 2px solid #dee2e6;
-            margin-right: 5px;
-            vertical-align: middle;
-        }
-        #nav-breedinfo .color-label {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 15px;
-            margin-bottom: 8px;
-        }
+/* Color Swatches within Breed Info */
+#nav-breedinfo .color-swatch {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #dee2e6;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+#nav-breedinfo .color-label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 8px;
+}
 
-        /* Traits Badge within Breed Info */
-        #nav-breedinfo .badge-trait {
-            background-color: var(--color-secondary-light-pink);
-            color: var(--color-primary-dark-teal);
-            font-size: 0.9em;
-            padding: 0.4em 0.7em;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            display: inline-block;
-            border-radius: 0.5rem;
-            border: 1px solid var(--color-secondary-dark-pink);
-        }
+/* Traits Badge within Breed Info */
+#nav-breedinfo .badge-trait {
+    background-color: var(--color-secondary-light-pink);
+    color: var(--color-primary-dark-teal);
+    font-size: 0.9em;
+    padding: 0.4em 0.7em;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-secondary-dark-pink);
+}
 
-        /* Characteristics Level Bar within Breed Info */
-        #nav-breedinfo .level-bar { display: flex; align-items: center; width: 100%; max-width: 200px; }
-        #nav-breedinfo .level-segment {
-            flex-grow: 1;
-            height: 10px;
-            margin-right: 2px;
-            background-color: #e9ecef;
-            border: 1px solid #dee2e6;
-            border-radius: 2px;
-        }
-        #nav-breedinfo .level-segment.active {
-            background-color: var(--color-secondary-light-pink);
-            border-color: var(--color-secondary-light-pink);
-        }
-        #nav-breedinfo .characteristic-item {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background-color: #ffffff;
-            border-radius: 0.5rem;
-            border: 1px solid var(--color-primary-light-blue-grey);
-        }
+/* Characteristics Level Bar within Breed Info */
+#nav-breedinfo .level-bar { display: flex; align-items: center; width: 100%; max-width: 200px; }
+#nav-breedinfo .level-segment {
+    flex-grow: 1;
+    height: 10px;
+    margin-right: 2px;
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+}
+#nav-breedinfo .level-segment.active {
+    background-color: var(--color-secondary-light-pink);
+    border-color: var(--color-secondary-light-pink);
+}
+#nav-breedinfo .characteristic-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-primary-light-blue-grey);
+}
 
-        /* Accordion within Breed Info */
-        #nav-breedinfo .accordion { margin-bottom: 1.5rem; }
-        #nav-breedinfo .accordion-item {
-            background-color: white;
-            border: 1px solid #dee2e6;
-            margin-bottom: 0.5rem;
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-        #nav-breedinfo .accordion-button {
-            width: 100%;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-family: var(--font-primary);
-            border-bottom: 1px solid var(--color-primary-light-blue-grey);
-        }
-        #nav-breedinfo .accordion-button:not(.collapsed) {
-            background-color: var(--color-secondary-light-pink);
-            color: white;
-            box-shadow: none;
-        }
-        #nav-breedinfo .accordion-button::after { display: none; }
-        #nav-breedinfo .accordion-button i.bi {
-            color: var(--color-secondary-light-pink);
-            margin-right: 0.75rem;
-            transition: transform 0.3s ease-in-out;
-            transform: rotate(0deg);
-        }
-        #nav-breedinfo .accordion-button:not(.collapsed) i.bi {
-            transform: rotate(90deg);
-            color: white;
-        }
-        #nav-breedinfo .accordion-button h5,
-        #nav-breedinfo .accordion-button span {
-            margin: 0;
-            font-size: 1rem;
-            flex-grow: 1;
-            font-weight: bold;
-        }
-        #nav-breedinfo .accordion-body {
-            background-color: white;
-            color: var(--color-text);
-            padding: 1.25rem;
-            font-family: var(--font-primary);
-        }
-        #nav-breedinfo .accordion-body p:last-child { margin-bottom: 0; }
+/* Accordion within Breed Info */
+#nav-breedinfo .accordion { margin-bottom: 1.5rem; }
+#nav-breedinfo .accordion-item {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+#nav-breedinfo .accordion-button {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-family: var(--font-primary);
+    border-bottom: 1px solid var(--color-primary-light-blue-grey);
+}
+#nav-breedinfo .accordion-button:not(.collapsed) {
+    background-color: var(--color-secondary-light-pink);
+    color: white;
+    box-shadow: none;
+}
+#nav-breedinfo .accordion-button::after { display: none; }
+#nav-breedinfo .accordion-button i.bi {
+    color: var(--color-secondary-light-pink);
+    margin-right: 0.75rem;
+    transition: transform 0.3s ease-in-out;
+    transform: rotate(0deg);
+}
+#nav-breedinfo .accordion-button:not(.collapsed) i.bi {
+    transform: rotate(90deg);
+    color: white;
+}
+#nav-breedinfo .accordion-button h5,
+#nav-breedinfo .accordion-button span {
+    margin: 0;
+    font-size: 1rem;
+    flex-grow: 1;
+    font-weight: bold;
+}
+#nav-breedinfo .accordion-body {
+    background-color: white;
+    color: var(--color-text);
+    padding: 1.25rem;
+    font-family: var(--font-primary);
+}
+#nav-breedinfo .accordion-body p:last-child { margin-bottom: 0; }
 
-        /* Contact tab form styling */
-        #nav-contact {
-            background-color: #ffffff;
-        }
+/* Contact tab form styling */
+#nav-contact {
+    background-color: #ffffff;
+}
 
-        /* --- Related Products Section --- */
-        .related-products-wrapper {
-            background-color: var(--color-secondary-light-pink);
-            background-image: url(/wp-content/uploads/2025/06/clouds.jpg);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            padding: 5rem 0;
-            margin-top: 5rem;
-            margin-bottom: -1.5rem; /* Offset parent container padding */
-        }
+/* --- Related Products Section --- */
+.related-products-wrapper {
+    background-color: var(--color-secondary-light-pink);
+    background-image: url(/wp-content/uploads/2025/06/clouds.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 5rem 0;
+    margin-top: 5rem;
+    margin-bottom: -1.5rem; /* Offset parent container padding */
+}
 
-        .related-products-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
+.related-products-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
 
-        .related-products-section h2 {
-            color: var(--color-primary-dark-teal);
-            font-family: var(--font-secondary);
-            margin-bottom: 3rem;
-            text-align: center;
-        }
+.related-products-section h2 {
+    color: var(--color-primary-dark-teal);
+    font-family: var(--font-secondary);
+    margin-bottom: 3rem;
+    text-align: center;
+}
 
-        /* --- Happiness Is Pets Difference Section --- */
-        .happiness-is-pets-difference-section {
-            background-color: #f8f9fa;
-            padding: 4rem 0;
-            margin-top: 0;
-        }
+/* --- Happiness Is Pets Difference Section --- */
+.happiness-is-pets-difference-section {
+    background-color: #f8f9fa;
+    padding: 4rem 0;
+    margin-top: 0;
+}
 
-        .happiness-is-pets-difference-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
+.happiness-is-pets-difference-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
 
-        .happiness-is-pets-difference-content h2 {
-            font-family: var(--font-secondary);
-            font-size: 2rem;
-            color: #41545f;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-        }
+.happiness-is-pets-difference-content h2 {
+    font-family: var(--font-secondary);
+    font-size: 2rem;
+    color: #41545f;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
 
-        .happiness-is-pets-difference-content h2 i {
-            color: #41545f;
-            margin-right: 1rem;
-            font-size: 2.5rem;
-        }
+.happiness-is-pets-difference-content h2 i {
+    color: #41545f;
+    margin-right: 1rem;
+    font-size: 2.5rem;
+}
 
-        /* --- Section Title & Tab Styles --- */
-        .product-page-wrapper h2,
-        .product-page-wrapper h4,
-        .product-page-wrapper h5 {
-            color: #41545e;
-        }
+/* --- Section Title & Tab Styles --- */
+.product-page-wrapper h2,
+.product-page-wrapper h4,
+.product-page-wrapper h5 {
+    color: #41545e;
+}
 
-        #product-tab .nav-link {
-            background-color: #41545e;
-            color: #fff;
-            border-color: #41545e;
-        }
+#product-tab .nav-link {
+    background-color: #41545e;
+    color: #fff;
+    border-color: #41545e;
+}
 
-        #product-tab .nav-link.active {
-            background-color: #41545e;
-            color: #fff;
-            border-color: #41545e;
-        }
+#product-tab .nav-link.active {
+    background-color: #41545e;
+    color: #fff;
+    border-color: #41545e;
+}
 
-        /* --- Responsive Design Adjustments --- */
-        @media (max-width: 991.98px) {
-            .product-details-box {
-                margin-top: 1.5rem;
-            }
-            .related-products-wrapper {
-                padding: 4rem 0;
-                margin-top: 4rem;
-            }
-            .happiness-is-pets-difference-section {
-                padding: 3rem 0;
-            }
-            .happiness-is-pets-difference-content h2 {
-                font-size: 1.75rem;
-            }
-        }
+/* --- Responsive Design Adjustments --- */
+@media (max-width: 991.98px) {
+    .product-details-box {
+        margin-top: 1.5rem;
+    }
+    .related-products-wrapper {
+        padding: 4rem 0;
+        margin-top: 4rem;
+    }
+    .happiness-is-pets-difference-section {
+        padding: 3rem 0;
+    }
+    .happiness-is-pets-difference-content h2 {
+        font-size: 1.75rem;
+    }
+}
 
-        @media (max-width: 767.98px) {
-            .product-page-wrapper { padding-top: 0.75rem !important; }
-            #product-tab > .nav-link { font-size: 0.875rem; padding: 0.6rem 0.8rem; }
-            .product-primary-info .short-details li { font-size: 0.95rem; }
-            .action-buttons .row > div { margin-bottom: 0.5rem; }
-            .action-buttons .btn { width: 100%; }
-            #nav-breedinfo .row.row-cols-lg-4 > .col { flex: 0 0 auto; width: 50%; }
-            .related-products-wrapper {
-                padding: 3rem 0;
-                margin-top: 3rem;
-            }
-            .happiness-is-pets-difference-section {
-                padding: 2.5rem 0;
-            }
-            .happiness-is-pets-difference-content h2 {
-                font-size: 1.5rem;
-            }
-            .happiness-is-pets-difference-content h2 i {
-                font-size: 2rem;
-            }
-        }
+@media (max-width: 767.98px) {
+    .product-page-wrapper { padding-top: 0.75rem !important; }
+    #product-tab > .nav-link { font-size: 0.875rem; padding: 0.6rem 0.8rem; }
+    .product-primary-info .short-details li { font-size: 0.95rem; }
+    .action-buttons .row > div { margin-bottom: 0.5rem; }
+    .action-buttons .btn { width: 100%; }
+    #nav-breedinfo .row.row-cols-lg-4 > .col { flex: 0 0 auto; width: 50%; }
+    .related-products-wrapper {
+        padding: 3rem 0;
+        margin-top: 3rem;
+    }
+    .happiness-is-pets-difference-section {
+        padding: 2.5rem 0;
+    }
+    .happiness-is-pets-difference-content h2 {
+        font-size: 1.5rem;
+    }
+    .happiness-is-pets-difference-content h2 i {
+        font-size: 2rem;
+    }
+}
 
 @media (max-width: 480px) {
-            #product-tab > .nav-link { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
-            .product-primary-info h1 { font-size: 2rem; }
-            .product-primary-info .breed-info { font-size: 1.1rem; }
-            #nav-breedinfo .row.row-cols-lg-4 > .col { width: 100%; }
-            .happiness-is-pets-difference-content h2 {
-                font-size: 1.25rem;
-                flex-direction: column;
-                text-align: center;
-            }
-            .happiness-is-pets-difference-content h2 i {
-                margin-bottom: 0.5rem;
-            }
-        }
+    #product-tab > .nav-link { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
+    .product-primary-info h1 { font-size: 2rem; }
+    .product-primary-info .breed-info { font-size: 1.1rem; }
+    #nav-breedinfo .row.row-cols-lg-4 > .col { width: 100%; }
+    .happiness-is-pets-difference-content h2 {
+        font-size: 1.25rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    .happiness-is-pets-difference-content h2 i {
+        margin-bottom: 0.5rem;
+    }
+}
 
-        /* Available Puppies Slider */
-        .available-puppy-card { overflow: hidden; border-radius: .5rem; }
-        .available-puppy-card img { border-radius: .5rem; transition: transform .3s; }
-        .available-puppy-card:hover img { transform: scale(1.05); }
-        .available-puppy-info { background: rgba(0,0,0,0.6); color: #fff; opacity: 0; transition: opacity .3s; }
-        .available-puppy-card:hover .available-puppy-info { opacity: 1; }
-        .available-puppies-swiper .swiper-button-next,
-        .available-puppies-swiper .swiper-button-prev { color: var(--color-primary-dark-teal); }
+/* Available Puppies Slider */
+.available-puppy-card { overflow: hidden; border-radius: .5rem; }
+.available-puppy-card img { border-radius: .5rem; transition: transform .3s; }
+.available-puppy-card:hover img { transform: scale(1.05); }
+.available-puppy-info { background: rgba(0,0,0,0.6); color: #fff; opacity: 0; transition: opacity .3s; }
+.available-puppy-card:hover .available-puppy-info { opacity: 1; }
+.available-puppies-swiper .swiper-button-next,
+.available-puppies-swiper .swiper-button-prev { color: var(--color-primary-dark-teal); }
 
-        /* Canine Care Certified Section */
-        .canine-care-certified .section-title { color: var(--color-primary-dark-teal); }
+/* Canine Care Certified Section */
+.canine-care-certified .section-title { color: var(--color-primary-dark-teal); }
 
 /* -------------------------------------------------- */
 /*  New design styles for header, front page and footer
@@ -2580,7 +2576,7 @@ color: #2d3e40 !important;
     background: transparent;
 }
 .cssHeader .site-branding img {
-    height: 50px;
+    /* height: 50px; */
 }
 .cssHeader .navbar-nav-horizontal li a {
     font-family: var(--font-secondary);
@@ -2616,8 +2612,8 @@ color: #2d3e40 !important;
     font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
-    color: #333333;
     margin-bottom: 50px;
+    color: #585855;
 }
 .available-puppies-swiper .swiper-slide {
     width: 170px;
@@ -2639,7 +2635,7 @@ color: #2d3e40 !important;
     font-size: 16px;
     font-weight: 600;
     padding: 14px 35px;
-    border-radius: 30px;
+    border-radius: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 40px;
@@ -2679,7 +2675,7 @@ color: #2d3e40 !important;
     font-size: 15px;
     font-weight: 600;
     padding: 12px 30px;
-    border-radius: 25px;
+    border-radius: 15px;
     margin-top: 30px;
     text-transform: none;
 }
@@ -2697,7 +2693,7 @@ color: #2d3e40 !important;
     font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
-    color: #333333;
+    color: #585855;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -2722,22 +2718,21 @@ color: #2d3e40 !important;
     font-size: 15px;
     font-weight: 600;
     padding: 13px 32px;
-    border-radius: 28px;
+    border-radius: 15px;
     margin-top: 40px;
 }
 
 /* Reviews Section */
 #reviews {
-    background: #FAFAFA;
-    padding: 90px 0;
+    padding: 0px;
 }
 #reviews .carous-title-5007 {
     font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
-    color: #333333;
     text-align: center;
     margin-bottom: 50px;
+    color: #585855;
 }
 #reviews .carousel-item-box {
     background: #FFFFFF;
@@ -2767,7 +2762,7 @@ color: #2d3e40 !important;
     font-size: 15px;
     font-weight: 600;
     padding: 13px 35px;
-    border-radius: 28px;
+    border-radius: 15px;
     margin-top: 40px;
 }
 
@@ -2844,7 +2839,7 @@ color: #2d3e40 !important;
     text-decoration: underline;
 }
 .cssFooter .footer-bottom {
-    background: #00ACC1;
+    background: #00c8ba;
     padding: 20px 0;
     border-top: 1px solid rgba(255,255,255,0.1);
     text-align: center;
