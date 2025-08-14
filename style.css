@@ -37,6 +37,8 @@ Text Domain: happiness-is-pets
     --color-link: var(--color-secondary-teal);
     --color-link-hover: var(--color-primary-dark-teal);
 
+    --global-secondary-color: var(--color-primary-dark-teal);
+
     /* Font Families */
     --font-primary: 'Transcend', sans-serif; /* Body text */
     --font-secondary: 'Transcend', sans-serif; /* Headings */
@@ -164,6 +166,27 @@ a:hover {
     --bs-btn-disabled-bg: var(--color-button);
     --bs-btn-disabled-border-color: var(--color-button);
     opacity: 0.8;
+}
+
+/* Global button styling */
+.btn,
+button,
+.theme-primary-btn {
+    background-color: var(--global-secondary-color) !important;
+    color: #fff !important;
+    border: 2px solid var(--global-secondary-color) !important;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover,
+button:hover,
+.theme-primary-btn:hover {
+    background-color: #fff !important;
+    color: var(--global-secondary-color) !important;
+    border: 2px solid var(--global-secondary-color) !important;
 }
 
 
