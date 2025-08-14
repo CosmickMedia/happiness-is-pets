@@ -22,9 +22,6 @@ Text Domain: happiness-is-pets
     --color-primary-dark-grey: #585956; /* Primary 5 - Body Text */
 
     --color-secondary-teal: #3e5155; /* Secondary 1 - Links, Icons */
-    --color-secondary-light-beige: #DBC8B6; /* Secondary 2 */
-    --color-secondary-light-pink: #d9b2af; /* Secondary 3 - Accent Button BG */
-    --color-secondary-dark-pink: #ffb3b3; /* Darker shade for hover states */
     --color-secondary-dark-blue: #2E334E; /* Secondary 4 - Footer Titles */
     --color-secondary-dark-maroon: #503B3D; /* Secondary 5 */
 
@@ -350,7 +347,7 @@ input[type="reset"]:hover,
 .happiness-is-pets-offcanvas .offcanvas-header {
     background-color: var(--color-primary-light-blue-grey);
     padding: 1.5rem;
-    border-bottom: 3px solid var(--color-secondary-light-pink);
+    border-bottom: 3px solid var(--color-primary-light-peach);
 }
 
 .happiness-is-pets-offcanvas .offcanvas-logo img {
@@ -411,7 +408,7 @@ input[type="reset"]:hover,
 
 .mobile-menu-list a:hover,
 .mobile-menu-list .current-menu-item > a {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     padding-left: 2rem;
     color: var(--color-primary-dark-teal);
 }
@@ -541,7 +538,7 @@ input[type="reset"]:hover,
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     color: var(--color-primary-dark-teal);
     border-radius: 50%;
     transition: transform 0.3s ease, background-color 0.3s ease;
@@ -702,7 +699,7 @@ input[type="reset"]:hover,
 
 /* --- Front Page Specific Styles --- */
 .front-page-hero {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     height: 700px;
     display: flex;
     align-items: center;
@@ -882,7 +879,7 @@ input[type="reset"]:hover,
     font-size: 3.5rem;
 }
 #happy-tails .fa-quote-left {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 #happy-tails .blockquote {
     /* Bootstrap handles basic blockquote styling */
@@ -1095,7 +1092,7 @@ input[type="reset"]:hover,
 }
 .swiper-button-next,
 .swiper-button-prev {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 section#concierge-care {
     padding-top: 64px !important;
@@ -2036,7 +2033,7 @@ body .product-primary-info h1.product_title {
     font-size: 2.5rem;
     font-weight: normal;
     margin-bottom: 0.25rem;
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 
 /* Product details styling with white background */
@@ -2050,13 +2047,13 @@ body .product-primary-info h1.product_title {
 }
 
 .product-details-box h4 {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
     font-family: var(--font-secondary);
 }
 
 .product-primary-info .short-details { list-style: none; padding: 0; margin-bottom: 1.5rem; }
 .product-primary-info .short-details li { margin-bottom: 0.5rem; font-size: 1rem; display: flex; align-items: center; font-family: var(--font-primary); }
-.product-primary-info .short-details li i { color: var(--color-secondary-light-pink); margin-right: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
+.product-primary-info .short-details li i { color: var(--color-primary-light-peach); margin-right: 0.75rem; width: 20px; text-align: center; flex-shrink: 0; }
 .product-primary-info .short-details li strong { font-weight: 700 !important; color: var(--color-heading); }
 
 .product-primary-info .breed-info {
@@ -2086,7 +2083,7 @@ body .product-primary-info h1.product_title {
 }
 .detail-list li:last-child { border-bottom: none; }
 .detail-list .detail-label { font-weight: 600; color: var(--color-heading); margin-right: 1rem; flex-shrink: 0; }
-.detail-list .detail-label i { width: 1.2em; text-align: center; color: var(--color-secondary-light-pink); }
+.detail-list .detail-label i { width: 1.2em; text-align: center; color: var(--color-primary-light-peach); }
 .detail-list .detail-value { color: var(--color-text); text-align: right; flex-grow: 1; word-break: break-word; }
 
 /* Parent info with theme colors */
@@ -2100,14 +2097,14 @@ body .product-primary-info h1.product_title {
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border: 3px solid var(--color-secondary-light-pink);
+    border: 3px solid var(--color-primary-light-peach);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .parent-info h5 {
     font-weight: 700 !important;
     font-size: 1.25rem;
     font-family: var(--font-secondary);
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 .parent-info p {
     font-size: 1rem;
@@ -2143,7 +2140,7 @@ body .product-primary-info h1.product_title {
     background-color: #dee2e6;
 }
 .product-gallery .carousel-indicators button.active {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
 }
 
 /* Status badges with theme colors */
@@ -2165,17 +2162,17 @@ body .product-primary-info h1.product_title {
 }
 .product-gallery .badge-coming-soon {
     right: 1rem;
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     color: var(--color-primary-dark-teal);
     text-decoration: none;
 }
 .product-gallery .badge-coming-soon:hover {
-    background-color: var(--color-secondary-dark-pink);
+    background-color: var(--color-primary-dark-teal);
     color: var(--color-primary-dark-teal);
 }
 .product-gallery .badge-status.status-sold { background-color: var(--color-secondary-dark-maroon); }
 .product-gallery .badge-status.status-on-hold { background-color: var(--color-primary-light-yellow); color: var(--color-primary-dark-teal); }
-.product-gallery .badge-status.status-coming-soon { background-color: var(--color-secondary-light-pink); color: var(--color-primary-dark-teal); }
+.product-gallery .badge-status.status-coming-soon { background-color: var(--color-primary-light-peach); color: var(--color-primary-dark-teal); }
 
 /* --- Action Buttons --- */
 .action-buttons .btn {
@@ -2190,7 +2187,7 @@ body .product-primary-info h1.product_title {
 
 /* Finance and video icons */
 .product-primary-info .finance-video-icons a {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
     text-decoration: none;
     margin-right: 1rem;
     display: inline-flex;
@@ -2198,9 +2195,9 @@ body .product-primary-info h1.product_title {
     transition: color 0.2s ease;
     font-family: var(--font-primary);
 }
-.product-primary-info .finance-video-icons a:hover { color: var(--color-secondary-dark-pink); }
-.product-primary-info .finance-video-icons .finance-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
-.product-primary-info .finance-video-icons .youtube-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-secondary-light-pink); }
+.product-primary-info .finance-video-icons a:hover { color: var(--color-primary-dark-teal); }
+.product-primary-info .finance-video-icons .finance-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-primary-light-peach); }
+.product-primary-info .finance-video-icons .youtube-btn i { font-size: 1.5rem; margin-right: 0.5rem; color: var(--color-primary-light-peach); }
 
 /* Info badges */
 .product-primary-info .info-badges img { height: 30px; width: auto; vertical-align: middle; }
@@ -2222,15 +2219,15 @@ body .product-primary-info h1.product_title {
     font-family: var(--font-primary);
 }
 #product-tab .nav-link:hover {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
     background-color: #f8f9fa;
     border-color: #dee2e6 #dee2e6 transparent;
 }
 #product-tab .nav-link.active {
     color: white !important;
     font-weight: 600 !important;
-    background-color: var(--color-secondary-light-pink) !important;
-    border-color: var(--color-secondary-light-pink) var(--color-secondary-light-pink) var(--color-secondary-light-pink) !important;
+    background-color: var(--color-primary-light-peach) !important;
+    border-color: var(--color-primary-light-peach) var(--color-primary-light-peach) var(--color-primary-light-peach) !important;
 }
 #nav-tabContent {
     border: 1px solid #dee2e6;
@@ -2245,7 +2242,7 @@ body .product-primary-info h1.product_title {
 /* All tab headings pink */
 .tab-pane h4,
 .tab-pane h5 {
-    color: var(--color-secondary-light-pink) !important;
+    color: var(--color-primary-light-peach) !important;
     font-family: var(--font-secondary);
 }
 
@@ -2255,13 +2252,13 @@ body .product-primary-info h1.product_title {
     margin-bottom: 1.5rem !important;
     font-weight: 600;
     font-family: var(--font-secondary);
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 #nav-breedinfo h5 {
     font-size: 1.25rem;
     font-weight: 600;
     font-family: var(--font-secondary);
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
 }
 
 /* Carousel within Breed Info */
@@ -2289,7 +2286,7 @@ body .product-primary-info h1.product_title {
 #nav-breedinfo .carousel-control-prev:hover,
 #nav-breedinfo .carousel-control-next:hover {
     opacity: 0.9;
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
 }
 #nav-breedinfo .media-placeholder {
     width: 100%;
@@ -2304,7 +2301,7 @@ body .product-primary-info h1.product_title {
 }
 
 /* Stats Icons within Breed Info */
-#nav-breedinfo .stat-icon { color: var(--color-secondary-light-pink); }
+#nav-breedinfo .stat-icon { color: var(--color-primary-light-peach); }
 #nav-breedinfo .stat-box {
     background-color: #ffffff;
     border: 1px solid var(--color-primary-light-blue-grey);
@@ -2337,7 +2334,7 @@ body .product-primary-info h1.product_title {
 
 /* Traits Badge within Breed Info */
 #nav-breedinfo .badge-trait {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     color: var(--color-primary-dark-teal);
     font-size: 0.9em;
     padding: 0.4em 0.7em;
@@ -2345,7 +2342,7 @@ body .product-primary-info h1.product_title {
     margin-bottom: 0.5rem;
     display: inline-block;
     border-radius: 0.5rem;
-    border: 1px solid var(--color-secondary-dark-pink);
+    border: 1px solid var(--color-primary-dark-teal);
 }
 
 /* Characteristics Level Bar within Breed Info */
@@ -2359,8 +2356,8 @@ body .product-primary-info h1.product_title {
     border-radius: 2px;
 }
 #nav-breedinfo .level-segment.active {
-    background-color: var(--color-secondary-light-pink);
-    border-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
+    border-color: var(--color-primary-light-peach);
 }
 #nav-breedinfo .characteristic-item {
     display: flex;
@@ -2391,13 +2388,13 @@ body .product-primary-info h1.product_title {
     border-bottom: 1px solid var(--color-primary-light-blue-grey);
 }
 #nav-breedinfo .accordion-button:not(.collapsed) {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     color: white;
     box-shadow: none;
 }
 #nav-breedinfo .accordion-button::after { display: none; }
 #nav-breedinfo .accordion-button i.bi {
-    color: var(--color-secondary-light-pink);
+    color: var(--color-primary-light-peach);
     margin-right: 0.75rem;
     transition: transform 0.3s ease-in-out;
     transform: rotate(0deg);
@@ -2428,7 +2425,7 @@ body .product-primary-info h1.product_title {
 
 /* --- Related Products Section --- */
 .related-products-wrapper {
-    background-color: var(--color-secondary-light-pink);
+    background-color: var(--color-primary-light-peach);
     background-image: url(/wp-content/uploads/2025/06/clouds.jpg);
     background-size: cover;
     background-position: center;
