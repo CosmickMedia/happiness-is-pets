@@ -104,10 +104,10 @@ $locations = happiness_is_pets_get_locations();
                 <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
                         <?php if ( ! empty( $locations ) ) : ?>
-                            <div class="dropdown me-3">
-                                <button class="header-icon header-phone-icon dropdown-toggle" type="button" id="headerPhoneDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="dropdown">
+                                <a class="header-icon header-phone-icon me-3" href="#" role="button" id="headerPhoneDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-phone"></i>
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerPhoneDropdown">
                                     <?php foreach ( $locations as $loc ) :
                                         if ( ! empty( $loc['phone'] ) ) :
