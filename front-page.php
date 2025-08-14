@@ -149,7 +149,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
                     <a href="/breeders/" class="btn btn-primary mt-3"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="https://www.happinessispets.com/media/background/caninecare.webp" alt="<?php esc_attr_e( 'Canine Care Certified', 'happiness-is-pets' ); ?>" class="img-fluid rounded" />
+                    <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/caninecare.webp' ); ?>" alt="<?php esc_attr_e( 'Canine Care Certified', 'happiness-is-pets' ); ?>" class="img-fluid rounded" />
                 </div>
             </div>
         </div>
@@ -163,7 +163,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 d-flex align-items-center">
                                 <div class="info-layout-content-img">
-                                    <img src="https://www.happinessispets.com/media/background/ourpuppies.webp" alt="" class="info_placeholder img-fluid infofirst-img" />
+                                    <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/ourpuppies.webp' ); ?>" alt="" class="info_placeholder img-fluid infofirst-img" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-8 align-items-center d-flex order-2 order-md-2">
@@ -206,7 +206,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
             <div class="row justify-content-center">
                 <div class="col col-12 col-md-4 align-self-center">
                     <div class="container d-flex flex-column justify-content-center align-items-center">
-                        <img src="https://www.happinessispets.com/media/filer_public_thumbnails/filer_public/dc/cf/dccf0cd9-751e-47b4-b42c-8000445d9d9c/health-warranty.webp__88.0x77.0_subsampling-2.webp" alt="" class="img-fluid" />
+                        <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/health-warranty.webp__88.0x77.0_subsampling-2.webp' ); ?>" alt="" class="img-fluid" />
                         <div class="my-2 text-center">
                             <p class="primary1-bold"><?php esc_html_e( '2 year health warranty', 'happiness-is-pets' ); ?></p>
                             <p><?php esc_html_e( 'Since many, but not all congenital defects arise within the first year, we go the extra mile to ensure you and your new puppy are covered.', 'happiness-is-pets' ); ?></p>
@@ -217,7 +217,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
                 <div class="col col-12 col-md-4 align-self-center my-5 my-md-0">
                     <div class="container d-flex flex-column justify-content-center align-items-center">
-                        <img src="https://www.happinessispets.com/media/filer_public_thumbnails/filer_public/58/24/582480e6-b190-420b-83bb-58f9812c876c/veterinary-check.webp__81.0x68.0_subsampling-2.webp" alt="" class="img-fluid" />
+                        <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/veterinary-check.webp__81.0x68.0_subsampling-2.webp' ); ?>" alt="" class="img-fluid" />
                         <div class="my-2 text-center">
                             <p class="primary1-bold"><?php esc_html_e( '7 day veterinary check', 'happiness-is-pets' ); ?></p>
                             <p><?php esc_html_e( 'Bring your new puppy to any of our in-network clinics within 7 days of purchase for a complimentary wellness check-up.', 'happiness-is-pets' ); ?></p>
