@@ -20,16 +20,27 @@ get_header();
             </div>
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
+                    <?php $hero_image = get_theme_mod( 'hero_image' ); ?>
+                    <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0"<?php if ( $hero_image ) : ?> style="background-image: url('<?php echo esc_url( $hero_image ); ?>');"<?php endif; ?>></div>
                     <div class="col-md-6">
                         <div class="hero-content p-4 p-md-5 rounded text-center">
-                            <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal); font-size: 2rem;">
-                                <?php echo esc_html( get_theme_mod( 'hero_heading', 'Meet Your New Best Friend' ) ); ?>
-                            </h1>
-                            <p class="lead mb-4"><?php echo esc_html( get_theme_mod( 'hero_text', 'Stop by either of our locations to meet our adorable puppies in person. Our friendly team is ready to help you find the perfect match and guide you through bringing home a healthy, happy companion today!' ) ); ?></p>
-                            <a href="<?php echo esc_url( get_theme_mod( 'hero_button_url', '#available-puppies' ) ); ?>" class="theme-primary-btn mt-2">
-                                <?php echo esc_html( get_theme_mod( 'hero_button_text', 'Available Puppies' ) ); ?>
-                            </a>
+                            <?php if ( $hero_heading = get_theme_mod( 'hero_heading' ) ) : ?>
+                                <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal); font-size: 2rem;">
+                                    <?php echo esc_html( $hero_heading ); ?>
+                                </h1>
+                            <?php endif; ?>
+                            <?php if ( $hero_text = get_theme_mod( 'hero_text' ) ) : ?>
+                                <p class="lead mb-4"><?php echo esc_html( $hero_text ); ?></p>
+                            <?php endif; ?>
+                            <?php
+                            $hero_button_text = get_theme_mod( 'hero_button_text' );
+                            $hero_button_url  = get_theme_mod( 'hero_button_url' );
+                            if ( $hero_button_text && $hero_button_url ) :
+                            ?>
+                                <a href="<?php echo esc_url( $hero_button_url ); ?>" class="theme-primary-btn mt-2">
+                                    <?php echo esc_html( $hero_button_text ); ?>
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
