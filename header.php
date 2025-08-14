@@ -107,8 +107,8 @@
                         <?php
                         $phone = get_theme_mod( 'header_phone_number', '941-203-1196' );
                         if ( $phone ) : ?>
-                            <a class="header-phone-number me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>" aria-label="<?php echo esc_attr( $phone ); ?>">
-                                <i class="fas fa-phone me-2 header-icon"></i><span class="phone-text d-none d-md-inline"><?php echo esc_html( $phone ); ?></span>
+                            <a class="header-icon header-phone-icon me-3" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>" aria-label="<?php echo esc_attr( $phone ); ?>">
+                                <i class="fas fa-phone"></i>
                             </a>
                         <?php endif; ?>
                         <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'happiness-is-pets' ); ?>">

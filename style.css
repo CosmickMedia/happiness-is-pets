@@ -185,21 +185,7 @@ input[type="reset"]:hover,
     opacity: 0.9;
 }
 
-/* Phone number displayed in the top header bar */
-.header-phone-number {
-    color: #000;
-    font-weight: bold;
-    white-space: nowrap;
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    font-family: var(--font-primary);
-}
-.header-phone-number i {
-    font-size: 1.25rem;
-}
-
+/* Header icons */
 .header-icon {
     color: var(--color-primary-dark-teal);
     text-decoration: none;
