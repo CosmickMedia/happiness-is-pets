@@ -11,8 +11,30 @@ get_header();
     <main id="primary" class="site-main">
 
 <?php // --- Hero Section --- ?>
-    <section class="hero-section" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');">
-        <h1><?php esc_html_e( 'Meet Your New Best Friend', 'happiness-is-pets' ); ?></h1>
+    <section class="front-page-hero">
+        <div class="paw-background">
+            <i class="fas fa-paw"></i>
+            <i class="fas fa-paw"></i>
+            <i class="fas fa-paw"></i>
+        </div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0" style="background-image: url('<?php echo esc_url( get_theme_mod( 'front_hero_image', get_template_directory_uri() . '/assets/images/homepage_hero.png' ) ); ?>');"></div>
+                <div class="col-md-6">
+                    <div class="hero-content p-4 p-md-5 rounded text-center">
+                        <h1 class="display-4" style="color: var(--color-primary-dark-teal);">
+                            <?php echo esc_html( get_theme_mod( 'front_hero_heading', __( 'where pets find their people', 'happiness-is-pets' ) ) ); ?>
+                        </h1>
+                        <?php $hero_url = get_theme_mod( 'header_book_button_url', '' ); ?>
+                        <?php if ( $hero_url ) : ?>
+                            <a href="<?php echo esc_url( $hero_url ); ?>" class="btn btn-lg mt-3 btn-book-appointment d-inline-flex align-items-center mt-2">
+                                <i class="fa-regular fa-calendar-check me-2"></i> <?php echo esc_html( get_theme_mod( 'front_hero_button_text', __( 'Book an Appointment', 'happiness-is-pets' ) ) ); ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 <?php // --- Available Puppies Slider --- ?>
@@ -101,7 +123,7 @@ get_header();
                 <div class="swiper-button-prev"></div>
             </div>
             <div class="text-center">
-                <a href="/all-pets/" class="see-all-puppies">See All Puppies</a>
+                <a href="/all-pets/" class="see-all-puppies btn">See All Puppies</a>
             </div>
         </div>
     </section>

@@ -11,7 +11,7 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, theme-option
 Text Domain: happiness-is-pets
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 /* --- Variables --- */
 :root {
@@ -33,7 +33,7 @@ Text Domain: happiness-is-pets
     --color-background: #FFFFFF;
     --color-light-background: #FAFAFA; /* For alternating sections */
     --color-header-bg: #FFFFFF;
-    --color-footer-bg: var(--color-primary-light-blue-grey);
+    --color-footer-bg: #00c8baff;
     --color-button: var(--color-primary-dark-teal); /* Default button bg */
     --color-button-text: #FFFFFF;
     --color-link: var(--color-secondary-teal);
@@ -42,67 +42,10 @@ Text Domain: happiness-is-pets
     --global-secondary-color: var(--color-primary-dark-teal);
 
     /* Font Families */
-    --font-primary: 'Transcend', sans-serif; /* Body text */
-    --font-secondary: 'Transcend', sans-serif; /* Headings */
+    --font-primary: 'Open Sans', sans-serif; /* Body text */
+    --font-secondary: 'Open Sans', sans-serif; /* Headings */
 }
 
-/* --- Transcend Font Faces --- */
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Thin.otf') format('opentype');
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Semibold.otf') format('opentype');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Ultra.otf') format('opentype');
-    font-weight: 800;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Transcend';
-    src: url('assets/fonts/Transcend Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* WooCommerce Blocks (Cart & Checkout) */
 .wp-block-woocommerce-cart,
@@ -173,9 +116,12 @@ a:hover {
 /* Global button styling */
 .btn,
 button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
 .theme-primary-btn {
     background-color: var(--global-secondary-color) !important;
-    color: #fff !important;
+    color: white !important;
     border: 2px solid var(--global-secondary-color) !important;
     padding: 0.75rem 1.25rem;
     display: inline-flex;
@@ -185,8 +131,11 @@ button,
 
 .btn:hover,
 button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
 .theme-primary-btn:hover {
-    background-color: #fff !important;
+    background-color: white !important;
     color: var(--global-secondary-color) !important;
     border: 2px solid var(--global-secondary-color) !important;
 }
@@ -215,10 +164,7 @@ button:hover,
 
 /* Style Top Right "Book Appointment" Button */
 .btn-book-appointment {
-    background-color: var(--color-primary-dark-teal) !important; /* #3D5155 */
-    color: white !important;
     border-radius: 15px !important; /* Increased rounding */
-    border: none;
     font-weight: bold;
     padding: 0.6rem 1.2rem !important; /* Adjust padding for btn-lg */
     transition: background-color 0.3s ease, opacity 0.3s ease;
@@ -226,8 +172,6 @@ button:hover,
     white-space: nowrap; /* Prevent button text wrapping */
 }
 .btn-book-appointment:hover {
-    background-color: var(--color-primary-dark-grey) !important; /* Example hover - Dark Grey */
-    color: white !important;
     opacity: 0.9;
 }
 
@@ -290,8 +234,6 @@ button:hover,
 
 /* --- Hamburger Toggle in Top Bar --- */
 .happiness-is-pets-toggler {
-    border: none;
-    background-color: transparent;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -610,10 +552,7 @@ button:hover,
 }
 
 .btn-book-appointment-mobile {
-    background-color: var(--color-primary-dark-teal) !important;
-    color: white !important;
     border-radius: 15px !important;
-    border: none;
     font-weight: bold;
     padding: 0.75rem 1.5rem !important;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -624,7 +563,6 @@ button:hover,
 }
 
 .btn-book-appointment-mobile:hover {
-    background-color: var(--color-primary-dark-grey) !important;
     transform: scale(1.02);
 }
 
@@ -672,7 +610,7 @@ button:hover,
 
 /* --- Footer --- */
 .site-footer {
-    background-color: var(--color-footer-bg);
+    background: #00c8baff;
     color: #000; /* Base text color for footer */
     font-size: 0.95rem; /* Slightly larger footer text */
     padding-top: 3rem; /* Use Bootstrap pt-5 class on element instead? */
@@ -831,13 +769,6 @@ button:hover,
     font-size: 4rem; /* slightly larger tagline */
 }
 /* Style the button within the hero */
-.hero-content .btn {
-    background-color: var(--color-button);
-    color: var(--color-button-text);
-}
-.hero-content .btn:hover {
-    background-color: var(--color-link-hover);
-}
 
 /* Icon Section styling */
 #dreaming-of-you {
@@ -916,21 +847,11 @@ button:hover,
 }
 /* Button in card */
 #featured-pets .card .btn {
-    background-color: var(--color-button);
-    color: var(--color-button-text);
     font-size: 0.9rem;
-}
-#featured-pets .card .btn:hover {
-    background-color: var(--color-link-hover);
 }
 /* Button for 'View All Pets' */
 #featured-pets .btn-lg {
-    background-color: var(--color-secondary-teal);
-    color: white;
     transition: background-color 0.3s ease;
-}
-#featured-pets .btn-lg:hover {
-    background-color: var(--color-link-hover);
 }
 
 
@@ -985,17 +906,10 @@ button:hover,
 
 /* Filter pets button and offcanvas styles */
 .filter-pets-btn {
-    background-color: var(--color-secondary-light-pink);
-    color: var(--color-primary-dark-teal);
     font-weight: 600;
-    border: none;
     border-radius: 20px;
     padding: 0.5rem 1.25rem;
     margin-bottom: 1rem;
-}
-.filter-pets-btn:hover {
-    background-color: var(--color-secondary-dark-pink);
-    color: var(--color-primary-dark-teal);
 }
 
 .pets-offcanvas {
@@ -1011,41 +925,6 @@ button:hover,
     color: var(--color-heading);
 }
 
-/* Themed buttons for product cards */
-.btn-primary-theme {
-    background-color: var(--color-button);
-    color: var(--color-button-text);
-    border: none;
-    border-radius: 15px;
-    font-weight: 600;
-}
-.btn-primary-theme:hover {
-    background-color: var(--color-link-hover);
-    color: var(--color-button-text);
-}
-
-.btn-secondary-theme {
-    background-color: var(--color-secondary-light-pink);
-    color: var(--color-primary-dark-teal);
-    border: none;
-    border-radius: 15px;
-    font-weight: 600;
-}
-.btn-secondary-theme:hover {
-    background-color: var(--color-secondary-dark-pink);
-    color: var(--color-primary-dark-teal);
-}
-
-.btn-outline-primary-theme {
-    color: var(--color-button);
-    border: 2px solid var(--color-button);
-    border-radius: 15px;
-    font-weight: 600;
-}
-.btn-outline-primary-theme:hover {
-    background-color: var(--color-button);
-    color: var(--color-button-text);
-}
 .empty-cart-cust{
 display:none !important;
 }
@@ -1475,9 +1354,7 @@ form#gform_3 label{
   font-size: 14px;
 }
 input#gform_submit_button_3 {
-    border: none;
     min-width: 120px;
-    background: #3d5155;
     border-radius: 5px;
     font-weight: 700;
     font-size: 16px;
@@ -2190,41 +2067,6 @@ color: #2d3e40 !important;
             font-family: var(--font-primary);
         }
 
-        /* Theme button styles - all buttons pink */
-        .btn-primary-theme,
-        .btn-secondary-theme {
-            background-color: var(--color-secondary-light-pink) !important;
-            color: var(--color-primary-dark-teal) !important;
-            border: 2px solid var(--color-secondary-light-pink) !important;
-            transition: all 0.3s ease;
-            font-family: var(--font-primary);
-            font-weight: 600;
-            border-radius: 15px !important;
-        }
-        .btn-primary-theme:hover,
-        .btn-secondary-theme:hover {
-            background-color: var(--color-secondary-dark-pink) !important;
-            border-color: var(--color-secondary-dark-pink) !important;
-            color: var(--color-primary-dark-teal) !important;
-        }
-
-        /* Grey secondary button for Learn More */
-        .btn-secondary-grey {
-            background-color: var(--color-primary-dark-grey) !important;
-            color: white !important;
-            border: 2px solid var(--color-primary-dark-grey) !important;
-            transition: all 0.3s ease;
-            font-family: var(--font-primary);
-            font-weight: 600;
-            border-radius: 15px !important;
-            padding: 0.75rem 2rem;
-        }
-        .btn-secondary-grey:hover {
-            background-color: var(--color-primary-dark-teal) !important;
-            border-color: var(--color-primary-dark-teal) !important;
-            color: white !important;
-        }
-
         /* Detail list styling with theme colors */
         .detail-list { list-style: none; padding: 0; margin: 0; }
         .detail-list li {
@@ -2277,18 +2119,15 @@ color: #2d3e40 !important;
         .product-gallery .carousel-control-next {
             width: 3rem;
             height: 3rem;
-            background-color: var(--color-primary-light-blue-grey);
             border-radius: 50%;
             opacity: 0.9;
             transition: opacity 0.2s ease, background-color 0.2s ease;
             top: 50%;
             transform: translateY(-50%);
             position: absolute;
-            border: none;
         }
         .product-gallery .carousel-control-prev:hover,
         .product-gallery .carousel-control-next:hover {
-            background-color: var(--color-secondary-light-pink);
             opacity: 1;
         }
         .product-gallery .carousel-control-prev { left: 1rem; }
@@ -2537,17 +2376,11 @@ color: #2d3e40 !important;
             overflow: hidden;
         }
         #nav-breedinfo .accordion-button {
-            background-color: #ffffff;
-            color: var(--color-primary-dark-teal);
-            font-weight: bold;
-            padding: 1rem 1.25rem;
-            border: none;
             width: 100%;
             text-align: left;
             display: flex;
             align-items: center;
-            box-shadow: none;
-            border-radius: 0;
+            font-weight: bold;
             font-family: var(--font-primary);
             border-bottom: 1px solid var(--color-primary-light-blue-grey);
         }
@@ -2726,14 +2559,6 @@ color: #2d3e40 !important;
 
         /* Canine Care Certified Section */
         .canine-care-certified .section-title { color: var(--color-primary-dark-teal); }
-.canine-care-certified .btn-primary {
-    background-color: var(--color-primary-dark-teal);
-    border-color: var(--color-primary-dark-teal);
-}
-.canine-care-certified .btn-primary:hover {
-    background-color: var(--color-secondary-teal);
-    border-color: var(--color-secondary-teal);
-}
 
 /* -------------------------------------------------- */
 /*  New design styles for header, front page and footer
@@ -2758,7 +2583,7 @@ color: #2d3e40 !important;
     height: 50px;
 }
 .cssHeader .navbar-nav-horizontal li a {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 15px;
     font-weight: 500;
     color: #333333;
@@ -2780,36 +2605,6 @@ color: #2d3e40 !important;
     font-size: 24px;
 }
 
-/* Hero Section */
-.hero-section {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-.hero-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
-}
-.hero-section h1 {
-    position: relative;
-    font-family: 'Poppins', sans-serif;
-    font-size: 54px;
-    font-weight: 700;
-    color: #FFFFFF;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-top: 200px;
-    letter-spacing: 1px;
-}
 
 /* Available Puppies */
 #available-puppies {
@@ -2818,7 +2613,7 @@ color: #2d3e40 !important;
     text-align: center;
 }
 #available-puppies .section-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
     color: #333333;
@@ -2841,13 +2636,10 @@ color: #2d3e40 !important;
     transform: scale(1.05);
 }
 .see-all-puppies {
-    background: #00BCD4;
-    color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
     padding: 14px 35px;
     border-radius: 30px;
-    border: none;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 40px;
@@ -2865,7 +2657,7 @@ color: #2d3e40 !important;
     padding: 100px 0;
 }
 .canine-care-certified h2 {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 38px;
     font-weight: 600;
     color: #333333;
@@ -2884,8 +2676,6 @@ color: #2d3e40 !important;
     text-align: justify;
 }
 .canine-care-certified .btn-primary {
-    background: #00BCD4;
-    border: none;
     font-size: 15px;
     font-weight: 600;
     padding: 12px 30px;
@@ -2904,7 +2694,7 @@ color: #2d3e40 !important;
     padding: 90px 0;
 }
 #our-guarantee h2 {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
     color: #333333;
@@ -2929,8 +2719,6 @@ color: #2d3e40 !important;
     text-align: center;
 }
 #our-guarantee .theme-primary-btn {
-    background: #00BCD4;
-    color: #FFFFFF;
     font-size: 15px;
     font-weight: 600;
     padding: 13px 32px;
@@ -2944,7 +2732,7 @@ color: #2d3e40 !important;
     padding: 90px 0;
 }
 #reviews .carous-title-5007 {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 42px;
     font-weight: 600;
     color: #333333;
@@ -2976,8 +2764,6 @@ color: #2d3e40 !important;
     font-style: italic;
 }
 #reviews .theme-primary-btn {
-    background: #00BCD4;
-    color: #FFFFFF;
     font-size: 15px;
     font-weight: 600;
     padding: 13px 35px;
@@ -2991,7 +2777,7 @@ color: #2d3e40 !important;
     padding: 80px 0;
 }
 .google-reviews h2 {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 38px;
     font-weight: 600;
     color: #333333;
@@ -3034,12 +2820,12 @@ color: #2d3e40 !important;
 
 /* Footer */
 .cssFooter {
-    background: #00BCD4;
+    background: #00c8baff;
     color: #FFFFFF;
     padding: 60px 0 0 0;
 }
 .cssFooter .footer-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary);
     font-size: 20px;
     font-weight: 600;
     color: #FFFFFF;
@@ -3075,7 +2861,6 @@ color: #2d3e40 !important;
 /* Responsive Breakpoints */
 @media (max-width: 1199px) {
     .cssHeader { padding: 0 30px; }
-    .hero-section h1 { font-size: 42px; }
     #available-puppies .section-title,
     #reviews .carous-title-5007,
     #our-guarantee h2,
@@ -3085,7 +2870,6 @@ color: #2d3e40 !important;
     .cssHeader { padding: 0 20px; }
     .cssHeader .navbar-horizontal-menu { display: none; }
     .cssHeader .mobile-menu-toggle { display: block; }
-    .hero-section h1 { font-size: 32px; margin-top: 150px; }
     #available-puppies .section-title,
     #reviews .carous-title-5007,
     #our-guarantee h2,
