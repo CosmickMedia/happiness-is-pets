@@ -252,6 +252,7 @@ function happiness_is_pets_customize_register( $wp_customize ) {
 
     $wp_customize->add_setting( 'hero_background_image', array(
             'sanitize_callback' => 'esc_url_raw',
+            'default'           => get_template_directory_uri() . '/assets/images/hero.jpg',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_background_image', array(
             'label'   => __( 'Hero Background Image', 'happiness-is-pets' ),
@@ -260,6 +261,7 @@ function happiness_is_pets_customize_register( $wp_customize ) {
 
     $wp_customize->add_setting( 'hero_background_image_mobile', array(
             'sanitize_callback' => 'esc_url_raw',
+            'default'           => get_template_directory_uri() . '/assets/images/hero-mobile.jpg',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_background_image_mobile', array(
             'label'   => __( 'Hero Background Image (Mobile)', 'happiness-is-pets' ),
