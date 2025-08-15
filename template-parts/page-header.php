@@ -4,7 +4,7 @@ if ( is_front_page() ) {
 }
 ?>
 <div class="header-title">
-    <div class="page-header-bar py-4">
+    <div class="page-header-bar">
         <div class="main-container">
             <h1 class="page-title mb-1">
                 <?php
