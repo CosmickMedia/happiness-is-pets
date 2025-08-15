@@ -234,6 +234,14 @@ function happiness_is_pets_customize_register( $wp_customize ) {
             'section' => 'homepage_hero',
     ) ) );
 
+    $wp_customize->add_setting( 'hero_image_mobile', array(
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_image_mobile', array(
+            'label'   => __( 'Hero Mobile Image', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+    ) ) );
+
     $wp_customize->add_setting( 'hero_background_color', array(
             'sanitize_callback' => 'sanitize_hex_color',
     ) );
