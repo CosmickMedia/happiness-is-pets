@@ -227,7 +227,7 @@ input[type="reset"]:hover,
 
     /* Set smaller logo height on mobile */
     .top-bar-logo img {
-        height: 10px;
+        height: 10px !important;
         width: auto;
     }
 
