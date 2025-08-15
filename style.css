@@ -2915,6 +2915,26 @@ body .product-primary-info h1.product_title {
     }
 }
 
+/* Quote bubble */
+.quote {
+    position: relative;
+    background: var(--color-secondary-light-pink);
+    padding: 1rem 1.5rem;
+    border-radius: .5rem;
+    font-style: italic;
+    margin: 1rem 0;
+}
+
+.quote::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 2rem;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: var(--color-secondary-light-pink) transparent;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 1199px) {
     .cssHeader { padding: 0 30px; }
