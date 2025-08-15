@@ -258,6 +258,14 @@ function happiness_is_pets_customize_register( $wp_customize ) {
             'section' => 'homepage_hero',
     ) ) );
 
+    $wp_customize->add_setting( 'hero_background_image_mobile', array(
+            'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'hero_background_image_mobile', array(
+            'label'   => __( 'Hero Background Image (Mobile)', 'happiness-is-pets' ),
+            'section' => 'homepage_hero',
+    ) ) );
+
     // --- Available Puppies Section ---
     $wp_customize->add_section( 'homepage_puppies', array(
             'title' => __( 'Available Puppies Section', 'happiness-is-pets' ),
@@ -834,9 +842,10 @@ function happiness_is_pets_customizer_css() {
 
         /* Hero Section */
         <?php
-        $hero_bg_color = get_theme_mod( 'hero_background_color' );
-        $hero_bg_image = get_theme_mod( 'hero_background_image' );
-        if ( $hero_bg_color || $hero_bg_image ) :
+        $hero_bg_color         = get_theme_mod( 'hero_background_color' );
+        $hero_bg_image         = get_theme_mod( 'hero_background_image' );
+        $hero_bg_image_mobile  = get_theme_mod( 'hero_background_image_mobile' );
+        if ( $hero_bg_color || $hero_bg_image || $hero_bg_image_mobile ) :
         ?>
         .front-page-hero {
             <?php if ( $hero_bg_color ) : ?>
@@ -846,6 +855,13 @@ function happiness_is_pets_customizer_css() {
             background-image: url('<?php echo esc_url( $hero_bg_image ); ?>');
             <?php endif; ?>
         }
+        <?php if ( $hero_bg_image_mobile ) : ?>
+        @media (max-width: 767px) {
+            .front-page-hero {
+                background-image: url('<?php echo esc_url( $hero_bg_image_mobile ); ?>');
+            }
+        }
+        <?php endif; ?>
         <?php endif; ?>
 
         /* Available Puppies Section */
