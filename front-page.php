@@ -20,8 +20,20 @@ get_header();
             </div>
             <div class="container">
                 <div class="row align-items-center">
-                    <?php $hero_image = get_theme_mod( 'hero_image' ); ?>
+                    <?php
+                    $hero_image        = get_theme_mod( 'hero_image' );
+                    $hero_image_mobile = get_theme_mod( 'hero_image_mobile' );
+                    ?>
                     <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0"<?php if ( $hero_image ) : ?> style="background-image: url('<?php echo esc_url( $hero_image ); ?>');"<?php endif; ?>></div>
+                    <?php if ( $hero_image_mobile ) : ?>
+                        <style>
+                            @media (max-width: 767px) {
+                                .front-page-hero .hero-image {
+                                    background-image: url('<?php echo esc_url( $hero_image_mobile ); ?>') !important;
+                                }
+                            }
+                        </style>
+                    <?php endif; ?>
                     <div class="col-md-6">
                         <div class="hero-content p-4 p-md-5 rounded text-center">
                             <?php if ( $hero_heading = get_theme_mod( 'hero_heading' ) ) : ?>
@@ -144,11 +156,24 @@ get_header();
                         prevEl: '.available-puppies-swiper .swiper-button-prev',
                     },
                     breakpoints: {
-                        0: { slidesPerView: 1 },
-                        576: { slidesPerView: 2 },
-                        768: { slidesPerView: 3 },
-                        992: { slidesPerView: 4 },
+                        0: { slidesPerView: 2 },
+                        576: { slidesPerView: 3 },
+                        768: { slidesPerView: 4 },
+                        992: { slidesPerView: 5 },
                         1200: { slidesPerView: 6 },
+                    },
+                } );
+                new Swiper( '.reviews-swiper', {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                    navigation: {
+                        nextEl: '.reviews-swiper .swiper-button-next',
+                        prevEl: '.reviews-swiper .swiper-button-prev',
+                    },
+                    breakpoints: {
+                        0: { slidesPerView: 1.2 },
+                        768: { slidesPerView: 2 },
+                        992: { slidesPerView: 3 },
                     },
                 } );
             } );
@@ -275,18 +300,22 @@ get_header();
                                     ),
                             );
                             ?>
-                            <div class="row justify-content-center">
-                                <?php foreach ( $reviews as $review ) : ?>
-                                    <div class="col-md-4 mb-4">
-                                        <div class="carousel-item-box carousel-item-box-style-6 h-100">
-                                            <div class="carousel-item-box-desc mx-4">
-                                                <div class="carousel-item-box-desc-title"><?php echo esc_html( $review['title'] ); ?></div>
-                                                <div class="carousel-item-box-desc-desc"><?php echo esc_html( $review['text'] ); ?></div>
-                                                <div class="carousel-item-box-desc-auth">- <?php echo esc_html( $review['author'] ); ?></div>
+                            <div class="swiper reviews-swiper">
+                                <div class="swiper-wrapper">
+                                    <?php foreach ( $reviews as $review ) : ?>
+                                        <div class="swiper-slide">
+                                            <div class="carousel-item-box carousel-item-box-style-6 h-100">
+                                                <div class="carousel-item-box-desc mx-4">
+                                                    <div class="carousel-item-box-desc-title"><?php echo esc_html( $review['title'] ); ?></div>
+                                                    <div class="carousel-item-box-desc-desc"><?php echo esc_html( $review['text'] ); ?></div>
+                                                    <div class="carousel-item-box-desc-auth">- <?php echo esc_html( $review['author'] ); ?></div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
                             <div class="carousel-layout-wrap-footer text-center pt-3">
                                 <a href="<?php echo esc_url( get_theme_mod( 'reviews_button_url', '/testimonials/' ) ); ?>" class="mt-2 theme-primary-btn">
