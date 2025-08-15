@@ -136,17 +136,6 @@ $locations = happiness_is_pets_get_locations();
         <?php // --- Offcanvas Menu (Triggered by hamburger in top bar) --- ?>
         <div class="offcanvas offcanvas-start happiness-is-pets-offcanvas" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">
             <div class="offcanvas-header">
-                <div class="offcanvas-logo">
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-                        <?php
-                        if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
-                            the_custom_logo();
-                        } else {
-                            ?>
-                            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo_horizontal.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-                        <?php } ?>
-                    </a>
-                </div>
                 <button type="button" class="btn-close happiness-is-pets-close" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
             </div>
             <div class="offcanvas-body">

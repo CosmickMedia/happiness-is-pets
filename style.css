@@ -252,13 +252,16 @@ input[type="reset"]:hover,
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
+    border: none;
+    background: none;
 }
 
 .happiness-is-pets-toggler:hover,
 .happiness-is-pets-toggler:focus {
-    background-color: rgba(61, 81, 85, 0.05);
+    background-color: transparent;
     outline: none;
     box-shadow: none;
+    border: none;
 }
 
 .happiness-is-pets-toggler .navbar-toggler-icon {
@@ -348,15 +351,10 @@ input[type="reset"]:hover,
 }
 
 .happiness-is-pets-offcanvas .offcanvas-header {
-    background-color: var(--color-primary-light-blue-grey);
     padding: 1.5rem;
-    border-bottom: 3px solid var(--color-primary-dark-teal);
-}
-
-.happiness-is-pets-offcanvas .offcanvas-logo img {
-    max-height: 60px;
-    width: auto;
-    max-width: 100%;
+    background-color: transparent;
+    border-bottom: none;
+    justify-content: flex-end;
 }
 
 .happiness-is-pets-offcanvas .happiness-is-pets-close {
