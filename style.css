@@ -164,15 +164,9 @@ input[type="reset"]:hover,
 
 /* Control Logo Size using the wrapper div */
 .top-bar-logo img { /* Target any img inside the wrapper */
-    width: auto;       /* Maintain aspect ratio */
     display: block;    /* Ensure it behaves as a block element */
-}
-
-@media (min-width: 768px) {
-    .top-bar-logo img {
-        width: 60%;
-        height: auto;
-    }
+    width: auto;       /* Maintain natural width */
+    height: 20px;      /* Default desktop height */
 }
 
 /* Style Top Right "Book Appointment" Button */
@@ -231,10 +225,10 @@ input[type="reset"]:hover,
         margin-bottom: 0;
     }
 
-    /* Adjust logo size on mobile when hamburger is present */
+    /* Set smaller logo height on mobile */
     .top-bar-logo img {
-        width: 141px;
-        height: 19px !important;
+        height: 10px;
+        width: auto;
     }
 
     /* Ensure consistent button border radius on mobile */
@@ -1922,13 +1916,6 @@ section#happy-tails {
     padding-right: 50px;
 }
 } */
-@media (max-width: 380px) {
-
-    .top-bar-logo img {
-        max-width: 140px;
-
-    }
-}
 @media (max-width: 575px){
     .page-id-306 .wp-block-group.apply-on-cust .custom-online-sec {
         flex-wrap: wrap !important;
