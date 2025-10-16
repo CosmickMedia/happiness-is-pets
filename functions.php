@@ -690,3 +690,58 @@ function dt_featured_pets_shortcode() {
     return ob_get_clean();
 }
 add_shortcode( 'featured_pets_section', 'dt_featured_pets_shortcode' );
+
+/**
+ * Add custom product statuses: B2B, Just-in, Weight Watch.
+ */
+function wc_ukm_add_custom_product_statuses( $product_statuses ) {
+
+    //B2B
+    $product_statuses['b2b'] = array(
+        'label'                     => _x( 'B2B', 'Pet Status', 'wc-unified-km' ),
+        'public'                    => false,
+        'exclude_from_search'       => true,
+        'show_in_admin_all_list'    => false,
+        'show_in_admin_status_list' => true,
+        'post_type'                 => array( 'product' ),
+        'label_count'               => _n_noop(
+            'B2B <span class="count">(%s)</span>',
+            'B2B <span class="count">(%s)</span>',
+            'wc-unified-km'
+        ),
+    );
+
+    //Justin
+    $product_statuses['just_in'] = array(
+        'label'                     => _x( 'Justin', 'Pet Status', 'wc-unified-km' ),
+        'public'                    => false,
+        'exclude_from_search'       => true,
+        'show_in_admin_all_list'    => false,
+        'show_in_admin_status_list' => true,
+        'post_type'                 => array( 'product' ),
+        'label_count'               => _n_noop(
+            'Justin <span class="count">(%s)</span>',
+            'Justin <span class="count">(%s)</span>',
+            'wc-unified-km'
+        ),
+    );
+
+    //Weight Watch
+    $product_statuses['weight_watch'] = array(
+        'label'                     => _x( 'Weight Watch', 'Pet Status', 'wc-unified-km' ),
+        'public'                    => false,
+        'exclude_from_search'       => true,
+        'show_in_admin_all_list'    => false,
+        'show_in_admin_status_list' => true,
+        'post_type'                 => array( 'product' ),
+        'label_count'               => _n_noop(
+            'Weight Watch <span class="count">(%s)</span>',
+            'Weight Watch <span class="count">(%s)</span>',
+            'wc-unified-km'
+        ),
+    );
+
+    return $product_statuses;
+}
+add_filter( 'wc_ukm_get_custom_product_statuses', 'wc_ukm_add_custom_product_statuses' );
+

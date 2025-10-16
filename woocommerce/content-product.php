@@ -19,6 +19,8 @@ if ( strtolower($gender) === 'female' ) {
 }
 
 $pet = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
+$pet_name = $product->get_meta( 'pet_name' ) ?: $product->get_name();
+$ref_id = $product->get_meta('reference_number') ?: $sku;
 $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
 $header_phone = get_theme_mod( 'header_phone_number' );
 $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
@@ -58,7 +60,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </div>
 
                     <!-- <h5 class="card-title pet-name fw-bold mb-2"><?php //echo sprintf( esc_html__( 'Hi, my name is %s!', 'happiness-is-pets' ), get_the_title() ); ?></h5> -->
-                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo sprintf( esc_html__( '%s!', 'happiness-is-pets' ), get_the_title() ); ?></h5>
+                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name . ' - ' . $ref_id ); ?></h5>
 
                     <div class="card-text">
                         <?php if ( $gender ) : ?>
@@ -70,12 +72,6 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         <?php if ( $birth_date ) : ?>
                         <div class="pet-detail pet-dob d-flex align-items-center mb-1">
                             <strong class="me-1"><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if ( $sku ) : ?>
-                        <div class="pet-detail pet-ref d-flex align-items-center">
-                            <strong class="me-1"><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> <span class="ref-id badge bg-light text-dark">#<?php echo esc_html( $sku ); ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -97,12 +93,31 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 
         <div class="card-footer bg-transparent border-top-0 text-center p-3">
             <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100 mb-2"><?php esc_html_e( 'View Details', 'happiness-is-pets' ); ?></a>
-            <a href="<?php echo esc_url( $reservation_url ); ?>" class="btn btn-secondary-theme w-100 mb-2" style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;">
-                <?php esc_html_e( 'Make a Reservation', 'happiness-is-pets' ); ?>
+            <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>" data-bs-toggle="modal" class="btn btn-secondary-theme w-100 mb-2" style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;">
+                <?php esc_html_e( 'Get my Details', 'happiness-is-pets' ); ?>
             </a>
             <?php if ( $header_phone ) : ?>
             <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $header_phone ) ); ?>" class="btn btn-outline-primary-theme w-100"><i class="fas fa-phone me-1"></i> <?php echo esc_html( $header_phone ); ?></a>
             <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Pet Details Modal -->
+<div class="modal fade" id="petDetailsModal-<?php echo esc_attr( $product_id ); ?>" tabindex="-1" aria-labelledby="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>">Get Details About <?php echo esc_html( $pet_name ); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php if ( shortcode_exists( 'gravityform' ) ) {
+                    echo do_shortcode( '[gravityform id="3" title="false" description="false" ajax="true"]' );
+                } else {
+                    echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
+                } ?>
+            </div>
         </div>
     </div>
 </div>

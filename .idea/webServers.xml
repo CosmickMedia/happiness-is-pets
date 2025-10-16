@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="c4f44e79-4559-4ce7-bfe4-8f7270373bce" name="Happiness Is Pets">
+      <webServer id="c4f44e79-4559-4ce7-bfe4-8f7270373bce" name="Happiness Is Pets" url="http://happinessispets.kinsta.cloud">
         <fileTransfer rootFolder="/www/happinessispets_512/public/wp-content/themes/happiness-is-pets" accessType="SFTP" host="35.224.70.159" port="58010" sshConfigId="8126ab81-49b7-4d66-b3d2-f096f386b380" sshConfig="Happiness Is Pets">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseRsync="true" />
