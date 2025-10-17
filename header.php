@@ -104,25 +104,14 @@ $locations = happiness_is_pets_get_locations();
                 <div class="header-top-button ms-auto">
                     <div class="header-contact d-flex align-items-center justify-content-end">
                         <?php if ( ! empty( $locations ) ) : ?>
-                            <div class="dropdown">
-                                <a class="header-icon header-phone-icon me-3" href="#" role="button" id="headerPhoneDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-phone"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerPhoneDropdown">
-                                    <?php foreach ( $locations as $loc ) :
-                                        if ( ! empty( $loc['phone'] ) ) :
-                                            $tel = preg_replace( '/[^0-9+]/', '', $loc['phone'] );
-                                            ?>
-                                            <li><a class="dropdown-item" href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $loc['name'] ); ?></a></li>
-                                        <?php endif;
-                                    endforeach; ?>
-                                </ul>
-                            </div>
+                            <a class="header-icon header-phone-icon me-3" href="#" role="button" data-bs-toggle="modal" data-bs-target="#locationPhoneModal" aria-label="<?php esc_attr_e( 'Call Us', 'happiness-is-pets' ); ?>">
+                                <i class="fas fa-phone"></i>
+                            </a>
                         <?php endif; ?>
                         <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header-icon header-account-icon me-3" aria-label="<?php esc_attr_e( 'My Account', 'happiness-is-pets' ); ?>">
                             <i class="fas fa-user"></i>
                         </a>
-                        <?php if ( function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
+                        <?php if ( false && function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
                             <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="header-icon header-cart-icon me-3" aria-label="<?php esc_attr_e( 'Shopping Cart', 'happiness-is-pets' ); ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
@@ -162,7 +151,7 @@ $locations = happiness_is_pets_get_locations();
                             <i class="fas fa-user"></i>
                             <span><?php esc_html_e( 'My Account', 'happiness-is-pets' ); ?></span>
                         </a>
-                        <?php if ( function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
+                        <?php if ( false && function_exists( 'wc_get_cart_url' ) && ! is_catalog_mode() ) : ?>
                             <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="quick-link-item">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span><?php esc_html_e( 'Cart', 'happiness-is-pets' ); ?></span>
@@ -224,5 +213,41 @@ $locations = happiness_is_pets_get_locations();
         </div>
 
     </header>
+
+    <?php // Location Phone Modal ?>
+    <div class="modal fade" id="locationPhoneModal" tabindex="-1" aria-labelledby="locationPhoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="locationPhoneModalLabel">
+                        <i class="fas fa-phone me-2"></i>
+                        <?php esc_html_e( 'Which Location Would You Like to Call?', 'happiness-is-pets' ); ?>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-3"><?php esc_html_e( 'Select the location you would like to contact:', 'happiness-is-pets' ); ?></p>
+                    <div class="d-grid gap-2">
+                        <?php foreach ( $locations as $loc ) :
+                            if ( ! empty( $loc['phone'] ) ) :
+                                $tel = preg_replace( '/[^0-9+]/', '', $loc['phone'] );
+                                ?>
+                                <a href="tel:<?php echo esc_attr( $tel ); ?>" class="btn btn-lg btn-primary d-flex align-items-center justify-content-between" style="background-color: var(--color-primary-turquoise); border-color: var(--color-primary-turquoise);">
+                                    <span>
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        <strong><?php echo esc_html( $loc['name'] ); ?></strong>
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-phone me-2"></i>
+                                        <?php echo esc_html( $loc['phone'] ); ?>
+                                    </span>
+                                </a>
+                            <?php endif;
+                        endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="content" class="site-content">
