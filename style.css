@@ -216,6 +216,10 @@ input[type="reset"]:hover,
     justify-content: flex-end;
 }
 
+.gform_page_footer input[type="submit"], .gform_page_footer input[type="button"] {
+    margin-bottom: 20px !important;
+}
+
 @media (max-width: 767.98px) {
     .header-top-button {
         text-align: right !important;
@@ -2961,3 +2965,79 @@ body .product-primary-info h1.product_title {
 }
 
 
+
+/* ================================
+   INFINITE SCROLL STYLES
+   ================================ */
+.infinite-scroll-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.infinite-scroll-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+    color: var(--color-primary-dark-teal) !important;
+}
+
+.infinite-scroll-loading p {
+    margin-top: 1rem;
+    color: var(--color-primary-dark-grey);
+    font-weight: 600;
+}
+
+.infinite-scroll-end {
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 2px solid var(--color-primary-light-blue-grey);
+    margin-top: 2rem;
+}
+
+.infinite-scroll-end p {
+    color: var(--color-primary-dark-grey);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Performance optimizations for images */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Smooth scrolling for better UX */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimize for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

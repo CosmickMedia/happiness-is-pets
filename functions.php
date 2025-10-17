@@ -465,6 +465,9 @@ add_action( 'init', function() {
     remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
     remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
 
+    // 🔹 Disable WooCommerce Pagination (for infinite scroll)
+    remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 10 );
+
 });
 
 
@@ -744,4 +747,201 @@ function wc_ukm_add_custom_product_statuses( $product_statuses ) {
     return $product_statuses;
 }
 add_filter( 'wc_ukm_get_custom_product_statuses', 'wc_ukm_add_custom_product_statuses' );
+
+/**
+ * ================================
+ * INFINITE SCROLL & LAZY LOADING
+ * ================================
+ */
+
+// Add infinite scroll JavaScript and AJAX handler
+function happiness_is_pets_infinite_scroll_scripts() {
+    if ( ! is_shop() && ! is_product_taxonomy() ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'happiness-infinite-scroll',
+        get_template_directory_uri() . '/assets/js/infinite-scroll.js',
+        array( 'jquery' ),
+        HAPPINESS_IS_PETS_VERSION,
+        true
+    );
+
+    // Get current page number
+    $current_page = max( 1, get_query_var( 'paged' ) );
+    $max_pages = $GLOBALS['wp_query']->max_num_pages;
+
+    wp_localize_script(
+        'happiness-infinite-scroll',
+        'infiniteScrollParams',
+        array(
+            'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+            'current_page' => $current_page,
+            'max_pages'    => $max_pages,
+            'loading_text' => __( 'Loading more puppies...', 'happiness-is-pets' ),
+            'no_more_text' => __( 'No more puppies to show', 'happiness-is-pets' ),
+            'query_vars'   => json_encode( $GLOBALS['wp_query']->query_vars ),
+        )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'happiness_is_pets_infinite_scroll_scripts' );
+
+// AJAX handler for loading more products
+function happiness_is_pets_load_more_products() {
+    $paged      = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+    $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
+
+    $query_vars['paged'] = $paged;
+    $query_vars['post_type'] = 'product';
+
+    $products = new WP_Query( $query_vars );
+
+    if ( $products->have_posts() ) {
+        ob_start();
+
+        // Just output the products, not the loop wrapper
+        while ( $products->have_posts() ) {
+            $products->the_post();
+            wc_get_template_part( 'content', 'product' );
+        }
+
+        $html = ob_get_clean();
+        wp_reset_postdata();
+
+        wp_send_json_success( array(
+            'html'      => $html,
+            'max_pages' => $products->max_num_pages,
+        ) );
+    } else {
+        wp_send_json_error();
+    }
+
+    wp_die();
+}
+add_action( 'wp_ajax_load_more_products', 'happiness_is_pets_load_more_products' );
+add_action( 'wp_ajax_nopriv_load_more_products', 'happiness_is_pets_load_more_products' );
+
+/**
+ * Add native lazy loading to all product images - DISABLED (was breaking images)
+ */
+// function happiness_is_pets_add_lazy_loading( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+//     // Add loading="lazy" to product images
+//     if ( get_post_type( $post_id ) === 'product' ) {
+//         $html = str_replace( '<img', '<img loading="lazy"', $html );
+//     }
+//     return $html;
+// }
+// add_filter( 'post_thumbnail_html', 'happiness_is_pets_add_lazy_loading', 10, 5 );
+
+/**
+ * ================================
+ * PAGESPEED OPTIMIZATIONS
+ * ================================
+ */
+
+// Defer JavaScript loading for better PageSpeed - DISABLED (was causing JS errors)
+// function happiness_is_pets_defer_scripts( $tag, $handle, $src ) {
+//     // Don't defer critical scripts
+//     $skip_defer = array(
+//         'jquery',
+//         'jquery-core',
+//         'jquery-migrate',
+//         'happiness-infinite-scroll',
+//         'wp-util',
+//         'wp-api',
+//         'wp-i18n',
+//         'lodash'
+//     );
+//
+//     if ( in_array( $handle, $skip_defer ) || is_admin() ) {
+//         return $tag;
+//     }
+//
+//     // Don't defer WooCommerce core scripts
+//     if ( strpos( $handle, 'wc-' ) === 0 || strpos( $handle, 'woocommerce' ) !== false ) {
+//         return $tag;
+//     }
+//
+//     // Add defer attribute
+//     return str_replace( ' src', ' defer src', $tag );
+// }
+// add_filter( 'script_loader_tag', 'happiness_is_pets_defer_scripts', 10, 3 );
+
+// Preload critical assets - DISABLED for now to prevent CSS conflicts
+// function happiness_is_pets_preload_assets() {
+//     // Preload Bootstrap CSS
+//     echo '<link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
+//
+//     // Preload Font Awesome
+//     echo '<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
+//
+//     // Fallback for no-JS
+//     echo '<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"></noscript>' . "\n";
+//     echo '<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>' . "\n";
+// }
+// add_action( 'wp_head', 'happiness_is_pets_preload_assets', 1 );
+
+// Add DNS prefetch for external resources
+function happiness_is_pets_dns_prefetch() {
+    echo '<link rel="dns-prefetch" href="//cdn.jsdelivr.net">' . "\n";
+    echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">' . "\n";
+    echo '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>' . "\n";
+    echo '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>' . "\n";
+}
+add_action( 'wp_head', 'happiness_is_pets_dns_prefetch', 0 );
+
+// Enable WebP support
+function happiness_is_pets_webp_support( $mimes ) {
+    $mimes['webp'] = 'image/webp';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'happiness_is_pets_webp_support' );
+
+// Add WebP srcset support
+function happiness_is_pets_webp_srcset( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
+    foreach ( $sources as &$source ) {
+        $webp_url = preg_replace( '/\.(jpg|jpeg|png)$/i', '.webp', $source['url'] );
+
+        // Check if WebP version exists
+        $upload_dir = wp_upload_dir();
+        $webp_path = str_replace( $upload_dir['baseurl'], $upload_dir['basedir'], $webp_url );
+
+        if ( file_exists( $webp_path ) ) {
+            $source['url'] = $webp_url;
+        }
+    }
+    return $sources;
+}
+add_filter( 'wp_calculate_image_srcset', 'happiness_is_pets_webp_srcset', 10, 5 );
+
+// Optimize images on upload
+function happiness_is_pets_optimize_image( $image_data ) {
+    if ( ! function_exists( 'wp_get_image_editor' ) ) {
+        return $image_data;
+    }
+
+    $image = wp_get_image_editor( $image_data );
+
+    if ( is_wp_error( $image ) ) {
+        return $image_data;
+    }
+
+    // Set quality to 82% (optimal for web)
+    $image->set_quality( 82 );
+    $image->save( $image_data );
+
+    return $image_data;
+}
+add_filter( 'wp_handle_upload', 'happiness_is_pets_optimize_image' );
+
+// Remove query strings from static resources
+function happiness_is_pets_remove_query_strings( $src ) {
+    if ( strpos( $src, '?ver=' ) ) {
+        $src = remove_query_arg( 'ver', $src );
+    }
+    return $src;
+}
+add_filter( 'style_loader_src', 'happiness_is_pets_remove_query_strings', 10, 1 );
+add_filter( 'script_loader_src', 'happiness_is_pets_remove_query_strings', 10, 1 );
 

@@ -356,13 +356,6 @@ body {
     gap: 24px;
 }
 
-.pup-title-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
 .pup-title-card h1 {
     font-size: 48px;
     font-weight: 900;
