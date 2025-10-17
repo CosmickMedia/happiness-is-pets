@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.1' ); // Updated version
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.3.0' ); // Updated version - Load More button instead of infinite scroll
 }
 
 /**
@@ -470,6 +470,39 @@ add_action( 'init', function() {
 
 });
 
+/**
+ * Set WooCommerce loop columns to 4 (matches Bootstrap grid)
+ */
+function happiness_is_pets_loop_columns() {
+    return 4;
+}
+add_filter( 'loop_shop_columns', 'happiness_is_pets_loop_columns', 999 );
+
+/**
+ * Remove WooCommerce column classes that conflict with Bootstrap grid
+ * This ensures consistent 4-column layout with row-cols-* classes
+ */
+function happiness_is_pets_product_class_filter( $classes, $product ) {
+    // Remove WooCommerce default column classes
+    $classes = array_diff( $classes, array( 'first', 'last' ) );
+
+    // Remove any col-* or column width classes that WooCommerce might add
+    $classes = array_filter( $classes, function( $class ) {
+        // Remove col-1, col-2, col-3, etc.
+        if ( preg_match( '/^col-\d/', $class ) ) {
+            return false;
+        }
+        // Remove column width classes
+        if ( strpos( $class, 'columns-' ) === 0 ) {
+            return false;
+        }
+        return true;
+    });
+
+    return $classes;
+}
+add_filter( 'woocommerce_post_class', 'happiness_is_pets_product_class_filter', 999, 2 );
+
 
 // Testimonial slider
 function happiness_is_pets_enqueue_swiper_assets() {
@@ -776,12 +809,14 @@ function happiness_is_pets_infinite_scroll_scripts() {
         'happiness-infinite-scroll',
         'infiniteScrollParams',
         array(
-            'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-            'current_page' => $current_page,
-            'max_pages'    => $max_pages,
-            'loading_text' => __( 'Loading more puppies...', 'happiness-is-pets' ),
-            'no_more_text' => __( 'No more puppies to show', 'happiness-is-pets' ),
-            'query_vars'   => json_encode( $GLOBALS['wp_query']->query_vars ),
+            'ajaxurl'        => admin_url( 'admin-ajax.php' ),
+            'current_page'   => $current_page,
+            'max_pages'      => $max_pages,
+            'loading_text'   => __( 'Loading more puppies...', 'happiness-is-pets' ),
+            'no_more_text'   => __( 'No more puppies to show', 'happiness-is-pets' ),
+            'error_text'     => __( 'Unable to load more puppies. Please refresh the page.', 'happiness-is-pets' ),
+            'placeholder_url'=> wc_placeholder_img_src(),
+            'query_vars'     => json_encode( $GLOBALS['wp_query']->query_vars ),
         )
     );
 }
@@ -792,29 +827,63 @@ function happiness_is_pets_load_more_products() {
     $paged      = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
 
+    // Sanitize and validate
+    if ( ! is_array( $query_vars ) ) {
+        wp_send_json_error( array( 'message' => 'Invalid query parameters' ) );
+        wp_die();
+    }
+
     $query_vars['paged'] = $paged;
     $query_vars['post_type'] = 'product';
+
+    // Ensure we don't load too many posts
+    if ( ! isset( $query_vars['posts_per_page'] ) ) {
+        $query_vars['posts_per_page'] = get_option( 'posts_per_page' );
+    }
 
     $products = new WP_Query( $query_vars );
 
     if ( $products->have_posts() ) {
         ob_start();
 
+        // Reset WooCommerce loop to prevent column classes
+        global $woocommerce_loop;
+        $woocommerce_loop = array();
+
+        // Disable WooCommerce's default column counting
+        $woocommerce_loop['columns'] = 4; // Set to 4 to match our grid
+        $woocommerce_loop['loop'] = 0;
+
         // Just output the products, not the loop wrapper
         while ( $products->have_posts() ) {
             $products->the_post();
+
+            // Ensure product global is set
+            global $product;
+            $product = wc_get_product( get_the_ID() );
+
+            if ( ! $product ) {
+                continue; // Skip if product is invalid
+            }
+
+            // Increment loop counter for WooCommerce
+            $woocommerce_loop['loop']++;
+
             wc_get_template_part( 'content', 'product' );
         }
 
         $html = ob_get_clean();
         wp_reset_postdata();
 
+        // Return HTML and pagination info
         wp_send_json_success( array(
             'html'      => $html,
             'max_pages' => $products->max_num_pages,
+            'found'     => $products->found_posts,
+            'page'      => $paged,
         ) );
     } else {
-        wp_send_json_error();
+        wp_send_json_error( array( 'message' => 'No products found' ) );
     }
 
     wp_die();

@@ -1,103 +1,71 @@
 /**
- * Infinite Scroll for WooCommerce Product Archives
- * Happiness Is Pets Theme
+ * Load More Button for WooCommerce Product Archives
+ * Happiness Is Pets Theme - Simple & Reliable
  */
 
 (function($) {
     'use strict';
 
-    console.log('🚀 Infinite Scroll Script Loaded');
-    console.log('📊 Params:', infiniteScrollParams);
+    // Prevent multiple initializations
+    if (window.loadMoreInitialized) {
+        return;
+    }
+    window.loadMoreInitialized = true;
 
     let currentPage = parseInt(infiniteScrollParams.current_page);
     let maxPages = parseInt(infiniteScrollParams.max_pages);
     let loading = false;
-    let allLoaded = false;
 
-    console.log('📄 Current Page:', currentPage);
-    console.log('📚 Max Pages:', maxPages);
+    // Find the products container
+    const $productsContainer = $('.products.row').first();
 
-    // Create and append loading indicator
-    const loadingHTML = `
-        <div class="infinite-scroll-loading text-center py-5" style="display: none;">
-            <div class="spinner-border text-primary" role="status" style="color: var(--color-primary-dark-teal) !important;">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-3 fw-bold">${infiniteScrollParams.loading_text}</p>
+    if (!$productsContainer.length) {
+        console.error('Products container not found');
+        return;
+    }
+
+    // Create Load More button
+    const loadMoreHTML = `
+        <div class="load-more-wrapper text-center py-5">
+            <button class="btn btn-primary btn-lg load-more-btn" type="button">
+                <span class="btn-text">Load More Puppies</span>
+                <span class="spinner-border spinner-border-sm ms-2" role="status" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+            </button>
+            <p class="text-muted mt-2 mb-0">Showing page ${currentPage} of ${maxPages}</p>
         </div>
     `;
 
     const noMoreHTML = `
-        <div class="infinite-scroll-end text-center py-4">
-            <p class="text-muted">${infiniteScrollParams.no_more_text}</p>
+        <div class="load-more-end text-center py-4">
+            <p class="text-muted mb-0">That's all the puppies for now!</p>
         </div>
     `;
 
-    // Find the products container - try multiple selectors
-    let $productsContainer = $('.products');
-
-    // If not found, try alternative selectors
-    if ($productsContainer.length === 0) {
-        console.log('⚠️ .products not found, trying alternatives...');
-        $productsContainer = $('ul.products');
-    }
-
-    if ($productsContainer.length === 0) {
-        $productsContainer = $('.woocommerce ul.products');
-    }
-
-    if ($productsContainer.length === 0) {
-        $productsContainer = $('.row.product-grid');
-    }
-
-    if ($productsContainer.length === 0) {
-        // Find the FIRST row that contains product elements
-        $productsContainer = $('.row').has('.product, .col.type-product').first();
-        console.log('🎯 Using first .row with products');
-    }
-
-    console.log('🔍 Products container found:', $productsContainer.length);
-    console.log('📦 Container class:', $productsContainer.attr('class'));
-    console.log('🔢 Products in container:', $productsContainer.find('.product, .col.type-product').length);
-
-    if ($productsContainer.length) {
-        // Only append loading indicator once
-        if ($('.infinite-scroll-loading').length === 0) {
-            $productsContainer.after(loadingHTML);
-            console.log('✅ Loading indicator added');
-        } else {
-            console.log('ℹ️ Loading indicator already exists');
-        }
+    // Add button after products container
+    if (currentPage < maxPages) {
+        $productsContainer.after(loadMoreHTML);
     } else {
-        console.error('❌ No products container found!');
-        console.log('🔍 Available containers:', $('[class*="product"]').length);
-        return; // Exit if no container found
+        $productsContainer.after(noMoreHTML);
     }
 
-    const $loadingIndicator = $('.infinite-scroll-loading');
+    // Handle button click
+    $(document).on('click', '.load-more-btn', function() {
+        if (loading) return;
 
-    /**
-     * Load more products via AJAX
-     */
-    function loadMoreProducts() {
-        console.log('🎬 loadMoreProducts called - Page:', currentPage, 'Max:', maxPages, 'Loading:', loading, 'AllLoaded:', allLoaded);
-
-        if (loading || allLoaded || currentPage >= maxPages) {
-            console.log('⛔ Skipping load - already loading or all loaded');
-            if (currentPage >= maxPages && !allLoaded) {
-                $loadingIndicator.hide();
-                if ($('.infinite-scroll-end').length === 0) {
-                    $productsContainer.after(noMoreHTML);
-                }
-                allLoaded = true;
-            }
-            return;
-        }
+        const $btn = $(this);
+        const $btnText = $btn.find('.btn-text');
+        const $spinner = $btn.find('.spinner-border');
+        const $wrapper = $('.load-more-wrapper');
 
         loading = true;
         currentPage++;
-        console.log('📤 Making AJAX request for page:', currentPage);
-        $loadingIndicator.show();
+
+        // Show loading state
+        $btn.prop('disabled', true);
+        $btnText.text('Loading...');
+        $spinner.show();
 
         $.ajax({
             url: infiniteScrollParams.ajaxurl,
@@ -108,129 +76,58 @@
                 query_vars: infiniteScrollParams.query_vars
             },
             success: function(response) {
-                console.log('📥 AJAX Response received:', response);
-
                 if (response.success && response.data.html) {
-                    console.log('✅ Success! HTML length:', response.data.html.length);
+                    // Parse HTML and separate products from modals
+                    const $temp = $('<div>').html(response.data.html);
+                    const $allElements = $temp.children();
 
-                    // Try to parse the HTML and find products
-                    const $responseHTML = $(response.data.html);
-                    console.log('🔍 Response elements:', $responseHTML.length);
+                    const $newProducts = $allElements.filter(':not(.modal)');
+                    const $newModals = $allElements.filter('.modal');
 
-                    let $newProducts;
+                    // Add products to grid
+                    $productsContainer.append($newProducts);
 
-                    // Check if response is product elements or wrapped
-                    if ($responseHTML.hasClass('product') || $responseHTML.hasClass('col')) {
-                        $newProducts = $responseHTML;
-                        console.log('✓ Products found directly');
-                    } else {
-                        $newProducts = $responseHTML.find('.product, .col');
-                        console.log('✓ Products found nested:', $newProducts.length);
-                    }
-
-                    if ($newProducts.length === 0) {
-                        // Fallback: Just append the HTML as-is
-                        console.log('⚠️ No product elements found, appending raw HTML');
-                        $productsContainer.append(response.data.html);
-                    } else {
-                        console.log('➕ Appending', $newProducts.length, 'products');
-                        $productsContainer.append($newProducts);
-                    }
+                    // Add modals to body
+                    $('body').append($newModals);
 
                     // Update max pages
-                    maxPages = parseInt(response.data.max_pages);
-                    console.log('📚 Updated max pages:', maxPages);
+                    maxPages = response.data.max_pages || maxPages;
 
-                    // Trigger event for other scripts
-                    $(document).trigger('happiness_infinite_scroll_loaded', [$newProducts]);
-
-                    // Check if we've loaded all products
+                    // Check if more pages exist
                     if (currentPage >= maxPages) {
-                        console.log('🏁 All pages loaded!');
-                        $loadingIndicator.hide();
-                        if ($('.infinite-scroll-end').length === 0) {
-                            $productsContainer.after(noMoreHTML);
-                        }
-                        allLoaded = true;
-                    } else {
-                        console.log('📄 More pages available');
-                        $loadingIndicator.hide();
-                    }
-                } else {
-                    console.log('❌ No more products available');
-                    // No more products
-                    $loadingIndicator.hide();
-                    if ($('.infinite-scroll-end').length === 0) {
+                        $wrapper.remove();
                         $productsContainer.after(noMoreHTML);
+                    } else {
+                        // Update page counter
+                        $wrapper.find('p').text(`Showing page ${currentPage} of ${maxPages}`);
+
+                        // Reset button
+                        $btn.prop('disabled', false);
+                        $btnText.text('Load More Puppies');
+                        $spinner.hide();
                     }
-                    allLoaded = true;
+
+                    // Scroll smoothly to first new product
+                    $('html, body').animate({
+                        scrollTop: $newProducts.first().offset().top - 100
+                    }, 400);
+                } else {
+                    $wrapper.remove();
+                    $productsContainer.after(noMoreHTML);
                 }
 
                 loading = false;
-                console.log('✓ Loading complete, ready for next page');
             },
             error: function(xhr, status, error) {
-                console.error('❌ AJAX Error:', status, error);
-                console.error('Response:', xhr.responseText);
-                $loadingIndicator.hide();
+                console.error('AJAX Error:', error);
+                $wrapper.html(`
+                    <div class="alert alert-warning text-center">
+                        Unable to load more products. Please refresh the page.
+                    </div>
+                `);
                 loading = false;
             }
         });
-    }
-
-    /**
-     * Check if user has scrolled near bottom of page
-     */
-    function checkScroll() {
-        if (allLoaded || loading) {
-            return;
-        }
-
-        const scrollPosition = $(window).scrollTop() + $(window).height();
-        const documentHeight = $(document).height();
-        const triggerPoint = documentHeight - 800; // Trigger 800px before bottom
-
-        console.log('📍 Scroll check - Position:', scrollPosition, 'Trigger:', triggerPoint);
-
-        if (scrollPosition >= triggerPoint) {
-            console.log('✨ Trigger point reached! Loading more...');
-            loadMoreProducts();
-        }
-    }
-
-    // Bind scroll event with throttling
-    let scrollTimeout;
-    $(window).on('scroll', function() {
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-        }
-
-        scrollTimeout = setTimeout(function() {
-            checkScroll();
-        }, 100);
-    });
-
-    // Initial check in case content doesn't fill the page
-    $(document).ready(function() {
-        // Remove any duplicate loading indicators
-        $('.infinite-scroll-loading').each(function(index) {
-            if (index > 0) {
-                console.log('🗑️ Removing duplicate loading indicator #' + index);
-                $(this).remove();
-            }
-        });
-
-        // Remove any duplicate end messages
-        $('.infinite-scroll-end').each(function(index) {
-            if (index > 0) {
-                console.log('🗑️ Removing duplicate end message #' + index);
-                $(this).remove();
-            }
-        });
-
-        setTimeout(function() {
-            checkScroll();
-        }, 500);
     });
 
 })(jQuery);

@@ -2967,41 +2967,53 @@ body .product-primary-info h1.product_title {
 
 
 /* ================================
-   INFINITE SCROLL STYLES
+   LOAD MORE BUTTON STYLES
    ================================ */
-.infinite-scroll-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.load-more-wrapper {
     padding: 3rem 0;
     animation: fadeIn 0.3s ease-in;
 }
 
-.infinite-scroll-loading .spinner-border {
-    width: 3rem;
-    height: 3rem;
-    border-width: 0.3em;
-    color: var(--color-primary-dark-teal) !important;
-}
-
-.infinite-scroll-loading p {
-    margin-top: 1rem;
-    color: var(--color-primary-dark-grey);
+.load-more-btn {
+    background-color: var(--color-primary-dark-teal) !important;
+    border-color: var(--color-primary-dark-teal) !important;
+    color: white !important;
+    padding: 0.75rem 2rem;
     font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.infinite-scroll-end {
+.load-more-btn:hover:not(:disabled) {
+    background-color: var(--color-primary-dark-grey) !important;
+    border-color: var(--color-primary-dark-grey) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.load-more-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.load-more-wrapper p {
+    color: var(--color-primary-dark-grey);
+    font-size: 0.95rem;
+}
+
+.load-more-end {
     padding: 2rem 0;
     text-align: center;
     border-top: 2px solid var(--color-primary-light-blue-grey);
     margin-top: 2rem;
 }
 
-.infinite-scroll-end p {
+.load-more-end p {
     color: var(--color-primary-dark-grey);
     font-size: 1.1rem;
-    margin: 0;
+    font-weight: 500;
 }
 
 @keyframes fadeIn {
@@ -3039,5 +3051,43 @@ html {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+/* ================================
+   PRODUCT GRID FIX - Infinite Scroll
+   Force Bootstrap's row-cols to work properly
+   ================================ */
+
+/* Reset any WooCommerce width overrides */
+.products.row > .col,
+.products.row > [class*="product"],
+.products.row > [class*="type-product"] {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* 4 columns on large screens (desktop) - Bootstrap default */
+@media (min-width: 992px) {
+    .products.row.row-cols-lg-4 > * {
+        flex: 0 0 auto !important;
+        width: 25% !important;
+    }
+}
+
+/* 3 columns on medium screens (tablet) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .products.row.row-cols-md-3 > * {
+        flex: 0 0 auto !important;
+        width: 33.3333333333% !important;
+    }
+}
+
+/* 2 columns on small screens (mobile) */
+@media (max-width: 767.98px) {
+    .products.row.row-cols-2 > * {
+        flex: 0 0 auto !important;
+        width: 50% !important;
     }
 }

@@ -39,7 +39,18 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                 <?php endif; ?>
                 <?php
                 if ( has_post_thumbnail() ) {
-                    the_post_thumbnail( 'woocommerce_thumbnail', array( 'class' => 'object-fit-cover w-100' ) );
+                    // Force immediate loading without lazy loading attribute
+                    $image_id = get_post_thumbnail_id();
+                    $image_url = wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' );
+                    $image_srcset = wp_get_attachment_image_srcset( $image_id, 'woocommerce_thumbnail' );
+                    $image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
+                    printf(
+                        '<img src="%s" srcset="%s" sizes="(max-width: 300px) 100vw, 300px" alt="%s" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail object-fit-cover w-100" decoding="async">',
+                        esc_url( $image_url ),
+                        esc_attr( $image_srcset ),
+                        esc_attr( $image_alt ?: get_the_title() )
+                    );
                 } else {
                     echo wc_placeholder_img( 'woocommerce_thumbnail' );
                 }
