@@ -7,13 +7,34 @@
  */
 
 get_header();
+
+// Preload hero image for LCP optimization
+$hero_image = get_theme_mod( 'hero_image' );
+if ( $hero_image ) {
+    echo '<link rel="preload" as="image" href="' . esc_url( $hero_image ) . '" fetchpriority="high">' . "\n";
+}
 ?>
+
+    <style>
+        /* Critical CSS for Hero Section - Inline for faster LCP */
+        .hero-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 767px) {
+            .hero-img {
+                max-height: 400px;
+            }
+        }
+    </style>
 
     <main id="primary" class="site-main">
 
         <?php // --- Hero Section --- ?>
         <section class="front-page-hero">
-            <div class="paw-background">
+            <div class="paw-background" aria-hidden="true">
                 <i class="fas fa-paw"></i>
                 <i class="fas fa-paw"></i>
                 <i class="fas fa-paw"></i>
@@ -24,16 +45,16 @@ get_header();
                     $hero_image        = get_theme_mod( 'hero_image' );
                     $hero_image_mobile = get_theme_mod( 'hero_image_mobile' );
                     ?>
-                    <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0"<?php if ( $hero_image ) : ?> style="background-image: url('<?php echo esc_url( $hero_image ); ?>');"<?php endif; ?>></div>
-                    <?php if ( $hero_image_mobile ) : ?>
-                        <style>
-                            @media (max-width: 767px) {
-                                .front-page-hero .hero-image {
-                                    background-image: url('<?php echo esc_url( $hero_image_mobile ); ?>') !important;
-                                }
-                            }
-                        </style>
-                    <?php endif; ?>
+                    <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0">
+                        <?php if ( $hero_image ) : ?>
+                            <picture>
+                                <?php if ( $hero_image_mobile ) : ?>
+                                    <source media="(max-width: 767px)" srcset="<?php echo esc_url( $hero_image_mobile ); ?>" type="image/webp">
+                                <?php endif; ?>
+                                <img src="<?php echo esc_url( $hero_image ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) . ' - ' . get_theme_mod( 'hero_heading', 'Welcome' ) ); ?>" width="800" height="600" fetchpriority="high" loading="eager" class="hero-img">
+                            </picture>
+                        <?php endif; ?>
+                    </div>
                     <div class="col-md-6">
                         <div class="hero-content p-4 p-md-5 rounded text-center">
                             <?php if ( $hero_heading = get_theme_mod( 'hero_heading' ) ) : ?>
@@ -100,38 +121,154 @@ get_header();
                         <?php foreach ( $products as $product ) :
                             $product_id = $product->get_id();
                             $sku        = $product->get_sku();
-                            $gender     = get_field( 'gender', $product_id );
-                            $pet        = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
-                            $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
-                            $breed      = '';
                             $categories = get_the_terms( $product_id, 'product_cat' );
-                            if ( $categories && ! is_wp_error( $categories ) ) {
-                                foreach ( $categories as $cat ) {
-                                    if ( 'puppies-for-sale' !== $cat->slug ) {
-                                        $breed = $cat->name;
-                                        break;
-                                    }
+                            $first_cat  = $categories && ! is_wp_error( $categories ) ? array_shift( $categories ) : false;
+                            $gender = get_field('gender', $product_id);
+
+                            $gender_class = '';
+                            if ( strtolower($gender) === 'female' ) {
+                                $gender_class = 'gender-female';
+                            } elseif ( strtolower($gender) === 'male' ) {
+                                $gender_class = 'gender-male';
+                            }
+
+                            $pet = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
+                            $pet_name = $product->get_meta( 'pet_name' ) ?: $product->get_name();
+                            $ref_id = $product->get_meta('reference_number') ?: $sku;
+                            $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
+                            $location = ! empty( $pet->location ) ? $pet->location : '';
+                            $breed = ! empty( $pet->breed ) ? $pet->breed : ( $first_cat ? $first_cat->name : '' );
+
+                            // Dynamic phone number based on location
+                            $location_phone = get_theme_mod('header_phone_number', '317-537-2480');
+                            if (!empty($location)) {
+                                $location_lower = strtolower(trim($location));
+                                if (strpos($location_lower, 'indianapolis') !== false) {
+                                    $location_phone = get_theme_mod('location_1_phone', '317-537-2480');
+                                } elseif (strpos($location_lower, 'schererville') !== false) {
+                                    $location_phone = get_theme_mod('location_2_phone', '219-865-3078');
                                 }
                             }
                             ?>
                             <div class="swiper-slide">
-                                <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="available-puppy-card d-block text-center">
-                                    <?php echo $product->get_image( 'medium', array( 'class' => 'img-fluid rounded' ) ); ?>
-                                    <?php if ( $breed ) : ?>
-                                        <h5 class="fw-bold mt-2 mb-1"><?php echo esc_html( $breed ); ?></h5>
-                                    <?php endif; ?>
-                                    <ul class="list-unstyled small mb-0">
-                                        <?php if ( $sku ) : ?>
-                                            <li><strong><?php esc_html_e( 'Ref:', 'happiness-is-pets' ); ?></strong> #<?php echo esc_html( $sku ); ?></li>
-                                        <?php endif; ?>
-                                        <?php if ( $birth_date ) : ?>
-                                            <li><strong><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $birth_date ); ?></li>
-                                        <?php endif; ?>
-                                        <?php if ( $gender ) : ?>
-                                            <li><strong><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong> <?php echo esc_html( $gender ); ?></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </a>
+                                <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
+                                    <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), $pet_name ) ); ?>">
+                                        <div class="position-relative">
+                                            <?php
+                                            // Get the product image - use exact same method as the working slider
+                                            $image_id = $product->get_image_id();
+                                            if ( $image_id ) {
+                                                echo wp_get_attachment_image(
+                                                    $image_id,
+                                                    'medium',
+                                                    false,
+                                                    array(
+                                                        'class' => 'img-fluid w-100',
+                                                        'alt' => esc_attr( $breed ? $breed . ' puppy' : $pet_name )
+                                                    )
+                                                );
+                                            } else {
+                                                // Show placeholder if no image
+                                                echo '<img src="' . esc_url( wc_placeholder_img_src() ) . '" alt="' . esc_attr( $pet_name ) . '" class="img-fluid w-100" />';
+                                            }
+                                            ?>
+                                        </div>
+                                    </a>
+
+                                    <div class="card-body p-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="pet-breed mb-1">
+                                                    <?php if ( $first_cat ) : ?>
+                                                        <span class="badge rounded-pill fs-6">
+                                                            <a class="text-reset" href="<?php echo esc_url( get_term_link( $first_cat ) ); ?>" rel="tag">
+                                                                <?php echo esc_html( $first_cat->name ); ?>
+                                                            </a>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                </div>
+
+                                                <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name . ' - ' . $ref_id ); ?></h5>
+
+                                                <div class="card-text">
+                                                    <?php if ( $breed ) : ?>
+                                                    <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
+                                                        <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $breed ); ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+
+                                                    <?php if ( $gender ) : ?>
+                                                    <div class="pet-detail pet-gender d-flex align-items-center mb-1">
+                                                        <strong class="me-1"><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+
+                                                    <?php if ( $birth_date ) : ?>
+                                                    <div class="pet-detail pet-dob d-flex align-items-center mb-1">
+                                                        <strong class="me-1"><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+
+                                                    <?php if ( $location ) : ?>
+                                                    <div class="pet-detail pet-location d-flex align-items-center mb-1">
+                                                        <i class="fas fa-map-marker-alt me-1"></i><span> <?php echo esc_html( $location ); ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer bg-transparent border-top-0 text-center p-3">
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-6">
+                                                <?php if ( $location_phone ) : ?>
+                                                <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $location_phone ) ); ?>"
+                                                   class="btn w-100"
+                                                   style="background: white; color: var(--color-primary-dark-grey); border: 3px solid var(--color-primary-dark-grey);">
+                                                    <i class="fas fa-phone me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Call', 'happiness-is-pets' ); ?></span>
+                                                </a>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                                                   data-bs-toggle="modal"
+                                                   class="btn btn-secondary-theme w-100 pet-details-trigger"
+                                                   style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
+                                                   data-product-id="<?php echo esc_attr( $product_id ); ?>"
+                                                   data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                                                   data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+                                                   data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+                                                   data-gender="<?php echo esc_attr( $gender ); ?>"
+                                                   data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+                                                   data-location="<?php echo esc_attr( $location ); ?>"
+                                                   data-product-url="<?php echo esc_url( get_permalink( $product_id ) ); ?>">
+                                                    <i class="fas fa-paper-plane me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Contact', 'happiness-is-pets' ); ?></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="btn btn-primary-theme w-100"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pet Details Modal -->
+                            <div class="modal fade" id="petDetailsModal-<?php echo esc_attr( $product_id ); ?>" tabindex="-1" aria-labelledby="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>">Get Details About <?php echo esc_html( $pet_name ); ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <?php if ( shortcode_exists( 'gravityform' ) ) {
+                                                echo do_shortcode( '[gravityform id="3" title="false" description="false" ajax="true"]' );
+                                            } else {
+                                                echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
+                                            } ?>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -177,6 +314,117 @@ get_header();
                     },
                 } );
             } );
+
+            // Pet Details Modal Handler for Homepage
+            (function() {
+                'use strict';
+
+                // Prevent multiple initializations
+                if (window.petDetailsModalHandlerInitialized) {
+                    return;
+                }
+                window.petDetailsModalHandlerInitialized = true;
+
+                // Function to populate form fields
+                function populatePetDetailsForm(modal, button) {
+                    if (!button || !button.classList.contains('pet-details-trigger')) {
+                        return;
+                    }
+
+                    // Extract product data from button's data attributes
+                    const productData = {
+                        productId: button.getAttribute('data-product-id'),
+                        petName: button.getAttribute('data-pet-name'),
+                        refId: button.getAttribute('data-ref-id'),
+                        breed: button.getAttribute('data-breed'),
+                        gender: button.getAttribute('data-gender'),
+                        birthDate: button.getAttribute('data-birth-date'),
+                        location: button.getAttribute('data-location'),
+                        productUrl: button.getAttribute('data-product-url')
+                    };
+
+                    // Wait for Gravity Forms to fully render
+                    setTimeout(function() {
+                        const modalBody = modal.querySelector('.modal-body');
+                        if (!modalBody) {
+                            return;
+                        }
+
+                        // Map of CSS classes to product data
+                        const fieldMap = {
+                            'gf-pet-name': productData.petName,
+                            'gf-ref-id': productData.refId,
+                            'gf-breed': productData.breed,
+                            'gf-gender': productData.gender,
+                            'gf-birth-date': productData.birthDate,
+                            'gf-location': productData.location,
+                            'gf-product-url': productData.productUrl
+                        };
+
+                        // Try multiple selector methods to find fields
+                        Object.keys(fieldMap).forEach(function(className) {
+                            const value = fieldMap[className];
+                            let field = null;
+
+                            // Look for gfield wrapper with the CSS class
+                            let gfieldWrapper = modalBody.querySelector('.gfield.' + className);
+                            if (gfieldWrapper) {
+                                field = gfieldWrapper.querySelector('input, textarea, select');
+                            }
+
+                            // Look for the class on any li element
+                            if (!field) {
+                                let liWrapper = modalBody.querySelector('li.' + className);
+                                if (liWrapper) {
+                                    field = liWrapper.querySelector('input, textarea, select');
+                                }
+                            }
+
+                            // Look for ginput_container with the class
+                            if (!field) {
+                                let fieldContainer = modalBody.querySelector('.ginput_container.' + className);
+                                if (fieldContainer) {
+                                    field = fieldContainer.querySelector('input, textarea, select');
+                                }
+                            }
+
+                            // Direct input/textarea/select with the class
+                            if (!field) {
+                                field = modalBody.querySelector('input.' + className + ', textarea.' + className + ', select.' + className);
+                            }
+
+                            if (field) {
+                                field.value = value;
+                                field.setAttribute('value', value);
+
+                                // Trigger events
+                                if (window.jQuery && jQuery(field).length) {
+                                    jQuery(field).val(value).trigger('input').trigger('change').trigger('blur');
+                                } else {
+                                    field.dispatchEvent(new Event('input', { bubbles: true }));
+                                    field.dispatchEvent(new Event('change', { bubbles: true }));
+                                    field.dispatchEvent(new Event('blur', { bubbles: true }));
+                                }
+                            }
+                        });
+
+                    }, 500);
+                }
+
+                // Listen for Bootstrap modal show event
+                document.addEventListener('show.bs.modal', function(event) {
+                    const modal = event.target;
+
+                    // Only process pet details modals
+                    if (!modal.id || !modal.id.startsWith('petDetailsModal-')) {
+                        return;
+                    }
+
+                    // Get the button that triggered the modal
+                    const button = event.relatedTarget;
+                    populatePetDetailsForm(modal, button);
+                });
+            })();
         </script>
 
         <?php // --- Canine Care Certified Section --- ?>
@@ -188,7 +436,7 @@ get_header();
                         <p class="text-muted mb-3"><?php echo esc_html( get_theme_mod( 'canine_care_subtitle', 'Administered by Purdue University' ) ); ?></p>
                         <p><?php echo esc_html( get_theme_mod( 'canine_care_text', 'With an emphasis on offering the best puppies possible from the healthiest and most socially adjusted dogs, we visit many of our breeders on a monthly basis. If you are looking for a purebred puppy with us, you can do so with confidence. We are proud to be Canine Care Certified – Canine Care Certified goes above and beyond currently available canine welfare standards programs. The program sets forth rigorous, science-based, expert-reviewed standards for canine physical and behavioral welfare in areas such as nutrition, veterinary care, housing, handling and exercise.' ) ); ?></p>
                         <a href="<?php echo esc_url( get_theme_mod( 'canine_care_button_url', '/breeders/' ) ); ?>" class="btn btn-primary mt-3">
-                            <?php echo esc_html( get_theme_mod( 'canine_care_button_text', 'Learn More' ) ); ?>
+                            <?php echo esc_html( get_theme_mod( 'canine_care_button_text', 'Learn More About Our Canine Care Certified Breeders' ) ); ?>
                         </a>
                     </div>
                     <div class="col-md-6 text-center">
@@ -206,7 +454,7 @@ get_header();
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 d-flex align-items-center">
                                     <div class="info-layout-content-img">
-                                        <img src="<?php echo esc_url( get_theme_mod( 'financing_image', get_template_directory_uri() . '/assets/images/ourpuppies.webp' ) ); ?>" alt="" class="info_placeholder img-fluid infofirst-img" />
+                                        <img src="<?php echo esc_url( get_theme_mod( 'financing_image', get_template_directory_uri() . '/assets/images/ourpuppies.webp' ) ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'financing_title', 'Take Home Your Newest Addition!' ) ); ?>" class="info_placeholder img-fluid infofirst-img" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-8 align-items-center d-flex order-2 order-md-2">
@@ -246,7 +494,7 @@ get_header();
                 <div class="row justify-content-center">
                     <div class="col col-12 col-md-4 align-self-center">
                         <div class="container d-flex flex-column justify-content-center align-items-center">
-                            <img src="<?php echo esc_url( get_theme_mod( 'guarantee_1_image', get_template_directory_uri() . '/assets/images/health-warranty.webp__88.0x77.0_subsampling-2.webp' ) ); ?>" alt="" class="img-fluid" />
+                            <img src="<?php echo esc_url( get_theme_mod( 'guarantee_1_image', get_template_directory_uri() . '/assets/images/health-warranty.webp__88.0x77.0_subsampling-2.webp' ) ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'guarantee_1_title', '2 year health warranty' ) ); ?>" class="img-fluid" />
                             <div class="my-2 text-center">
                                 <p class="primary1-bold"><?php echo esc_html( get_theme_mod( 'guarantee_1_title', '2 year health warranty' ) ); ?></p>
                                 <p><?php echo esc_html( get_theme_mod( 'guarantee_1_text', 'Since many, but not all congenital defects arise within the first year, we go the extra mile to ensure you and your new puppy are covered.' ) ); ?></p>
@@ -259,7 +507,7 @@ get_header();
 
                     <div class="col col-12 col-md-4 align-self-center my-5 my-md-0">
                         <div class="container d-flex flex-column justify-content-center align-items-center">
-                            <img src="<?php echo esc_url( get_theme_mod( 'guarantee_2_image', get_template_directory_uri() . '/assets/images/veterinary-check.webp__81.0x68.0_subsampling-2.webp' ) ); ?>" alt="" class="img-fluid" />
+                            <img src="<?php echo esc_url( get_theme_mod( 'guarantee_2_image', get_template_directory_uri() . '/assets/images/veterinary-check.webp__81.0x68.0_subsampling-2.webp' ) ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'guarantee_2_title', '7 day veterinary check' ) ); ?>" class="img-fluid" />
                             <div class="my-2 text-center">
                                 <p class="primary1-bold"><?php echo esc_html( get_theme_mod( 'guarantee_2_title', '7 day veterinary check' ) ); ?></p>
                                 <p><?php echo esc_html( get_theme_mod( 'guarantee_2_text', 'Bring your new puppy to any of our in-network clinics within 7 days of purchase for a complimentary wellness check-up.' ) ); ?></p>

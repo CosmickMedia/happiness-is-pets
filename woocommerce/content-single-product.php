@@ -1335,7 +1335,7 @@ body {
 
             <div>
                 <?php if (shortcode_exists('gravityform')) {
-                    echo do_shortcode('[gravityform id="2" title="false" description="false" ajax="true"]');
+                    echo do_shortcode('[gravityform id="3" title="false" description="false" ajax="true"]');
                 } else {
                     echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
                 } ?>
@@ -1747,6 +1747,97 @@ if ($parents_ofa_tested) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Populate Gravity Form fields with product data
+    setTimeout(function() {
+        console.log('🐾 Populating Gravity Form on single product page');
+
+        const productData = {
+            petName: <?php echo json_encode($pet_name); ?>,
+            refId: <?php echo json_encode($ref_id); ?>,
+            breed: <?php echo json_encode($breed); ?>,
+            gender: <?php echo json_encode($gender); ?>,
+            birthDate: <?php echo json_encode($birth_date); ?>,
+            location: <?php echo json_encode($location); ?>,
+            productUrl: <?php echo json_encode(get_permalink()); ?>
+        };
+
+        console.log('📦 Product data:', productData);
+
+        const fieldMap = {
+            'gf-pet-name': productData.petName,
+            'gf-ref-id': productData.refId,
+            'gf-breed': productData.breed,
+            'gf-gender': productData.gender,
+            'gf-birth-date': productData.birthDate,
+            'gf-location': productData.location,
+            'gf-product-url': productData.productUrl
+        };
+
+        // Find and populate fields
+        let foundCount = 0;
+        Object.keys(fieldMap).forEach(function(className) {
+            const value = fieldMap[className];
+            let field = null;
+
+            // Method 1: Look for gfield wrapper with the CSS class
+            let gfieldWrapper = document.querySelector('.gfield.' + className);
+            if (gfieldWrapper) {
+                console.log('   Found gfield wrapper for ' + className);
+                field = gfieldWrapper.querySelector('input, textarea, select');
+            }
+
+            // Method 2: Look for the class on any li element
+            if (!field) {
+                let liWrapper = document.querySelector('li.' + className);
+                if (liWrapper) {
+                    console.log('   Found li wrapper for ' + className);
+                    field = liWrapper.querySelector('input, textarea, select');
+                }
+            }
+
+            // Method 3: Look for ginput_container with the class
+            if (!field) {
+                let fieldContainer = document.querySelector('.ginput_container.' + className);
+                if (fieldContainer) {
+                    console.log('   Found ginput_container for ' + className);
+                    field = fieldContainer.querySelector('input, textarea, select');
+                }
+            }
+
+            // Method 4: Direct input/textarea/select with the class
+            if (!field) {
+                field = document.querySelector('input.' + className + ', textarea.' + className + ', select.' + className);
+                if (field) {
+                    console.log('   Found direct input for ' + className);
+                }
+            }
+
+            if (field) {
+                console.log('🔍 Found field for ' + className + ':', field);
+                field.value = value;
+                field.setAttribute('value', value);
+                foundCount++;
+
+                // Trigger events
+                if (window.jQuery && jQuery(field).length) {
+                    console.log('   Using jQuery to set value');
+                    jQuery(field).val(value).trigger('input').trigger('change').trigger('blur');
+                } else {
+                    console.log('   Using native JS to trigger events');
+                    field.dispatchEvent(new Event('input', { bubbles: true }));
+                    field.dispatchEvent(new Event('change', { bubbles: true }));
+                    field.dispatchEvent(new Event('blur', { bubbles: true }));
+                }
+
+                console.log('✅ Populated field:', className, '=', value);
+            } else {
+                console.warn('⚠️ Field not found for class:', className);
+            }
+        });
+
+        console.log('📊 Summary: Populated ' + foundCount + ' out of ' + Object.keys(fieldMap).length + ' fields');
+    }, 500);
+
     // Gallery
     const imgs = <?php echo json_encode($images); ?>;
     let currIdx = 0;

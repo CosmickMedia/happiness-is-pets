@@ -23,7 +23,19 @@ $pet_name = $product->get_meta( 'pet_name' ) ?: $product->get_name();
 $ref_id = $product->get_meta('reference_number') ?: $sku;
 $birth_date = ! empty( $pet->dob ) && strtotime( $pet->dob ) ? date( 'm-d-Y', strtotime( $pet->dob ) ) : '';
 $location = ! empty( $pet->location ) ? $pet->location : '';
-$header_phone = get_theme_mod( 'header_phone_number' );
+$breed = ! empty( $pet->breed ) ? $pet->breed : ( $first_cat ? $first_cat->name : '' );
+
+// Dynamic phone number based on location
+$location_phone = get_theme_mod('header_phone_number', '317-537-2480'); // Default fallback to Indianapolis
+if (!empty($location)) {
+    $location_lower = strtolower(trim($location));
+    if (strpos($location_lower, 'indianapolis') !== false) {
+        $location_phone = get_theme_mod('location_1_phone', '317-537-2480');
+    } elseif (strpos($location_lower, 'schererville') !== false) {
+        $location_phone = get_theme_mod('location_2_phone', '219-865-3078');
+    }
+}
+
 $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 ?>
 <div <?php wc_product_class( 'col' ); ?> >
@@ -72,9 +84,15 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </div>
 
                     <!-- <h5 class="card-title pet-name fw-bold mb-2"><?php //echo sprintf( esc_html__( 'Hi, my name is %s!', 'happiness-is-pets' ), get_the_title() ); ?></h5> -->
-                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name . ' - ' . $ref_id ); ?></h5>
+
 
                     <div class="card-text">
+                        <?php if ( $breed ) : ?>
+                        <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
+                            <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $breed ); ?></span>
+                        </div>
+                        <?php endif; ?>
+
                         <?php if ( $gender ) : ?>
                         <div class="pet-detail pet-gender d-flex align-items-center mb-1">
                             <strong class="me-1"><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
@@ -110,24 +128,34 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
         </div>
 
         <div class="card-footer bg-transparent border-top-0 text-center p-3">
-            <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100 mb-2"><?php esc_html_e( 'View Details', 'happiness-is-pets' ); ?></a>
-            <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
-               data-bs-toggle="modal"
-               class="btn btn-secondary-theme w-100 mb-2 pet-details-trigger"
-               style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
-               data-product-id="<?php echo esc_attr( $product_id ); ?>"
-               data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
-               data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
-               data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
-               data-gender="<?php echo esc_attr( $gender ); ?>"
-               data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
-               data-location="<?php echo esc_attr( $location ); ?>"
-               data-product-url="<?php echo esc_url( get_permalink() ); ?>">
-                <?php esc_html_e( 'Get my Details', 'happiness-is-pets' ); ?>
-            </a>
-            <?php if ( $header_phone ) : ?>
-            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $header_phone ) ); ?>" class="btn btn-outline-primary-theme w-100"><i class="fas fa-phone me-1"></i> <?php echo esc_html( $header_phone ); ?></a>
-            <?php endif; ?>
+            <div class="row g-2 mb-2">
+                <div class="col-6">
+                    <?php if ( $location_phone ) : ?>
+                    <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $location_phone ) ); ?>"
+                       class="btn w-100"
+                       style="background: white; color: var(--color-primary-dark-grey); border: 3px solid var(--color-primary-dark-grey);">
+                        <i class="fas fa-phone me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Call', 'happiness-is-pets' ); ?></span>
+                    </a>
+                    <?php endif; ?>
+                </div>
+                <div class="col-6">
+                    <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                       data-bs-toggle="modal"
+                       class="btn btn-secondary-theme w-100 pet-details-trigger"
+                       style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
+                       data-product-id="<?php echo esc_attr( $product_id ); ?>"
+                       data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                       data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+                       data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+                       data-gender="<?php echo esc_attr( $gender ); ?>"
+                       data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+                       data-location="<?php echo esc_attr( $location ); ?>"
+                       data-product-url="<?php echo esc_url( get_permalink() ); ?>">
+                        <i class="fas fa-paper-plane me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Contact', 'happiness-is-pets' ); ?></span>
+                    </a>
+                </div>
+            </div>
+            <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
         </div>
     </div>
 </div>

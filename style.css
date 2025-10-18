@@ -921,11 +921,87 @@ span.navbar-toggler-icon {}
 }
 
 /* Filter pets button and offcanvas styles */
+.pets-filter-toolbar {
+    margin-bottom: 1rem;
+}
+
 .filter-pets-btn {
     font-weight: 600;
-    border-radius: 20px;
-    padding: 0.5rem 1.25rem;
-    margin-bottom: 1rem;
+    border-radius: 25px;
+    padding: 0.625rem 1.5rem;
+    background-color: var(--color-primary-dark-teal);
+    color: white;
+    border: 2px solid var(--color-primary-dark-teal);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(61, 81, 85, 0.2);
+}
+
+.filter-pets-btn:hover {
+    background-color: var(--color-primary-light-peach);
+    color: var(--color-primary-dark-teal);
+    border-color: var(--color-primary-light-peach);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(247, 188, 172, 0.3);
+}
+
+.location-dropdown-wrapper {
+    position: relative;
+}
+
+.location-select {
+    min-width: 280px;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 0.625rem 2.5rem 0.625rem 1.25rem;
+    border: 2px solid var(--color-primary-dark-teal);
+    color: var(--color-primary-dark-teal);
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233D5155'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(61, 81, 85, 0.15);
+    appearance: none;
+}
+
+.location-select:hover {
+    border-color: var(--color-primary-light-peach);
+    box-shadow: 0 4px 12px rgba(247, 188, 172, 0.3);
+}
+
+.location-select:focus {
+    outline: none;
+    border-color: var(--color-primary-light-peach);
+    box-shadow: 0 0 0 4px rgba(247, 188, 172, 0.2);
+}
+
+.location-select option {
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+    .pets-filter-toolbar {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .location-dropdown-wrapper {
+        width: 100%;
+    }
+
+    .location-select {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .filter-pets-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 .pets-offcanvas {
@@ -939,6 +1015,60 @@ span.navbar-toggler-icon {}
 .pets-offcanvas .offcanvas-title {
     font-family: var(--font-secondary);
     color: var(--color-heading);
+}
+
+/* Location Filter Widget Styles */
+.location-filter-widget {
+    padding: 1rem 0;
+}
+
+.location-filter-widget .location-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.location-filter-widget .location-option {
+    padding: 0.5rem;
+    transition: background-color 0.2s ease;
+    border-radius: 8px;
+}
+
+.location-filter-widget .location-option:hover {
+    background-color: rgba(247, 188, 172, 0.1);
+}
+
+.location-filter-widget .form-check-input {
+    cursor: pointer;
+    border-color: var(--color-primary-dark-teal);
+}
+
+.location-filter-widget .form-check-input:checked {
+    background-color: var(--color-primary-light-peach);
+    border-color: var(--color-primary-light-peach);
+}
+
+.location-filter-widget .form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+}
+
+.location-filter-widget .fa-map-marker-alt {
+    color: var(--color-primary-light-peach);
+}
+
+.location-filter-widget .clear-location-filter {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.location-filter-widget .clear-location-filter:hover {
+    background-color: var(--color-primary-dark-teal);
+    color: white;
+    border-color: var(--color-primary-dark-teal);
 }
 
 .empty-cart-cust{
@@ -2628,20 +2758,32 @@ body .product-primary-info h1.product_title {
     color: #585855;
 }
 .available-puppies-swiper .swiper-slide {
-    width: 170px;
-    height: 170px;
+    width: auto !important;
+    height: auto !important;
     margin: 10px;
 }
+.available-puppies-swiper .swiper-slide .pet-card {
+    height: 100%;
+    min-width: 280px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+.available-puppies-swiper .swiper-slide .pet-card .card-body {
+    flex-grow: 1;
+}
 .available-puppies-swiper .swiper-slide img {
-    width: 170px;
-    height: 170px;
+    width: 100%;
+    height: 250px;
     object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    transition: transform 0.3s;
+    border-radius: 0;
 }
 .available-puppies-swiper .swiper-slide img:hover {
-    transform: scale(1.05);
+    transform: none;
+}
+.available-puppies-swiper .swiper-slide .pet-card:hover img {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
 }
 .see-all-puppies {
     font-size: 16px;

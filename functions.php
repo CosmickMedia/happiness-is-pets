@@ -153,8 +153,319 @@ function happiness_is_pets_setup() {
     // Yoast SEO breadcrumbs
     add_theme_support( 'yoast-seo-breadcrumbs' );
 
+    // Add support for site icon (favicon)
+    add_theme_support( 'custom-header' );
+    add_theme_support( 'site-icon' );
+
 }
 add_action( 'after_setup_theme', 'happiness_is_pets_setup' );
+
+/**
+ * Add favicon and site icons
+ */
+function happiness_is_pets_add_favicons() {
+    $favicon_url = get_site_icon_url( 32 );
+
+    if ( ! $favicon_url ) {
+        // Fallback to custom favicon if site icon not set
+        $favicon_url = get_template_directory_uri() . '/assets/images/favicon.ico';
+    }
+
+    ?>
+    <link rel="icon" type="image/x-icon" href="<?php echo esc_url( $favicon_url ); ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_site_icon_url( 32 ) ); ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_site_icon_url( 192 ) ); ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_site_icon_url( 180 ) ); ?>">
+    <?php
+}
+add_action( 'wp_head', 'happiness_is_pets_add_favicons', 5 );
+
+/**
+ * Step 1 & 2: Add SEO meta tags + Open Graph for WooCommerce category pages
+ */
+function happiness_is_pets_woocommerce_category_seo() {
+    // Only run on WooCommerce shop or category pages
+    if ( ! function_exists( 'is_shop' ) || ! function_exists( 'is_product_category' ) ) {
+        return;
+    }
+
+    if ( ! is_shop() && ! is_product_category() && ! is_product_taxonomy() ) {
+        return;
+    }
+
+    // Get proper URL based on page type
+    if ( is_shop() ) {
+        $site_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : get_permalink();
+    } elseif ( is_product_category() ) {
+        $site_url = get_term_link( get_queried_object() );
+        if ( is_wp_error( $site_url ) ) {
+            $site_url = get_permalink();
+        }
+    } else {
+        $site_url = get_permalink();
+    }
+    $site_name = get_bloginfo( 'name' );
+
+    // Get default image (logo or hero image)
+    $default_image = get_theme_mod( 'hero_image' );
+    if ( ! $default_image ) {
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        if ( $custom_logo_id ) {
+            $default_image = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+        } else {
+            $default_image = get_template_directory_uri() . '/assets/images/logo_horizontal.png';
+        }
+    }
+
+    // Build meta description based on page type
+    if ( is_shop() ) {
+        $meta_title = 'Available Puppies for Sale | ' . $site_name . ' | Indianapolis & Schererville, IN';
+        $meta_description = 'Browse our available puppies for sale at Happiness Is Pets. Healthy, happy puppies from trusted Canine Care Certified breeders in Indianapolis and Schererville, Indiana.';
+        $og_image = $default_image;
+    } elseif ( is_product_category() ) {
+        $category = get_queried_object();
+        $category_name = $category->name;
+        $meta_title = $category_name . ' Puppies for Sale | ' . $site_name . ' | Indianapolis & Schererville, IN';
+        $meta_description = 'Find ' . $category_name . ' puppies for sale at Happiness Is Pets in Indianapolis and Schererville, Indiana. Healthy, well-socialized puppies from Canine Care Certified breeders.';
+
+        // Try to get category thumbnail image
+        $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
+        if ( $thumbnail_id ) {
+            $og_image = wp_get_attachment_url( $thumbnail_id );
+        } else {
+            $og_image = $default_image;
+        }
+    } else {
+        return; // Exit if not a recognized page type
+    }
+
+    ?>
+    <!-- WooCommerce Category SEO Meta Tags -->
+    <meta name="description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="<?php echo esc_url( $site_url ); ?>">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php echo esc_attr( $meta_title ); ?>">
+    <meta property="og:description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta property="og:url" content="<?php echo esc_url( $site_url ); ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr( $site_name ); ?>">
+    <meta property="og:image" content="<?php echo esc_url( $og_image ); ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr( $meta_title ); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta name="twitter:image" content="<?php echo esc_url( $og_image ); ?>">
+
+    <!-- Schema.org Structured Data for Product Categories -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "<?php echo esc_js( $meta_title ); ?>",
+        "description": "<?php echo esc_js( $meta_description ); ?>",
+        "url": "<?php echo esc_url( $site_url ); ?>",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "<?php echo esc_js( $site_name ); ?>",
+            "url": "<?php echo esc_url( home_url( '/' ) ); ?>"
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "<?php echo esc_url( home_url( '/' ) ); ?>"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "<?php echo is_shop() ? 'Shop' : esc_js( $category_name ); ?>",
+                    "item": "<?php echo esc_url( $site_url ); ?>"
+                }
+            ]
+        }
+    }
+    </script>
+    <?php
+}
+add_action( 'wp_head', 'happiness_is_pets_woocommerce_category_seo', 1 );
+
+/**
+ * Complete SEO: Meta tags + Open Graph + Schema.org for homepage
+ */
+function happiness_is_pets_basic_seo() {
+    // Only add these on the homepage
+    if ( ! is_front_page() ) {
+        return;
+    }
+
+    $site_name = get_bloginfo( 'name' );
+    $site_description = get_bloginfo( 'description' );
+    $site_url = home_url( '/' );
+
+    // Get logo
+    $logo_url = '';
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( $custom_logo_id ) {
+        $logo_url = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+    } else {
+        $logo_url = get_template_directory_uri() . '/assets/images/logo_horizontal.png';
+    }
+
+    // Get hero image for Open Graph
+    $hero_image = get_theme_mod( 'hero_image' );
+    if ( ! $hero_image ) {
+        $hero_image = $logo_url;
+    }
+
+    // Get location phone numbers
+    $indy_phone = get_theme_mod( 'location_1_phone', '317-537-2480' );
+    $schererville_phone = get_theme_mod( 'location_2_phone', '219-865-3078' );
+
+    // Get social media URLs
+    $facebook = get_theme_mod( 'social_facebook', '' );
+    $instagram = get_theme_mod( 'social_instagram', '' );
+
+    // Natural-sounding meta description (no AI patterns, no dashes)
+    $meta_description = 'Find your perfect puppy companion at Happiness Is Pets. We connect loving families with healthy, happy puppies from trusted breeders in Indianapolis and Schererville.';
+    $meta_title = $site_name . ' | Puppies for Sale in Indianapolis & Schererville, Indiana';
+
+    ?>
+    <!-- Basic SEO Meta Tags -->
+    <meta name="description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="<?php echo esc_url( $site_url ); ?>">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php echo esc_attr( $meta_title ); ?>">
+    <meta property="og:description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta property="og:url" content="<?php echo esc_url( $site_url ); ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr( $site_name ); ?>">
+    <meta property="og:image" content="<?php echo esc_url( $hero_image ); ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr( $meta_title ); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr( $meta_description ); ?>">
+    <meta name="twitter:image" content="<?php echo esc_url( $hero_image ); ?>">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "<?php echo esc_url( $site_url ); ?>#organization",
+                "name": "<?php echo esc_js( $site_name ); ?>",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "logo": {
+                    "@type": "ImageObject",
+                    "@id": "<?php echo esc_url( $site_url ); ?>#logo",
+                    "url": "<?php echo esc_url( $logo_url ); ?>",
+                    "contentUrl": "<?php echo esc_url( $logo_url ); ?>",
+                    "caption": "<?php echo esc_js( $site_name ); ?>"
+                },
+                "image": {
+                    "@id": "<?php echo esc_url( $site_url ); ?>#logo"
+                }<?php if ( $facebook || $instagram ) : ?>,
+                "sameAs": [
+                    <?php
+                    $social_links = array_filter( array( $facebook, $instagram ) );
+                    echo '"' . implode( '","', array_map( 'esc_url', $social_links ) ) . '"';
+                    ?>
+                ]
+                <?php endif; ?>
+            },
+            {
+                "@type": "PetStore",
+                "@id": "<?php echo esc_url( $site_url ); ?>#petstore",
+                "name": "<?php echo esc_js( $site_name ); ?>",
+                "description": "<?php echo esc_js( $meta_description ); ?>",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "image": "<?php echo esc_url( $hero_image ); ?>",
+                "priceRange": "$$",
+                "telephone": "<?php echo esc_js( $indy_phone ); ?>"
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "<?php echo esc_url( $site_url ); ?>#location-indianapolis",
+                "name": "<?php echo esc_js( $site_name ); ?> - Indianapolis",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "8980 Wesleyan Rd",
+                    "addressLocality": "Indianapolis",
+                    "addressRegion": "IN",
+                    "postalCode": "46268",
+                    "addressCountry": "US"
+                },
+                "telephone": "<?php echo esc_js( $indy_phone ); ?>",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "priceRange": "$$"
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "<?php echo esc_url( $site_url ); ?>#location-schererville",
+                "name": "<?php echo esc_js( $site_name ); ?> - Schererville",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "1525 US-41",
+                    "addressLocality": "Schererville",
+                    "addressRegion": "IN",
+                    "postalCode": "46375",
+                    "addressCountry": "US"
+                },
+                "telephone": "<?php echo esc_js( $schererville_phone ); ?>",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "priceRange": "$$"
+            },
+            {
+                "@type": "WebSite",
+                "@id": "<?php echo esc_url( $site_url ); ?>#website",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "name": "<?php echo esc_js( $site_name ); ?>",
+                "description": "<?php echo esc_js( $site_description ); ?>",
+                "publisher": {
+                    "@id": "<?php echo esc_url( $site_url ); ?>#organization"
+                },
+                "inLanguage": "en-US"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "<?php echo esc_url( $site_url ); ?>#webpage",
+                "url": "<?php echo esc_url( $site_url ); ?>",
+                "name": "<?php echo esc_js( $meta_title ); ?>",
+                "description": "<?php echo esc_js( $meta_description ); ?>",
+                "isPartOf": {
+                    "@id": "<?php echo esc_url( $site_url ); ?>#website"
+                },
+                "about": {
+                    "@id": "<?php echo esc_url( $site_url ); ?>#organization"
+                },
+                "primaryImageOfPage": {
+                    "@type": "ImageObject",
+                    "url": "<?php echo esc_url( $hero_image ); ?>"
+                },
+                "inLanguage": "en-US"
+            }
+        ]
+    }
+    </script>
+    <?php
+}
+add_action( 'wp_head', 'happiness_is_pets_basic_seo', 1 );
 
 /**
  * Enqueue scripts and styles.
@@ -477,6 +788,14 @@ function happiness_is_pets_loop_columns() {
     return 4;
 }
 add_filter( 'loop_shop_columns', 'happiness_is_pets_loop_columns', 999 );
+
+/**
+ * Set WooCommerce products per page to 20
+ */
+function happiness_is_pets_products_per_page() {
+    return 20;
+}
+add_filter( 'loop_shop_per_page', 'happiness_is_pets_products_per_page', 20 );
 
 /**
  * Remove WooCommerce column classes that conflict with Bootstrap grid
@@ -822,68 +1141,59 @@ function happiness_is_pets_infinite_scroll_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_infinite_scroll_scripts' );
 
-// AJAX handler for loading more products
+// AJAX handler for loading more products - SIMPLIFIED
 function happiness_is_pets_load_more_products() {
-    $paged      = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+    // Get page number
+    $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+
+    // Get the query vars and decode
     $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
 
-    // Sanitize and validate
-    if ( ! is_array( $query_vars ) ) {
-        wp_send_json_error( array( 'message' => 'Invalid query parameters' ) );
-        wp_die();
+    // Build simple args
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'paged'          => $paged,
+        'posts_per_page' => 20,
+    );
+
+    // Add category if it exists
+    if ( ! empty( $query_vars['product_cat'] ) ) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $query_vars['product_cat'],
+            ),
+        );
     }
 
-    $query_vars['paged'] = $paged;
-    $query_vars['post_type'] = 'product';
-
-    // Ensure we don't load too many posts
-    if ( ! isset( $query_vars['posts_per_page'] ) ) {
-        $query_vars['posts_per_page'] = get_option( 'posts_per_page' );
-    }
-
-    $products = new WP_Query( $query_vars );
+    // Run the query
+    $products = new WP_Query( $args );
 
     if ( $products->have_posts() ) {
         ob_start();
 
-        // Reset WooCommerce loop to prevent column classes
-        global $woocommerce_loop;
-        $woocommerce_loop = array();
-
-        // Disable WooCommerce's default column counting
-        $woocommerce_loop['columns'] = 4; // Set to 4 to match our grid
-        $woocommerce_loop['loop'] = 0;
-
-        // Just output the products, not the loop wrapper
         while ( $products->have_posts() ) {
             $products->the_post();
-
-            // Ensure product global is set
             global $product;
             $product = wc_get_product( get_the_ID() );
 
-            if ( ! $product ) {
-                continue; // Skip if product is invalid
+            if ( $product ) {
+                wc_get_template_part( 'content', 'product' );
             }
-
-            // Increment loop counter for WooCommerce
-            $woocommerce_loop['loop']++;
-
-            wc_get_template_part( 'content', 'product' );
         }
 
         $html = ob_get_clean();
         wp_reset_postdata();
 
-        // Return HTML and pagination info
         wp_send_json_success( array(
             'html'      => $html,
             'max_pages' => $products->max_num_pages,
-            'found'     => $products->found_posts,
             'page'      => $paged,
         ) );
     } else {
-        wp_send_json_error( array( 'message' => 'No products found' ) );
+        wp_send_json_error( array( 'message' => 'No more products' ) );
     }
 
     wp_die();
@@ -990,7 +1300,16 @@ function happiness_is_pets_optimize_image( $image_data ) {
         return $image_data;
     }
 
-    $image = wp_get_image_editor( $image_data );
+    // wp_handle_upload passes an array with 'file', 'url', 'type' keys
+    // We need the 'file' path for wp_get_image_editor
+    $file_path = is_array( $image_data ) && isset( $image_data['file'] ) ? $image_data['file'] : $image_data;
+
+    // If we still don't have a string path, return early
+    if ( ! is_string( $file_path ) ) {
+        return $image_data;
+    }
+
+    $image = wp_get_image_editor( $file_path );
 
     if ( is_wp_error( $image ) ) {
         return $image_data;
@@ -998,7 +1317,7 @@ function happiness_is_pets_optimize_image( $image_data ) {
 
     // Set quality to 82% (optimal for web)
     $image->set_quality( 82 );
-    $image->save( $image_data );
+    $image->save( $file_path );
 
     return $image_data;
 }
@@ -1013,4 +1332,145 @@ function happiness_is_pets_remove_query_strings( $src ) {
 }
 add_filter( 'style_loader_src', 'happiness_is_pets_remove_query_strings', 10, 1 );
 add_filter( 'script_loader_src', 'happiness_is_pets_remove_query_strings', 10, 1 );
+
+/**
+ * ================================
+ * LOCATION FILTER WIDGET
+ * ================================
+ */
+
+// Custom Location Filter Widget
+class Happiness_Is_Pets_Location_Filter_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'happiness_location_filter',
+            __( 'Pet Location Filter', 'happiness-is-pets' ),
+            array( 'description' => __( 'Filter puppies by location (Indianapolis or Schererville)', 'happiness-is-pets' ) )
+        );
+    }
+
+    public function widget( $args, $instance ) {
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Filter by Location', 'happiness-is-pets' );
+
+        // Get current location from URL
+        $current_location = isset( $_GET['location'] ) ? sanitize_text_field( $_GET['location'] ) : '';
+
+        echo $args['before_widget'];
+        if ( ! empty( $title ) ) {
+            echo $args['before_title'] . esc_html( $title ) . $args['after_title'];
+        }
+        ?>
+        <div class="location-filter-widget">
+            <div class="location-options">
+                <div class="form-check location-option">
+                    <input class="form-check-input location-filter-checkbox" type="checkbox" value="Indianapolis" id="location-indianapolis" data-location="Indianapolis" <?php checked( $current_location, 'Indianapolis' ); ?>>
+                    <label class="form-check-label" for="location-indianapolis">
+                        <i class="fas fa-map-marker-alt me-2"></i>Indianapolis
+                    </label>
+                </div>
+                <div class="form-check location-option">
+                    <input class="form-check-input location-filter-checkbox" type="checkbox" value="Schererville" id="location-schererville" data-location="Schererville" <?php checked( $current_location, 'Schererville' ); ?>>
+                    <label class="form-check-label" for="location-schererville">
+                        <i class="fas fa-map-marker-alt me-2"></i>Schererville
+                    </label>
+                </div>
+            </div>
+            <?php if ( $current_location ) : ?>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-3 w-100 clear-location-filter">
+                <i class="fas fa-times me-1"></i><?php esc_html_e( 'Clear Filter', 'happiness-is-pets' ); ?>
+            </button>
+            <?php endif; ?>
+        </div>
+        <?php
+        echo $args['after_widget'];
+    }
+
+    public function form( $instance ) {
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Filter by Location', 'happiness-is-pets' );
+        ?>
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'happiness-is-pets' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+        </p>
+        <?php
+    }
+
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+        return $instance;
+    }
+}
+
+// Register the widget
+function happiness_is_pets_register_location_widget() {
+    register_widget( 'Happiness_Is_Pets_Location_Filter_Widget' );
+}
+add_action( 'widgets_init', 'happiness_is_pets_register_location_widget' );
+
+// Enqueue JavaScript for location filter
+function happiness_is_pets_location_filter_scripts() {
+    if ( ! is_shop() && ! is_product_taxonomy() ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'happiness-location-filter',
+        get_template_directory_uri() . '/assets/js/location-filter.js',
+        array( 'jquery' ),
+        HAPPINESS_IS_PETS_VERSION,
+        true
+    );
+
+    wp_localize_script(
+        'happiness-location-filter',
+        'locationFilterParams',
+        array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'happiness_is_pets_location_filter_scripts' );
+
+// Filter products by location using post__in
+function happiness_is_pets_filter_products_by_location( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_taxonomy() ) ) {
+        if ( isset( $_GET['location'] ) && ! empty( $_GET['location'] ) ) {
+            $location = sanitize_text_field( $_GET['location'] );
+
+            // Get all products
+            $all_products = get_posts( array(
+                'post_type' => 'product',
+                'posts_per_page' => -1,
+                'fields' => 'ids',
+                'post_status' => 'publish',
+            ) );
+
+            $matching_products = array();
+
+            foreach ( $all_products as $product_id ) {
+                // Get pet data from WC Unified KM
+                if ( function_exists( 'wc_ukm_get_pet' ) ) {
+                    $pet = wc_ukm_get_pet( $product_id );
+                    if ( $pet && ! empty( $pet->location ) ) {
+                        // Check if location matches (case-insensitive partial match)
+                        if ( stripos( $pet->location, $location ) !== false ) {
+                            $matching_products[] = $product_id;
+                        }
+                    }
+                }
+            }
+
+            // If no matching products, set to array with 0 so no products show
+            if ( empty( $matching_products ) ) {
+                $matching_products = array( 0 );
+            }
+
+            $query->set( 'post__in', $matching_products );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_location' );
+
+// Update AJAX handler to support location filtering (NOT USED - using simpler load_more_products handler)
 

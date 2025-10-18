@@ -15,9 +15,24 @@ get_template_part( 'template-parts/page', 'header' );
     <main id="primary" class="site-main py-5">
         <div class="main-container">
             <?php if ( is_product_taxonomy() || is_shop() ) : ?>
-                <button class="btn filter-pets-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#petsFilterOffcanvas" aria-controls="petsFilterOffcanvas">
-                    <?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?>
-                </button>
+                <div class="pets-filter-toolbar d-flex flex-wrap align-items-center gap-3 mb-4">
+                    <button class="btn filter-pets-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#petsFilterOffcanvas" aria-controls="petsFilterOffcanvas">
+                        <i class="fas fa-filter me-2"></i><?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?>
+                    </button>
+
+                    <?php
+                    // Get current location from URL
+                    $current_location = isset( $_GET['location'] ) ? sanitize_text_field( $_GET['location'] ) : '';
+                    ?>
+                    <div class="location-dropdown-wrapper" style="flex: 1; max-width: 350px;">
+                        <label for="locationDropdown" class="visually-hidden">Change Location</label>
+                        <select class="form-select location-select" id="locationDropdown">
+                            <option value="" <?php selected( $current_location, '' ); ?>>All Locations</option>
+                            <option value="Indianapolis" <?php selected( $current_location, 'Indianapolis' ); ?>>Happiness Is Pets Indianapolis</option>
+                            <option value="Schererville" <?php selected( $current_location, 'Schererville' ); ?>>Happiness Is Pets Schererville</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="offcanvas offcanvas-start pets-offcanvas" tabindex="-1" id="petsFilterOffcanvas" aria-labelledby="petsFilterLabel">
                     <div class="offcanvas-header">

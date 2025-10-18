@@ -1,71 +1,47 @@
 /**
- * Load More Button for WooCommerce Product Archives
- * Happiness Is Pets Theme - Simple & Reliable
+ * Infinite Scroll for WooCommerce Products
+ * Uses Intersection Observer API for reliable scroll detection
  */
 
 (function($) {
     'use strict';
 
-    // Prevent multiple initializations
-    if (window.loadMoreInitialized) {
-        return;
-    }
-    window.loadMoreInitialized = true;
-
+    // Configuration
     let currentPage = parseInt(infiniteScrollParams.current_page);
     let maxPages = parseInt(infiniteScrollParams.max_pages);
     let loading = false;
+    let allLoaded = false;
 
     // Find the products container
-    const $productsContainer = $('.products.row').first();
+    const $container = $('.row.row-cols-2').first();
 
-    if (!$productsContainer.length) {
+    if (!$container.length) {
         console.error('Products container not found');
         return;
     }
 
-    // Create Load More button
-    const loadMoreHTML = `
-        <div class="load-more-wrapper text-center py-5">
-            <button class="btn btn-primary btn-lg load-more-btn" type="button">
-                <span class="btn-text">Load More Puppies</span>
-                <span class="spinner-border spinner-border-sm ms-2" role="status" style="display: none;">
-                    <span class="visually-hidden">Loading...</span>
-                </span>
-            </button>
-            <p class="text-muted mt-2 mb-0">Showing page ${currentPage} of ${maxPages}</p>
-        </div>
-    `;
-
-    const noMoreHTML = `
-        <div class="load-more-end text-center py-4">
-            <p class="text-muted mb-0">That's all the puppies for now!</p>
-        </div>
-    `;
-
-    // Add button after products container
-    if (currentPage < maxPages) {
-        $productsContainer.after(loadMoreHTML);
-    } else {
-        $productsContainer.after(noMoreHTML);
+    // Only proceed if there are more pages to load
+    if (currentPage >= maxPages) {
+        return;
     }
 
-    // Handle button click
-    $(document).on('click', '.load-more-btn', function() {
-        if (loading) return;
+    // Create loading sentinel (invisible element that triggers load when visible)
+    const $sentinel = $('<div class="infinite-scroll-sentinel" style="height: 1px; margin-top: 200px;"></div>');
+    const $loader = $('<div class="infinite-scroll-loader text-center py-5" style="display: none;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-3 text-muted">Loading more puppies...</p></div>');
 
-        const $btn = $(this);
-        const $btnText = $btn.find('.btn-text');
-        const $spinner = $btn.find('.spinner-border');
-        const $wrapper = $('.load-more-wrapper');
+    // Insert sentinel and loader after the products container
+    $container.after($sentinel);
+    $sentinel.after($loader);
+
+    // Load more products function
+    function loadMoreProducts() {
+        if (loading || allLoaded) return;
 
         loading = true;
         currentPage++;
 
-        // Show loading state
-        $btn.prop('disabled', true);
-        $btnText.text('Loading...');
-        $spinner.show();
+        // Show loader
+        $loader.show();
 
         $.ajax({
             url: infiniteScrollParams.ajaxurl,
@@ -77,57 +53,69 @@
             },
             success: function(response) {
                 if (response.success && response.data.html) {
-                    // Parse HTML and separate products from modals
-                    const $temp = $('<div>').html(response.data.html);
-                    const $allElements = $temp.children();
+                    // Append new products
+                    $container.append(response.data.html);
 
-                    const $newProducts = $allElements.filter(':not(.modal)');
-                    const $newModals = $allElements.filter('.modal');
-
-                    // Add products to grid
-                    $productsContainer.append($newProducts);
-
-                    // Add modals to body
-                    $('body').append($newModals);
-
-                    // Update max pages
-                    maxPages = response.data.max_pages || maxPages;
-
-                    // Check if more pages exist
-                    if (currentPage >= maxPages) {
-                        $wrapper.remove();
-                        $productsContainer.after(noMoreHTML);
-                    } else {
-                        // Update page counter
-                        $wrapper.find('p').text(`Showing page ${currentPage} of ${maxPages}`);
-
-                        // Reset button
-                        $btn.prop('disabled', false);
-                        $btnText.text('Load More Puppies');
-                        $spinner.hide();
+                    // Update max pages if provided
+                    if (response.data.max_pages) {
+                        maxPages = response.data.max_pages;
                     }
 
-                    // Scroll smoothly to first new product
-                    $('html, body').animate({
-                        scrollTop: $newProducts.first().offset().top - 100
-                    }, 400);
+                    // Check if we've loaded all products
+                    if (currentPage >= maxPages) {
+                        allLoaded = true;
+                        $sentinel.remove();
+                        $loader.html('<div class="text-center py-4"><p class="text-muted">That\'s all the puppies for now!</p></div>').show();
+                    } else {
+                        $loader.hide();
+                    }
                 } else {
-                    $wrapper.remove();
-                    $productsContainer.after(noMoreHTML);
+                    // No more products
+                    allLoaded = true;
+                    $sentinel.remove();
+                    $loader.html('<div class="text-center py-4"><p class="text-muted">No more puppies available</p></div>').show();
                 }
 
                 loading = false;
             },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                $wrapper.html(`
-                    <div class="alert alert-warning text-center">
-                        Unable to load more products. Please refresh the page.
-                    </div>
-                `);
+            error: function() {
+                allLoaded = true;
+                $sentinel.remove();
+                $loader.html('<div class="alert alert-warning text-center">Unable to load more products. Please refresh the page.</div>').show();
                 loading = false;
             }
         });
-    });
+    }
+
+    // Use Intersection Observer to detect when sentinel comes into view
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !loading && !allLoaded) {
+                    loadMoreProducts();
+                }
+            });
+        }, {
+            rootMargin: '0px 0px 400px 0px' // Start loading 400px before sentinel is visible
+        });
+
+        observer.observe($sentinel[0]);
+    } else {
+        // Fallback for older browsers - use scroll event
+        let scrollTimeout;
+        $(window).on('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                if (loading || allLoaded) return;
+
+                const sentinelOffset = $sentinel.offset().top;
+                const scrollPosition = $(window).scrollTop() + $(window).height();
+
+                if (scrollPosition >= sentinelOffset - 400) {
+                    loadMoreProducts();
+                }
+            }, 100);
+        });
+    }
 
 })(jQuery);

@@ -4,22 +4,6 @@ get_header( 'shop' );
 ?>
 <?php do_action( 'woocommerce_before_main_content' ); ?>
 
-<?php if ( is_product_taxonomy() || is_shop() ) : ?>
-    <button class="btn filter-pets-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#petsFilterOffcanvas" aria-controls="petsFilterOffcanvas">
-        <?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?>
-    </button>
-
-    <div class="offcanvas offcanvas-start pets-offcanvas" tabindex="-1" id="petsFilterOffcanvas" aria-labelledby="petsFilterLabel">
-        <div class="offcanvas-header">
-            <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?></h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
-        </div>
-        <div class="offcanvas-body">
-            <?php get_sidebar( 'woocommerce-pets' ); ?>
-        </div>
-    </div>
-<?php endif; ?>
-
 <?php if ( woocommerce_product_loop() ) : ?>
     <div class="shop-toolbar d-flex justify-content-between align-items-center mb-3">
         <?php woocommerce_result_count(); ?>
