@@ -1,59 +1,115 @@
 /**
- * Location Filter for WooCommerce Products
+ * Location Filter for WooCommerce Products - AJAX Version
  */
 
 (function($) {
     'use strict';
 
+    let isFiltering = false;
+
     // Handle location dropdown changes
     $(document).on('change', '#locationDropdown', function() {
-        const location = $(this).val();
-        const url = new URL(window.location.href);
+        if (isFiltering) return;
 
-        if (location) {
-            url.searchParams.set('location', location);
-        } else {
-            url.searchParams.delete('location');
+        const selectedLocation = $(this).val();
+        filterProductsByLocation(selectedLocation);
+    });
+
+    // Main filter function using AJAX
+    function filterProductsByLocation(selectedLocation) {
+        isFiltering = true;
+
+        // Find the products container
+        const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
+
+        if (!$productsContainer.length) {
+            console.error('Products container not found');
+            isFiltering = false;
+            return;
         }
 
-        // Reset to page 1 when filtering
-        url.searchParams.delete('paged');
+        // Show loading state
+        $productsContainer.css('opacity', '0.5');
 
-        // Reload page with new filter
-        window.location.href = url.toString();
-    });
+        // Add loading spinner if not exists
+        let $loader = $('.location-filter-loader');
+        if (!$loader.length) {
+            $loader = $('<div class="location-filter-loader text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-3">Filtering pets...</p></div>');
+            $productsContainer.before($loader);
+        } else {
+            $loader.show();
+        }
+
+        // Get current category from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('product_cat') || '';
+
+        // Make AJAX request
+        $.ajax({
+            url: locationFilterParams.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'filter_products_by_location',
+                location: selectedLocation,
+                category: category
+            },
+            success: function(response) {
+                if (response.success && response.data.html) {
+                    // Replace products
+                    $productsContainer.html(response.data.html);
+
+                    // Update URL without reload
+                    const newUrl = new URL(window.location.href);
+                    if (selectedLocation) {
+                        newUrl.searchParams.set('location', selectedLocation);
+                    } else {
+                        newUrl.searchParams.delete('location');
+                    }
+                    window.history.pushState({}, '', newUrl);
+
+                    // Scroll to top of products
+                    $('html, body').animate({
+                        scrollTop: $productsContainer.offset().top - 100
+                    }, 400);
+                } else {
+                    // Show no results message
+                    $productsContainer.html('<div class="col-12"><p class="woocommerce-info">No pets found at this location.</p></div>');
+                }
+
+                $loader.hide();
+                $productsContainer.css('opacity', '1');
+                isFiltering = false;
+            },
+            error: function(xhr, status, error) {
+                console.error('Filter error:', error);
+                alert('An error occurred while filtering. Please refresh the page and try again.');
+                $loader.hide();
+                $productsContainer.css('opacity', '1');
+                isFiltering = false;
+            }
+        });
+    }
 
     // Handle location checkbox changes (for sidebar widget if used)
     $(document).on('change', '.location-filter-checkbox', function() {
         const $checkbox = $(this);
-        const location = $checkbox.data('location');
+        const selectedLocation = $checkbox.data('location');
         const isChecked = $checkbox.is(':checked');
 
         // Uncheck other location checkboxes (only one location at a time)
         $('.location-filter-checkbox').not($checkbox).prop('checked', false);
 
-        // Update URL and reload page
-        const url = new URL(window.location.href);
-
         if (isChecked) {
-            url.searchParams.set('location', location);
+            filterProductsByLocation(selectedLocation);
         } else {
-            url.searchParams.delete('location');
+            filterProductsByLocation('');
         }
-
-        // Reset to page 1 when filtering
-        url.searchParams.delete('paged');
-
-        // Reload page with new filter
-        window.location.href = url.toString();
     });
 
     // Handle clear filter button
     $(document).on('click', '.clear-location-filter', function() {
-        const url = new URL(window.location.href);
-        url.searchParams.delete('location');
-        url.searchParams.delete('paged');
-        window.location.href = url.toString();
+        $('#locationDropdown').val('').trigger('change');
+        $('.location-filter-checkbox').prop('checked', false);
     });
 
 })(jQuery);

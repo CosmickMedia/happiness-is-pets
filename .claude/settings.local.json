@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(sed:*)",
-      "Bash(wp post list:*)"
+      "Bash(wp post list:*)",
+      "Read(//private/var/folders/px/wc8q1ryd7g3_lsklp2fv3sfw0000gn/T/tmp-80957-Jv0DthfH0s6H/**)",
+      "Bash(wp db query \"SELECT post_id, meta_key, meta_value FROM wp_postmeta WHERE meta_key LIKE ''%location%'' LIMIT 10\" --skip-plugins --skip-themes)"
     ],
     "deny": [],
     "ask": []

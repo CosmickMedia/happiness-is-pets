@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.3.0' ); // Updated version - Load More button instead of infinite scroll
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.4.1' ); // Added placeholder images for products without photos
 }
 
 /**
@@ -1168,6 +1168,12 @@ function happiness_is_pets_load_more_products() {
         );
     }
 
+    // Add location filter if it exists (from AJAX POST data)
+    if ( isset( $_POST['location'] ) && ! empty( $_POST['location'] ) ) {
+        $matching_products = happiness_is_pets_get_products_by_location( $_POST['location'] );
+        $args['post__in'] = $matching_products;
+    }
+
     // Run the query
     $products = new WP_Query( $args );
 
@@ -1427,50 +1433,125 @@ function happiness_is_pets_location_filter_scripts() {
         'locationFilterParams',
         array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'location_filter_nonce' ),
         )
     );
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_location_filter_scripts' );
 
-// Filter products by location using post__in
+// Helper function to get product IDs filtered by location
+function happiness_is_pets_get_products_by_location( $location ) {
+    if ( empty( $location ) ) {
+        return array();
+    }
+
+    $location = sanitize_text_field( $location );
+
+    // Get all products
+    $all_products = get_posts( array(
+        'post_type' => 'product',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'post_status' => 'publish',
+    ) );
+
+    $matching_products = array();
+
+    foreach ( $all_products as $product_id ) {
+        // Get pet data from WC Unified KM
+        if ( function_exists( 'wc_ukm_get_pet' ) ) {
+            $pet = wc_ukm_get_pet( $product_id );
+            if ( $pet && ! empty( $pet->location ) ) {
+                // Check if location matches (case-insensitive partial match)
+                if ( stripos( $pet->location, $location ) !== false ) {
+                    $matching_products[] = $product_id;
+                }
+            }
+        }
+    }
+
+    // If no matching products, set to array with 0 so no products show
+    if ( empty( $matching_products ) ) {
+        $matching_products = array( 0 );
+    }
+
+    return $matching_products;
+}
+
+// AJAX handler for location filtering - Returns filtered products HTML
+function happiness_is_pets_ajax_filter_products_by_location() {
+    $location = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
+    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
+
+    // Build query args
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1, // Get all products for the filter
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    // Add category filter if exists
+    if ( ! empty( $category ) ) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $category,
+            ),
+        );
+    }
+
+    // Add location filter if exists
+    if ( ! empty( $location ) ) {
+        $matching_products = happiness_is_pets_get_products_by_location( $location );
+        $args['post__in'] = $matching_products;
+    }
+
+    // Run query
+    $products = new WP_Query( $args );
+
+    if ( $products->have_posts() ) {
+        ob_start();
+
+        while ( $products->have_posts() ) {
+            $products->the_post();
+            global $product;
+            $product = wc_get_product( get_the_ID() );
+
+            if ( $product ) {
+                wc_get_template_part( 'content', 'product' );
+            }
+        }
+
+        $html = ob_get_clean();
+        wp_reset_postdata();
+
+        wp_send_json_success( array(
+            'html'  => $html,
+            'count' => $products->found_posts,
+        ) );
+    } else {
+        wp_send_json_error( array(
+            'message' => 'No products found',
+            'html'    => '',
+        ) );
+    }
+
+    wp_die();
+}
+add_action( 'wp_ajax_filter_products_by_location', 'happiness_is_pets_ajax_filter_products_by_location' );
+add_action( 'wp_ajax_nopriv_filter_products_by_location', 'happiness_is_pets_ajax_filter_products_by_location' );
+
+// Filter products by location using post__in (for initial page load)
 function happiness_is_pets_filter_products_by_location( $query ) {
     if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_taxonomy() ) ) {
         if ( isset( $_GET['location'] ) && ! empty( $_GET['location'] ) ) {
-            $location = sanitize_text_field( $_GET['location'] );
-
-            // Get all products
-            $all_products = get_posts( array(
-                'post_type' => 'product',
-                'posts_per_page' => -1,
-                'fields' => 'ids',
-                'post_status' => 'publish',
-            ) );
-
-            $matching_products = array();
-
-            foreach ( $all_products as $product_id ) {
-                // Get pet data from WC Unified KM
-                if ( function_exists( 'wc_ukm_get_pet' ) ) {
-                    $pet = wc_ukm_get_pet( $product_id );
-                    if ( $pet && ! empty( $pet->location ) ) {
-                        // Check if location matches (case-insensitive partial match)
-                        if ( stripos( $pet->location, $location ) !== false ) {
-                            $matching_products[] = $product_id;
-                        }
-                    }
-                }
-            }
-
-            // If no matching products, set to array with 0 so no products show
-            if ( empty( $matching_products ) ) {
-                $matching_products = array( 0 );
-            }
-
+            $matching_products = happiness_is_pets_get_products_by_location( $_GET['location'] );
             $query->set( 'post__in', $matching_products );
         }
     }
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_location' );
-
-// Update AJAX handler to support location filtering (NOT USED - using simpler load_more_products handler)
 

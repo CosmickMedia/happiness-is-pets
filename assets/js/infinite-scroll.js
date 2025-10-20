@@ -43,13 +43,18 @@
         // Show loader
         $loader.show();
 
+        // Get current location filter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const location = urlParams.get('location');
+
         $.ajax({
             url: infiniteScrollParams.ajaxurl,
             type: 'POST',
             data: {
                 action: 'load_more_products',
                 page: currentPage,
-                query_vars: infiniteScrollParams.query_vars
+                query_vars: infiniteScrollParams.query_vars,
+                location: location
             },
             success: function(response) {
                 if (response.success && response.data.html) {

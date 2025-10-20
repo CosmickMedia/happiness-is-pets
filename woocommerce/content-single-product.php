@@ -119,8 +119,8 @@ if ( ($gallery_image_ids = $product->get_gallery_image_ids()) ) {
     }
 }
 if ( empty($images) ) {
-    $placeholder_image = get_theme_mod('placeholder_image_url', get_template_directory_uri() . '/images/placeholder.png');
-    $images[] = esc_url($placeholder_image);
+    // Use a data URI for a placeholder or flag that we need a placeholder
+    $images[] = 'placeholder';
 }
 $img_count = count( $images );
 
@@ -1200,7 +1200,16 @@ body {
                     <div class="pup-status-pill"><?php echo esc_html($status_label); ?></div>
                 <?php endif; ?>
 
-                <img src="<?php echo esc_url($images[0]); ?>" alt="<?php echo esc_attr($pet_name); ?>" id="mainGalleryImg" class="pup-gallery-main-img" />
+                <?php if ($images[0] === 'placeholder') : ?>
+                    <div class="pup-gallery-placeholder d-flex align-items-center justify-content-center bg-light" style="width: 100%; height: 100%; min-height: 500px;">
+                        <div class="text-center">
+                            <i class="fas fa-paw fa-5x text-muted mb-3"></i>
+                            <p class="text-muted mb-0 fs-4"><?php esc_html_e( 'Photo Coming Soon', 'happiness-is-pets' ); ?></p>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <img src="<?php echo esc_url($images[0]); ?>" alt="<?php echo esc_attr($pet_name); ?>" id="mainGalleryImg" class="pup-gallery-main-img" />
+                <?php endif; ?>
 
                 <?php if ($img_count > 1) : ?>
                     <div class="pup-gallery-nav">
@@ -1214,7 +1223,13 @@ body {
                 <div class="pup-thumbs-row">
                     <?php foreach ($images as $idx => $img) : ?>
                         <div class="pup-thumb <?php echo $idx === 0 ? 'active' : ''; ?>" data-idx="<?php echo $idx; ?>">
-                            <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($pet_name . ' ' . ($idx + 1)); ?>" />
+                            <?php if ($img === 'placeholder') : ?>
+                                <div class="d-flex align-items-center justify-content-center bg-light" style="width: 100%; height: 100%; min-height: 80px;">
+                                    <i class="fas fa-paw text-muted"></i>
+                                </div>
+                            <?php else : ?>
+                                <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($pet_name . ' ' . ($idx + 1)); ?>" />
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

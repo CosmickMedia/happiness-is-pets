@@ -251,25 +251,6 @@ if ( $hero_image ) {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Pet Details Modal -->
-                            <div class="modal fade" id="petDetailsModal-<?php echo esc_attr( $product_id ); ?>" tabindex="-1" aria-labelledby="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>">Get Details About <?php echo esc_html( $pet_name ); ?></h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <?php if ( shortcode_exists( 'gravityform' ) ) {
-                                                echo do_shortcode( '[gravityform id="3" title="false" description="false" ajax="true"]' );
-                                            } else {
-                                                echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
-                                            } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         <?php endforeach; ?>
                     </div>
                     <div class="swiper-button-next"></div>
@@ -280,26 +261,78 @@ if ( $hero_image ) {
                         <?php echo esc_html( get_theme_mod( 'puppies_button_text', 'See All Puppies' ) ); ?>
                     </a>
                 </div>
+
+                <?php // Modal section - outside swiper to avoid z-index stacking context issues ?>
+                <?php foreach ( $products as $product ) :
+                    $product_id = $product->get_id();
+                    $pet = ( function_exists( 'wc_ukm_get_pet' ) && ( $p = wc_ukm_get_pet( $product_id ) ) ) ? $p : new stdClass();
+                    $pet_name = $product->get_meta( 'pet_name' ) ?: $product->get_name();
+                ?>
+                    <!-- Pet Details Modal -->
+                    <div class="modal fade" id="petDetailsModal-<?php echo esc_attr( $product_id ); ?>" tabindex="-1" aria-labelledby="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>">Get Details About <?php echo esc_html( $pet_name ); ?></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <?php if ( shortcode_exists( 'gravityform' ) ) {
+                                        echo do_shortcode( '[gravityform id="3" title="false" description="false" ajax="true"]' );
+                                    } else {
+                                        echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </section>
 
         <script>
             document.addEventListener( 'DOMContentLoaded', function() {
-                new Swiper( '.available-puppies-swiper', {
-                    slidesPerView: 6,
-                    spaceBetween: 20,
-                    navigation: {
-                        nextEl: '.available-puppies-swiper .swiper-button-next',
-                        prevEl: '.available-puppies-swiper .swiper-button-prev',
-                    },
-                    breakpoints: {
-                        0: { slidesPerView: 2 },
-                        576: { slidesPerView: 3 },
-                        768: { slidesPerView: 4 },
-                        992: { slidesPerView: 5 },
-                        1200: { slidesPerView: 6 },
-                    },
-                } );
+                // Only initialize Swiper on tablet and desktop (768px and up)
+                // Mobile uses native horizontal scroll
+                if (window.innerWidth >= 768) {
+                    new Swiper( '.available-puppies-swiper', {
+                        slidesPerView: 6,
+                        spaceBetween: 20,
+                        navigation: {
+                            nextEl: '.available-puppies-swiper .swiper-button-next',
+                            prevEl: '.available-puppies-swiper .swiper-button-prev',
+                        },
+                        grabCursor: true,
+                        speed: 400,
+                        breakpoints: {
+                            768: { slidesPerView: 4 },
+                            992: { slidesPerView: 5 },
+                            1200: { slidesPerView: 6 },
+                        },
+                    } );
+                } else {
+                    // Setup mobile horizontal scroll
+                    var swiperContainer = document.querySelector('.available-puppies-swiper');
+                    var swiperWrapper = document.querySelector('.available-puppies-swiper .swiper-wrapper');
+                    if (swiperContainer && swiperWrapper) {
+                        // Force horizontal scroll on mobile
+                        swiperContainer.style.overflowX = 'scroll';
+                        swiperContainer.style.overflowY = 'hidden';
+                        swiperContainer.style.WebkitOverflowScrolling = 'touch';
+
+                        swiperWrapper.style.display = 'flex';
+                        swiperWrapper.style.flexWrap = 'nowrap';
+                        swiperWrapper.style.width = 'auto';
+                        swiperWrapper.style.transform = 'none';
+
+                        // Set each slide width
+                        var slides = swiperWrapper.querySelectorAll('.swiper-slide');
+                        slides.forEach(function(slide) {
+                            slide.style.flexShrink = '0';
+                            slide.style.width = '280px';
+                        });
+                    }
+                }
                 new Swiper( '.reviews-swiper', {
                     slidesPerView: 3,
                     spaceBetween: 20,
@@ -327,7 +360,12 @@ if ( $hero_image ) {
 
                 // Function to populate form fields
                 function populatePetDetailsForm(modal, button) {
+                    console.log('🔍 populatePetDetailsForm called');
+                    console.log('Modal:', modal);
+                    console.log('Button:', button);
+
                     if (!button || !button.classList.contains('pet-details-trigger')) {
+                        console.warn('⚠️ Button is missing or does not have pet-details-trigger class');
                         return;
                     }
 
@@ -343,12 +381,17 @@ if ( $hero_image ) {
                         productUrl: button.getAttribute('data-product-url')
                     };
 
-                    // Wait for Gravity Forms to fully render
+                    console.log('📦 Product data extracted:', productData);
+
+                    // Wait a brief moment for Gravity Forms to fully render
                     setTimeout(function() {
                         const modalBody = modal.querySelector('.modal-body');
                         if (!modalBody) {
+                            console.error('❌ Modal body not found');
                             return;
                         }
+
+                        console.log('✅ Modal body found, looking for form fields...');
 
                         // Map of CSS classes to product data
                         const fieldMap = {
@@ -362,53 +405,95 @@ if ( $hero_image ) {
                         };
 
                         // Try multiple selector methods to find fields
+                        let foundCount = 0;
                         Object.keys(fieldMap).forEach(function(className) {
                             const value = fieldMap[className];
                             let field = null;
 
-                            // Look for gfield wrapper with the CSS class
+                            // Method 1: Look for gfield wrapper with the CSS class (most common in Gravity Forms)
                             let gfieldWrapper = modalBody.querySelector('.gfield.' + className);
                             if (gfieldWrapper) {
+                                console.log('   Found gfield wrapper for ' + className);
                                 field = gfieldWrapper.querySelector('input, textarea, select');
                             }
 
-                            // Look for the class on any li element
+                            // Method 2: Look for the class on any li element
                             if (!field) {
                                 let liWrapper = modalBody.querySelector('li.' + className);
                                 if (liWrapper) {
+                                    console.log('   Found li wrapper for ' + className);
                                     field = liWrapper.querySelector('input, textarea, select');
                                 }
                             }
 
-                            // Look for ginput_container with the class
+                            // Method 3: Look for ginput_container with the class
                             if (!field) {
                                 let fieldContainer = modalBody.querySelector('.ginput_container.' + className);
                                 if (fieldContainer) {
+                                    console.log('   Found ginput_container for ' + className);
                                     field = fieldContainer.querySelector('input, textarea, select');
                                 }
                             }
 
-                            // Direct input/textarea/select with the class
+                            // Method 4: Direct input/textarea/select with the class
                             if (!field) {
                                 field = modalBody.querySelector('input.' + className + ', textarea.' + className + ', select.' + className);
+                                if (field) {
+                                    console.log('   Found direct input for ' + className);
+                                }
                             }
 
                             if (field) {
+                                console.log('🔍 Found field for ' + className + ':', field);
+                                console.log('   Field type:', field.tagName, field.type);
+                                console.log('   Field ID:', field.id);
+                                console.log('   Setting value to:', value);
+
+                                // Set the value using multiple methods
                                 field.value = value;
+
+                                // Use setAttribute as well for good measure
                                 field.setAttribute('value', value);
 
-                                // Trigger events
+                                foundCount++;
+
+                                // Trigger events using both native JS and jQuery
                                 if (window.jQuery && jQuery(field).length) {
+                                    console.log('   Using jQuery to set value');
                                     jQuery(field).val(value).trigger('input').trigger('change').trigger('blur');
                                 } else {
+                                    console.log('   Using native JS to trigger events');
                                     field.dispatchEvent(new Event('input', { bubbles: true }));
                                     field.dispatchEvent(new Event('change', { bubbles: true }));
                                     field.dispatchEvent(new Event('blur', { bubbles: true }));
                                 }
+
+                                console.log('✅ Populated field:', className, '=', value);
+                                console.log('   Field value after setting:', field.value);
+                            } else {
+                                console.warn('⚠️ Field not found for class:', className);
+                                console.log('   Tried selectors:');
+                                console.log('   - .gfield.' + className + ' input/textarea/select');
+                                console.log('   - li.' + className + ' input/textarea/select');
+                                console.log('   - .ginput_container.' + className + ' input/textarea/select');
+                                console.log('   - input/textarea/select.' + className);
                             }
                         });
 
-                    }, 500);
+                        console.log('📊 Summary: Populated ' + foundCount + ' out of ' + Object.keys(fieldMap).length + ' fields');
+
+                        if (foundCount === 0) {
+                            console.error('❌ NO FIELDS WERE POPULATED! Check:');
+                            console.log('1. Are fields added to Gravity Form #3?');
+                            console.log('2. Do they have CSS classes in the "Custom CSS Class" field: gf-product-id, gf-pet-name, etc.?');
+                            console.log('3. All form fields in modal:');
+                            console.log('   Inputs:', modalBody.querySelectorAll('input'));
+                            console.log('   Textareas:', modalBody.querySelectorAll('textarea'));
+                            console.log('   Selects:', modalBody.querySelectorAll('select'));
+                            console.log('   All li elements:', modalBody.querySelectorAll('li[class*="gfield"]'));
+                        }
+
+                    }, 500); // Increased delay to 500ms for Gravity Forms AJAX
                 }
 
                 // Listen for Bootstrap modal show event
@@ -420,10 +505,14 @@ if ( $hero_image ) {
                         return;
                     }
 
+                    console.log('🎯 Pet Details Modal opening:', modal.id);
+
                     // Get the button that triggered the modal
                     const button = event.relatedTarget;
                     populatePetDetailsForm(modal, button);
                 });
+
+                console.log('✅ Pet Details Modal Handler Initialized');
             })();
         </script>
 

@@ -64,7 +64,15 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         esc_attr( $image_alt ?: get_the_title() )
                     );
                 } else {
-                    echo wc_placeholder_img( 'woocommerce_thumbnail' );
+                    // Custom placeholder for products without images
+                    ?>
+                    <div class="product-image-placeholder d-flex align-items-center justify-content-center bg-light w-100 h-100" style="min-height: 300px;">
+                        <div class="text-center">
+                            <i class="fas fa-paw fa-4x text-muted mb-3"></i>
+                            <p class="text-muted mb-0"><?php esc_html_e( 'Photo Coming Soon', 'happiness-is-pets' ); ?></p>
+                        </div>
+                    </div>
+                    <?php
                 }
                 ?>
             </div>
