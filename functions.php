@@ -570,6 +570,24 @@ function happiness_is_pets_widgets_init() {
 add_action( 'widgets_init', 'happiness_is_pets_widgets_init' );
 
 /**
+ * Enable legacy widgets for WooCommerce filters.
+ * The new block-based filter widgets don't work with traditional templates,
+ * so we force legacy mode to allow use of classic "Filter Products by Attribute" widgets.
+ */
+add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+add_filter( 'use_widgets_block_editor', '__return_false' );
+
+/**
+ * Include and register custom attribute filter widget.
+ */
+require_once get_template_directory() . '/inc/class-attribute-filter-widget.php';
+
+function happiness_is_pets_register_attribute_filter_widget() {
+    register_widget( 'Happiness_Attribute_Filter_Widget' );
+}
+add_action( 'widgets_init', 'happiness_is_pets_register_attribute_filter_widget' );
+
+/**
  * Add WooCommerce Wrappers.
  * This ensures WooCommerce content is wrapped with your theme's structure.
  */
@@ -1436,6 +1454,15 @@ function happiness_is_pets_location_filter_scripts() {
             'nonce'   => wp_create_nonce( 'location_filter_nonce' ),
         )
     );
+
+    // Enqueue debug script to help diagnose filter issues
+    wp_enqueue_script(
+        'happiness-filter-debug',
+        get_template_directory_uri() . '/assets/js/filter-debug.js',
+        array( 'jquery' ),
+        HAPPINESS_IS_PETS_VERSION,
+        true
+    );
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_location_filter_scripts' );
 
@@ -1544,14 +1571,60 @@ function happiness_is_pets_ajax_filter_products_by_location() {
 add_action( 'wp_ajax_filter_products_by_location', 'happiness_is_pets_ajax_filter_products_by_location' );
 add_action( 'wp_ajax_nopriv_filter_products_by_location', 'happiness_is_pets_ajax_filter_products_by_location' );
 
-// Filter products by location using post__in (for initial page load)
-function happiness_is_pets_filter_products_by_location( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_taxonomy() ) ) {
-        if ( isset( $_GET['location'] ) && ! empty( $_GET['location'] ) ) {
-            $matching_products = happiness_is_pets_get_products_by_location( $_GET['location'] );
-            $query->set( 'post__in', $matching_products );
+// Filter products by custom attributes (from our custom widget)
+function happiness_is_pets_filter_products_by_attributes( $query ) {
+    if ( is_admin() || ! $query->is_main_query() || ! ( is_shop() || is_product_taxonomy() ) ) {
+        return;
+    }
+
+    error_log('[Filter Debug] pre_get_posts hook triggered');
+    error_log('[Filter Debug] $_GET params: ' . print_r($_GET, true));
+
+    $tax_query = $query->get( 'tax_query' ) ?: array();
+    if ( ! isset( $tax_query['relation'] ) ) {
+        $tax_query['relation'] = 'AND';
+    }
+
+    // Handle attribute filters (filter_breed, filter_gender, etc.)
+    foreach ( $_GET as $key => $value ) {
+        if ( strpos( $key, 'filter_' ) === 0 && ! empty( $value ) ) {
+            $attribute = str_replace( 'filter_', '', $key );
+            $taxonomy = wc_attribute_taxonomy_name( $attribute );
+
+            if ( taxonomy_exists( $taxonomy ) ) {
+                error_log('[Filter Debug] Adding attribute filter: ' . $attribute . ' = ' . $value);
+                $tax_query[] = array(
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'slug',
+                    'terms'    => sanitize_text_field( $value ),
+                );
+            }
         }
     }
+
+    if ( count( $tax_query ) > 1 ) { // More than just 'relation'
+        $query->set( 'tax_query', $tax_query );
+        error_log('[Filter Debug] Applied tax_query: ' . print_r($tax_query, true));
+    }
+
+    // Handle location filter separately using post__in
+    if ( isset( $_GET['location'] ) && ! empty( $_GET['location'] ) ) {
+        error_log('[Filter Debug] Location filter active: ' . $_GET['location']);
+        $matching_products = happiness_is_pets_get_products_by_location( $_GET['location'] );
+        error_log('[Filter Debug] Matching products by location: ' . count($matching_products) . ' products');
+
+        // Get existing post__in from query (might be set by other filters)
+        $existing_post_in = $query->get( 'post__in' );
+
+        if ( ! empty( $existing_post_in ) && is_array( $existing_post_in ) ) {
+            $original_count = count($matching_products);
+            $matching_products = array_intersect( $existing_post_in, $matching_products );
+            error_log('[Filter Debug] Merged filters - Before: ' . $original_count . ', After: ' . count($matching_products));
+        }
+
+        error_log('[Filter Debug] Final post__in: ' . count($matching_products) . ' products');
+        $query->set( 'post__in', $matching_products );
+    }
 }
-add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_location' );
+add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
 

@@ -5,25 +5,31 @@
 (function($) {
     'use strict';
 
+    console.log('[Location Filter] Script loaded');
+
     let isFiltering = false;
 
     // Handle location dropdown changes
     $(document).on('change', '#locationDropdown', function() {
+        console.log('[Location Filter] Dropdown changed, isFiltering:', isFiltering);
         if (isFiltering) return;
 
         const selectedLocation = $(this).val();
+        console.log('[Location Filter] Selected location:', selectedLocation);
         filterProductsByLocation(selectedLocation);
     });
 
     // Main filter function using AJAX
     function filterProductsByLocation(selectedLocation) {
+        console.log('[Location Filter] filterProductsByLocation called with:', selectedLocation);
         isFiltering = true;
 
         // Find the products container
         const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
+        console.log('[Location Filter] Products container found:', $productsContainer.length > 0, $productsContainer);
 
         if (!$productsContainer.length) {
-            console.error('Products container not found');
+            console.error('[Location Filter] Products container not found');
             isFiltering = false;
             return;
         }
@@ -45,6 +51,12 @@
         const category = urlParams.get('product_cat') || '';
 
         // Make AJAX request
+        console.log('[Location Filter] Making AJAX request with data:', {
+            action: 'filter_products_by_location',
+            location: selectedLocation,
+            category: category
+        });
+
         $.ajax({
             url: locationFilterParams.ajaxurl,
             type: 'POST',
@@ -54,6 +66,7 @@
                 category: category
             },
             success: function(response) {
+                console.log('[Location Filter] AJAX response:', response);
                 if (response.success && response.data.html) {
                     // Replace products
                     $productsContainer.html(response.data.html);
