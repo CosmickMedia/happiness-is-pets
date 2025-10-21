@@ -1312,17 +1312,21 @@ body {
 
             <!-- Certifications Grid -->
             <div class="pup-certs-grid">
-                <div class="pup-cert-badge <?php echo $canine_care_certified ? 'certified' : 'not-certified'; ?>" <?php if ($canine_care_certified) : ?>data-bs-toggle="modal" href="#canine-care-certified"<?php endif; ?>>
-                    <i class="fas fa-certificate pup-cert-icon"></i>
+                <?php if ($canine_care_certified) : ?>
+                <div class="pup-cert-badge certified" data-bs-toggle="modal" href="#canine-care-certified">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/cta-canine-care-certified.png'); ?>" alt="Canine Care Certified" class="pup-cert-logo" style="width: 60px; height: auto; margin-bottom: 8px;">
                     <span class="pup-cert-label">CCC Breeder</span>
-                    <span class="pup-cert-status"><?php echo $canine_care_certified ? 'Certified' : 'N/A'; ?></span>
+                    <span class="pup-cert-status">Certified</span>
                 </div>
+                <?php endif; ?>
 
-                <div class="pup-cert-badge <?php echo $parents_ofa_tested ? 'certified' : 'not-certified'; ?>" <?php if ($parents_ofa_tested) : ?>data-bs-toggle="modal" href="#ofa-modal"<?php endif; ?>>
-                    <i class="fas fa-stethoscope pup-cert-icon"></i>
+                <?php if ($parents_ofa_tested) : ?>
+                <div class="pup-cert-badge certified" data-bs-toggle="modal" href="#ofa-modal">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/ofa.png'); ?>" alt="OFA Tested" class="pup-cert-logo" style="width: 60px; height: auto; margin-bottom: 8px;">
                     <span class="pup-cert-label">OFA Tested</span>
-                    <span class="pup-cert-status"><?php echo $parents_ofa_tested ? 'Yes' : 'No'; ?></span>
+                    <span class="pup-cert-status">Yes</span>
                 </div>
+                <?php endif; ?>
 
                 <?php if ($pet_type === 'Dog' && function_exists('get_field') && get_field('puppy_ad_heading', 'option')) : ?>
                 <div class="pup-cert-badge certified" data-bs-toggle="modal" href="#warranty">

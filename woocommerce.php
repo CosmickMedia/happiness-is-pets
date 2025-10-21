@@ -36,11 +36,27 @@ get_template_part( 'template-parts/page', 'header' );
 
                 <div class="offcanvas offcanvas-start pets-offcanvas" tabindex="-1" id="petsFilterOffcanvas" aria-labelledby="petsFilterLabel">
                     <div class="offcanvas-header">
-                        <h5 id="petsFilterLabel" class="offcanvas-title"><?php esc_html_e( 'Filter Pets', 'happiness-is-pets' ); ?></h5>
+                        <h5 id="petsFilterLabel" class="offcanvas-title">
+                            <i class="fas fa-paw me-2"></i>
+                            <span class="pets-count-display">
+                                <?php
+                                // Get total count of products (excluding Accessories)
+                                global $wp_query;
+                                echo esc_html( $wp_query->found_posts );
+                                ?>
+                            </span> pets found
+                        </h5>
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<?php esc_attr_e( 'Close', 'happiness-is-pets' ); ?>"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <?php get_sidebar( 'woocommerce-pets' ); ?>
+                        <?php
+                        // Use custom woo-sidebar instead of widget-based sidebar
+                        if ( file_exists( get_template_directory() . '/woo-sidebar.php' ) ) {
+                            include( get_template_directory() . '/woo-sidebar.php' );
+                        } else {
+                            get_sidebar( 'woocommerce-pets' );
+                        }
+                        ?>
                     </div>
                 </div>
             <?php endif; ?>

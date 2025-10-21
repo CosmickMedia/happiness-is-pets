@@ -1167,7 +1167,7 @@ function happiness_is_pets_load_more_products() {
     // Get the query vars and decode
     $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
 
-    // Build simple args
+    // Build simple args (excluding Accessories)
     $args = array(
         'post_type'      => 'product',
         'post_status'    => 'publish',
@@ -1175,16 +1175,27 @@ function happiness_is_pets_load_more_products() {
         'posts_per_page' => 20,
     );
 
+    // Always exclude Accessories
+    $tax_query = array(
+        'relation' => 'AND',
+        array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => 'accessories',
+            'operator' => 'NOT IN',
+        ),
+    );
+
     // Add category if it exists
     if ( ! empty( $query_vars['product_cat'] ) ) {
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'slug',
-                'terms'    => $query_vars['product_cat'],
-            ),
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $query_vars['product_cat'],
         );
     }
+
+    $args['tax_query'] = $tax_query;
 
     // Add location filter if it exists (from AJAX POST data)
     if ( isset( $_POST['location'] ) && ! empty( $_POST['location'] ) ) {
@@ -1474,12 +1485,20 @@ function happiness_is_pets_get_products_by_location( $location ) {
 
     $location = sanitize_text_field( $location );
 
-    // Get all products
+    // Get all products (excluding Accessories)
     $all_products = get_posts( array(
         'post_type' => 'product',
         'posts_per_page' => -1,
         'fields' => 'ids',
         'post_status' => 'publish',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => 'accessories',
+                'operator' => 'NOT IN',
+            ),
+        ),
     ) );
 
     $matching_products = array();
@@ -1510,7 +1529,7 @@ function happiness_is_pets_ajax_filter_products_by_location() {
     $location = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
     $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
 
-    // Build query args
+    // Build query args (excluding Accessories)
     $args = array(
         'post_type'      => 'product',
         'post_status'    => 'publish',
@@ -1519,16 +1538,27 @@ function happiness_is_pets_ajax_filter_products_by_location() {
         'order'          => 'DESC',
     );
 
+    // Always exclude Accessories
+    $tax_query = array(
+        'relation' => 'AND',
+        array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => 'accessories',
+            'operator' => 'NOT IN',
+        ),
+    );
+
     // Add category filter if exists
     if ( ! empty( $category ) ) {
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'slug',
-                'terms'    => $category,
-            ),
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $category,
         );
     }
+
+    $args['tax_query'] = $tax_query;
 
     // Add location filter if exists
     if ( ! empty( $location ) ) {
@@ -1585,6 +1615,14 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
         $tax_query['relation'] = 'AND';
     }
 
+    // Always exclude Accessories category
+    $tax_query[] = array(
+        'taxonomy' => 'product_cat',
+        'field'    => 'slug',
+        'terms'    => 'accessories',
+        'operator' => 'NOT IN',
+    );
+
     // Handle attribute filters (filter_breed, filter_gender, etc.)
     foreach ( $_GET as $key => $value ) {
         if ( strpos( $key, 'filter_' ) === 0 && ! empty( $value ) ) {
@@ -1627,4 +1665,210 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
+
+/**
+ * ================================
+ * CUSTOM WOO-SIDEBAR FILTERING
+ * ================================
+ */
+
+// Enqueue custom filter scripts
+function happiness_is_pets_custom_filter_scripts() {
+    if ( ! is_shop() && ! is_product_taxonomy() ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'happiness-custom-filters',
+        get_template_directory_uri() . '/assets/js/custom-filters.js',
+        array( 'jquery' ),
+        HAPPINESS_IS_PETS_VERSION,
+        true
+    );
+
+    // Get current page for pagination
+    $current_page = max( 1, get_query_var( 'paged' ) );
+    $max_pages = $GLOBALS['wp_query']->max_num_pages;
+
+    wp_localize_script(
+        'happiness-custom-filters',
+        'customFilterParams',
+        array(
+            'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+            'nonce'        => wp_create_nonce( 'custom_filter_nonce' ),
+            'current_page' => $current_page,
+            'max_pages'    => $max_pages,
+        )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'happiness_is_pets_custom_filter_scripts' );
+
+// Helper function to get products filtered by gender, breed, and location
+function happiness_is_pets_get_filtered_products( $filters = array() ) {
+    $matching_products = array();
+
+    // Get all published products (excluding Accessories category)
+    $all_products = get_posts( array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => 'accessories',
+                'operator' => 'NOT IN',
+            ),
+        ),
+    ) );
+
+    foreach ( $all_products as $product_id ) {
+        $matches = true;
+
+        // Check gender filter
+        if ( ! empty( $filters['gender'] ) ) {
+            $product_gender = get_field( 'gender', $product_id );
+            if ( strtolower( $product_gender ) !== strtolower( $filters['gender'] ) ) {
+                $matches = false;
+            }
+        }
+
+        // Check breed filter
+        if ( $matches && ! empty( $filters['breed'] ) ) {
+            $product_breed = '';
+            if ( function_exists( 'wc_ukm_get_pet' ) ) {
+                $pet = wc_ukm_get_pet( $product_id );
+                $product_breed = ! empty( $pet->breed ) ? $pet->breed : '';
+            }
+            if ( $product_breed !== $filters['breed'] ) {
+                $matches = false;
+            }
+        }
+
+        // Check location filter
+        if ( $matches && ! empty( $filters['location'] ) ) {
+            $product_location = '';
+            if ( function_exists( 'wc_ukm_get_pet' ) ) {
+                $pet = wc_ukm_get_pet( $product_id );
+                $product_location = ! empty( $pet->location ) ? trim( $pet->location ) : '';
+            }
+            if ( stripos( $product_location, $filters['location'] ) === false ) {
+                $matches = false;
+            }
+        }
+
+        if ( $matches ) {
+            $matching_products[] = $product_id;
+        }
+    }
+
+    // If no matching products, return array with 0 to show no results
+    if ( empty( $matching_products ) ) {
+        $matching_products = array( 0 );
+    }
+
+    return $matching_products;
+}
+
+// AJAX handler for custom product filtering
+function happiness_is_pets_ajax_custom_filter_products() {
+    // Verify nonce
+    check_ajax_referer( 'custom_filter_nonce', 'nonce' );
+
+    // Get filter values
+    $gender   = isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '';
+    $breed    = isset( $_POST['breed'] ) ? sanitize_text_field( $_POST['breed'] ) : '';
+    $location = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
+    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
+    $page     = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+
+    // Build filters array
+    $filters = array_filter( array(
+        'gender'   => $gender,
+        'breed'    => $breed,
+        'location' => $location,
+    ) );
+
+    // Build query args (always exclude Accessories)
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => 20,
+        'paged'          => $page,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    // Always exclude Accessories category
+    $tax_query = array(
+        'relation' => 'AND',
+        array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => 'accessories',
+            'operator' => 'NOT IN',
+        ),
+    );
+
+    // Add category filter if exists
+    if ( ! empty( $category ) ) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $category,
+        );
+    }
+
+    $args['tax_query'] = $tax_query;
+
+    // Add custom filters
+    if ( ! empty( $filters ) ) {
+        $matching_products = happiness_is_pets_get_filtered_products( $filters );
+        $args['post__in'] = $matching_products;
+
+        // Preserve order by date
+        if ( ! isset( $args['post__in'] ) || ! is_array( $args['post__in'] ) ) {
+            $args['orderby'] = 'post__in';
+        }
+    }
+
+    // Run query
+    $products = new WP_Query( $args );
+
+    if ( $products->have_posts() ) {
+        ob_start();
+
+        while ( $products->have_posts() ) {
+            $products->the_post();
+            global $product;
+            $product = wc_get_product( get_the_ID() );
+
+            if ( $product ) {
+                wc_get_template_part( 'content', 'product' );
+            }
+        }
+
+        $html = ob_get_clean();
+        wp_reset_postdata();
+
+        wp_send_json_success( array(
+            'html'       => $html,
+            'count'      => $products->found_posts,
+            'max_pages'  => $products->max_num_pages,
+            'page'       => $page,
+        ) );
+    } else {
+        wp_send_json_success( array(
+            'html'       => '<div class="col-12"><div class="alert alert-info text-center"><i class="fas fa-info-circle me-2"></i>No pets found matching your filters. Try adjusting your selection.</div></div>',
+            'count'      => 0,
+            'max_pages'  => 0,
+            'page'       => 1,
+        ) );
+    }
+
+    wp_die();
+}
+add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
+add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 

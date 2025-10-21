@@ -7,7 +7,8 @@
       "Bash(wp db query \"SELECT post_id, meta_key, meta_value FROM wp_postmeta WHERE meta_key LIKE ''%location%'' LIMIT 10\" --skip-plugins --skip-themes)",
       "Bash(wp option get widget_woocommerce_layered_nav --format=json)",
       "Bash(wp option get sidebars_widgets --format=json)",
-      "Bash(wp db query \"SELECT option_value FROM wp_options WHERE option_name = ''sidebars_widgets'' LIMIT 1\" --skip-plugins --skip-themes)"
+      "Bash(wp db query \"SELECT option_value FROM wp_options WHERE option_name = ''sidebars_widgets'' LIMIT 1\" --skip-plugins --skip-themes)",
+      "Bash(wp db query:*)"
     ],
     "deny": [],
     "ask": []
