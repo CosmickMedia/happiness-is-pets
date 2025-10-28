@@ -8,6 +8,30 @@
 
     console.log('[Custom Filters] Script loaded');
 
+    // Fix for lazy loading images in blog posts
+    function fixLazyImages() {
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        lazyImages.forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', function() {
+                    this.classList.add('loaded');
+                });
+            }
+        });
+    }
+
+    // Run on page load
+    $(document).ready(function() {
+        fixLazyImages();
+    });
+
+    // Run when images are loaded
+    $(window).on('load', function() {
+        fixLazyImages();
+    });
+
     // State management
     let isFiltering = false;
     let currentPage = 1;
