@@ -49,6 +49,11 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </div>
                 </div--> 
                 <?php endif; ?>
+				<?php if ( $product->get_status() === 'coming_soon' ) :?>
+				<div class="position-absolute top-0 end-1 m-2 z-index-1">
+					<div style="background-color: #00c8ba !important; color: #fff !important;" class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm">Coming Soon</div>
+				</div>
+				<?php endif; ?>
                 <?php
                 if ( has_post_thumbnail() ) {
                     // Force immediate loading without lazy loading attribute
