@@ -665,6 +665,98 @@ if ( $hero_image ) {
             </div>
         </section>
 
+        <?php // --- Latest Blog Section --- ?>
+        <section class="front-page-section py-5" id="latest-blog">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h2 class="h2-theme-bold title_text"><?php echo esc_html( get_theme_mod( 'blog_title', 'Latest from Our Blog' ) ); ?></h2>
+                        <p class="lead text-muted"><?php echo esc_html( get_theme_mod( 'blog_subtitle', 'Stay updated with our latest pet care tips, news, and stories' ) ); ?></p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <?php
+                    // Get latest blog posts
+                    $latest_posts = get_posts(array(
+                        'numberposts' => 3,
+                        'post_status' => 'publish',
+                        'orderby' => 'date',
+                        'order' => 'DESC'
+                    ));
+                    
+                    if ($latest_posts) :
+                        foreach ($latest_posts as $post) : setup_postdata($post);
+                    ?>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <article class="blog-card h-100">
+                                <div class="blog-card-image">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <a href="<?php the_permalink(); ?>">
+                                            <?php the_post_thumbnail('medium', array('class' => 'img-fluid')); ?>
+                                        </a>
+                                    <?php else : ?>
+                                        <a href="<?php the_permalink(); ?>">
+                                            <div class="blog-card-placeholder">
+                                                <i class="fas fa-image"></i>
+                                            </div>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                <div class="blog-card-content">
+                                    <div class="blog-card-meta mb-2">
+                                        <span class="blog-card-date">
+                                            <i class="fas fa-calendar-alt me-1"></i>
+                                            <?php echo get_the_date(); ?>
+                                        </span>
+                                        <?php if (has_category()) : ?>
+                                            <span class="blog-card-category ms-3">
+                                                <i class="fas fa-folder me-1"></i>
+                                                <?php the_category(', '); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <h3 class="blog-card-title">
+                                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                    </h3>
+                                    
+                                    <div class="blog-card-excerpt">
+                                        <?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?>
+                                    </div>
+                                    
+                                    <div class="blog-card-footer">
+                                        <a href="<?php the_permalink(); ?>" class="blog-read-more-link">
+                                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    <?php 
+                        endforeach; 
+                        wp_reset_postdata();
+                    else :
+                    ?>
+                        <div class="col-12 text-center">
+                            <p class="text-muted">No blog posts found.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <?php if ($latest_posts) : ?>
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="theme-primary-btn">
+                            <?php echo esc_html( get_theme_mod( 'blog_button_text', 'View All Posts' ) ); ?>
+                        </a>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </section>
+
     </main>
 <?php
 get_footer();
