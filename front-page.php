@@ -748,7 +748,7 @@ if ( $hero_image ) {
                 <?php if ($latest_posts) : ?>
                 <div class="row mt-4">
                     <div class="col-12 text-center">
-                        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="theme-primary-btn">
+                        <a href="/blog/" class="theme-primary-btn">
                             <?php echo esc_html( get_theme_mod( 'blog_button_text', 'View All Posts' ) ); ?>
                         </a>
                     </div>

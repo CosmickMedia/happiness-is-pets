@@ -16,6 +16,10 @@ if ( is_front_page() ) {
                     } else {
                         echo esc_html( woocommerce_page_title( false ) );
                     }
+                } elseif ( is_archive() ) {
+                    the_archive_title();
+                } elseif ( is_home() && ! is_front_page() ) {
+                    single_post_title();
                 } else {
                     echo esc_html( get_the_title() );
                 }
