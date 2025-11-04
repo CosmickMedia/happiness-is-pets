@@ -19,7 +19,7 @@ function get_filter_options() {
     // Get all published products (excluding Accessories)
     $products = get_posts(array(
         'post_type' => 'product',
-        'post_status' => 'publish',
+        'post_status' => happiness_is_pets_get_visible_product_statuses(),
         'posts_per_page' => -1,
         'fields' => 'ids',
         'tax_query' => array(

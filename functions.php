@@ -1119,6 +1119,16 @@ function wc_ukm_add_custom_product_statuses( $product_statuses ) {
 add_filter( 'wc_ukm_get_custom_product_statuses', 'wc_ukm_add_custom_product_statuses' );
 
 /**
+ * Get array of product statuses that should be visible on the frontend
+ * Includes: publish, coming_soon, and weight_watch (silently included)
+ *
+ * @return array Array of post status slugs
+ */
+function happiness_is_pets_get_visible_product_statuses() {
+    return array( 'publish', 'coming_soon', 'weight_watch' );
+}
+
+/**
  * ================================
  * INFINITE SCROLL & LAZY LOADING
  * ================================
@@ -1170,7 +1180,7 @@ function happiness_is_pets_load_more_products() {
     // Build simple args (excluding Accessories)
     $args = array(
         'post_type'      => 'product',
-        'post_status'    => 'publish',
+        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
         'paged'          => $paged,
         'posts_per_page' => 20,
     );
@@ -1490,7 +1500,7 @@ function happiness_is_pets_get_products_by_location( $location ) {
         'post_type' => 'product',
         'posts_per_page' => -1,
         'fields' => 'ids',
-        'post_status' => 'publish',
+        'post_status' => happiness_is_pets_get_visible_product_statuses(),
         'tax_query' => array(
             array(
                 'taxonomy' => 'product_cat',
@@ -1532,7 +1542,7 @@ function happiness_is_pets_ajax_filter_products_by_location() {
     // Build query args (excluding Accessories)
     $args = array(
         'post_type'      => 'product',
-        'post_status'    => 'publish',
+        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
         'posts_per_page' => -1, // Get all products for the filter
         'orderby'        => 'date',
         'order'          => 'DESC',
@@ -1663,6 +1673,9 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
         error_log('[Filter Debug] Final post__in: ' . count($matching_products) . ' products');
         $query->set( 'post__in', $matching_products );
     }
+
+    // Include multiple post statuses (publish, coming_soon, weight_watch)
+    $query->set( 'post_status', happiness_is_pets_get_visible_product_statuses() );
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
 
@@ -1710,7 +1723,7 @@ function happiness_is_pets_get_filtered_products( $filters = array() ) {
     // Get all published products (excluding Accessories category)
     $all_products = get_posts( array(
         'post_type'      => 'product',
-        'post_status'    => 'publish',
+        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
         'posts_per_page' => -1,
         'fields'         => 'ids',
         'tax_query'      => array(
@@ -1793,7 +1806,7 @@ function happiness_is_pets_ajax_custom_filter_products() {
     // Build query args (always exclude Accessories)
     $args = array(
         'post_type'      => 'product',
-        'post_status'    => 'publish',
+        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
         'posts_per_page' => 20,
         'paged'          => $page,
         'orderby'        => 'date',

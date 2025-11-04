@@ -254,7 +254,7 @@ if ( $hero_image ) {
                 <?php
                 $products = wc_get_products(
                         array(
-                                'status'   => 'publish',
+                                'status'   => happiness_is_pets_get_visible_product_statuses(),
                                 'limit'    => -1,
                                 'category' => array( 'puppies-for-sale' ),
                         )
