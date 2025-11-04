@@ -8,7 +8,10 @@
       "Bash(wp option get widget_woocommerce_layered_nav --format=json)",
       "Bash(wp option get sidebars_widgets --format=json)",
       "Bash(wp db query \"SELECT option_value FROM wp_options WHERE option_name = ''sidebars_widgets'' LIMIT 1\" --skip-plugins --skip-themes)",
-      "Bash(wp db query:*)"
+      "Bash(wp db query:*)",
+      "Bash(/opt/homebrew/bin/cwebp -q 85 our-puppies.png -o our-puppies.webp)",
+      "Bash(/opt/homebrew/bin/cwebp:*)",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "ask": []

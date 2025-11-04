@@ -188,9 +188,15 @@ if ( $hero_image ) {
                                                     <?php endif; ?>
                                                 </div>
 
-                                                <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name . ' - ' . $ref_id ); ?></h5>
+                                                <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name ); ?></h5>
 
                                                 <div class="card-text">
+                                                    <?php if ( $ref_id ) : ?>
+                                                    <div class="pet-detail pet-ref-id d-flex align-items-center mb-1">
+                                                        <strong class="me-1"><?php esc_html_e( 'Ref ID:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $ref_id ); ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+
                                                     <?php if ( $breed ) : ?>
                                                     <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
                                                         <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $breed ); ?></span>
@@ -535,45 +541,60 @@ if ( $hero_image ) {
             </div>
         </section>
 
-        <div class="d-none d-md-block">
-            <div class="info-preview-section py-3 infofirst-4991">
-                <div class="info-layout-wrap no-hover">
-                    <div class="info-layout-wrap-inner">
-                        <div class="info-layout-box container">
-                            <div class="row">
-                                <div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 d-flex align-items-center">
-                                    <div class="info-layout-content-img">
-                                        <img src="<?php echo esc_url( get_theme_mod( 'financing_image', get_template_directory_uri() . '/assets/images/ourpuppies.webp' ) ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'financing_title', 'Take Home Your Newest Addition!' ) ); ?>" class="info_placeholder img-fluid infofirst-img" />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-8 align-items-center d-flex order-2 order-md-2">
-                                    <div class="info-layout-content">
-                                        <div class="info-layout-content-inner">
-                                            <h2 class="h2-theme-bold mb-3 infofirst-title">
-                                                <p><?php echo esc_html( get_theme_mod( 'financing_title', 'Take Home Your Newest Addition!' ) ); ?></p>
-                                            </h2>
-                                            <div class="h3-theme-bold mb-3 infofirst-sub-title infofirst-sub-title"></div>
-                                            <div class="infofirst-message">
-                                                <p><span style="color:#B8B8B8;font-size:20px;"><?php echo esc_html( get_theme_mod( 'financing_subtitle', 'Healthy, Happy, and Adorable' ) ); ?></span></p>
-                                                <p><?php echo esc_html( get_theme_mod( 'financing_text', 'Quick and easy financing is available. Apply Now!' ) ); ?></p>
-                                            </div>
-                                            <div class="info-layout-action d-flex btn-flex">
-                                                <a style="white-space:nowrap" class="theme-primary-btn mt-1 sw-100" href="<?php echo esc_url( get_theme_mod( 'financing_button1_url', 'https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true' ) ); ?>" target="_blank">
-                                                    <?php echo esc_html( get_theme_mod( 'financing_button1_text', 'Apply Now - Schereville' ) ); ?>
-                                                </a>
-                                                <a style="white-space:nowrap" class="theme-primary-btn mt-1 sw-100" href="<?php echo esc_url( get_theme_mod( 'financing_button2_url', 'https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa' ) ); ?>" target="_blank">
-                                                    <?php echo esc_html( get_theme_mod( 'financing_button2_text', 'Apply Now - Indianapolis' ) ); ?>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <?php // --- Financing Section - Mobile & Desktop Friendly --- ?>
+        <section class="front-page-section financing-section py-5 my-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-5 mb-4 mb-lg-0 text-center">
+                        <img src="<?php echo esc_url( get_theme_mod( 'financing_image', get_template_directory_uri() . '/assets/images/our-puppies.webp' ) ); ?>"
+                             alt="<?php echo esc_attr( get_theme_mod( 'financing_title', 'Take Home Your Newest Addition!' ) ); ?>"
+                             class="img-fluid rounded-3 shadow-lg"
+                             style="max-width: 100%; height: auto;" />
+                    </div>
+                    <div class="col-12 col-lg-7">
+                        <div class="financing-content px-lg-4">
+                            <h2 class="fw-bold mb-3" style="color: var(--color-primary-dark-teal); font-size: 2.5rem;">
+                                <?php echo esc_html( get_theme_mod( 'financing_title', 'Take Home Your Newest Addition!' ) ); ?>
+                            </h2>
+                            <p class="lead mb-3" style="color: #6c757d; font-size: 1.25rem;">
+                                <?php echo esc_html( get_theme_mod( 'financing_subtitle', 'Healthy, Happy, and Adorable' ) ); ?>
+                            </p>
+                            <div class="financing-text mb-4" style="font-size: 1.1rem; line-height: 1.8; color: #495057;">
+                                <p class="mb-3">
+                                    <?php echo esc_html( get_theme_mod( 'financing_text', 'Don\'t let budget concerns stand in the way of bringing home your perfect companion! We offer quick and easy financing options to help make your dream of pet ownership a reality. Our streamlined application process takes just minutes, and you\'ll receive an instant decision - no waiting required.' ) ); ?>
+                                </p>
+                                <p class="mb-3">
+                                    <strong>Why choose our financing?</strong>
+                                </p>
+                                <ul class="list-unstyled ps-3 mb-4">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Fast approval - decision in minutes</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Flexible payment plans to fit your budget</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> No hidden fees or surprises</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Simple online application process</li>
+                                </ul>
+                                <p style="font-weight: 600; color: var(--color-primary-dark-teal);">
+                                    Apply now at either of our locations and start your journey to bringing home your new family member today!
+                                </p>
+                            </div>
+                            <div class="d-flex flex-column flex-md-row gap-3">
+                                <a class="btn btn-lg btn-primary-theme w-100 w-md-auto"
+                                   href="<?php echo esc_url( get_theme_mod( 'financing_button1_url', 'https://app.formpiper.com/outside-form/happiness-is-pets-schererville/fTlGP4zm9zLqayP9FI9M1nB4JACHgY?qr=true' ) ); ?>"
+                                   target="_blank"
+                                   style="font-size: 1.1rem; padding: 15px 30px;">
+                                    <i class="fas fa-file-invoice-dollar me-2"></i><?php echo esc_html( get_theme_mod( 'financing_button1_text', 'Apply Now - Schererville' ) ); ?>
+                                </a>
+                                <a class="btn btn-lg btn-primary-theme w-100 w-md-auto"
+                                   href="<?php echo esc_url( get_theme_mod( 'financing_button2_url', 'https://app.formpiper.com/outside-form/happiness-is-pets-indianapolis/tjtpqDXcm2p4H4oOd37nKRsg5xFwGa' ) ); ?>"
+                                   target="_blank"
+                                   style="font-size: 1.1rem; padding: 15px 30px;">
+                                    <i class="fas fa-file-invoice-dollar me-2"></i><?php echo esc_html( get_theme_mod( 'financing_button2_text', 'Apply Now - Indianapolis' ) ); ?>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <?php // --- Our Guarantee Section --- ?>
         <section class="front-page-section py-5 my-5" id="our-guarantee">

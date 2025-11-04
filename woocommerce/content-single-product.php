@@ -9,6 +9,21 @@ defined( 'ABSPATH' ) || exit;
 global $product;
 if ( ! $product instanceof WC_Product ) { return; }
 
+// Debug: Print $product for admin user 'cosmick'
+//$current_user = wp_get_current_user();
+//if ( current_user_can('administrator') && $current_user->user_login === 'cosmick' ) {
+ //   echo '<div style="background: #000; color: #0f0; padding: 20px; margin: 20px; font-family: monospace; font-size: 12px; overflow: auto; max-height: 500px;">';
+  //  echo '<h3 style="color: #0f0; margin-top: 0;">DEBUG: Global $product Object for ' . esc_html($current_user->user_login) . '</h3>';
+  //  echo '<pre style="color: #0f0; white-space: pre-wrap; word-wrap: break-word;">';
+  //  print_r($product);
+  //  echo '</pre>';
+  //  echo '<h4 style="color: #0f0; margin-top: 20px;">Available Methods:</h4>';
+  //  echo '<pre style="color: #0f0; white-space: pre-wrap; word-wrap: break-word;">';
+  //  print_r(get_class_methods($product));
+  //  echo '</pre>';
+  //  echo '</div>';
+//}
+
 // Gather all product data
 $product_id        = $product->get_id();
 $product_name      = $product->get_name();
@@ -22,11 +37,13 @@ $birth_date        = ! empty( $pet->dob ) && strtotime($pet->dob) ? date( 'm-d-Y
 $availability_meta = $product->get_meta('availability_date');
 $coming_soon       = ( $status === 'coming_soon' );
 $breed             = ! empty( $pet->breed ) ? $pet->breed : 'Unknown Breed';
-$age               = ! empty( $pet->age ) ? $pet->age : 'N/A';
-$gender            = ! empty( $pet->gender ) ? $pet->gender : 'N/A';
-$color             = ! empty( $pet->color ) ? $pet->color : 'N/A';
-$location          = ! empty( $pet->location ) ? $pet->location : 'N/A';
-$current_weight    = $product->get_meta('current_weight') ?: 'N/A';
+$age               = ! empty( $pet->age ) ? $pet->age : '';
+$gender            = ! empty( $pet->gender ) ? $pet->gender : '';
+$color             = ! empty( $pet->color ) ? $pet->color : '';
+$location          = ! empty( $pet->location ) ? $pet->location : '';
+$current_weight    = $product->get_pet_weight() ? $product->get_pet_weight() . ' lbs' : '';
+$est_adult_weight  = $product->get_meta('est_adult_weight') ?: '';
+$registry_info     = ! empty( $pet->registry_info ) ? $pet->registry_info : null;
 
 $product_categories = wp_get_post_terms($product_id, 'product_cat');
 $category_name = !empty($product_categories) ? $product_categories[0]->name : $breed;
@@ -1269,35 +1286,54 @@ body {
                     <span>Quick Facts</span>
                 </div>
 
+                <?php if (!empty($gender)) : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-venus-mars"></i> Gender</span>
                     <span class="pup-fact-value <?php echo strtolower($gender); ?>"><?php echo esc_html($gender); ?></span>
                 </div>
+                <?php endif; ?>
 
+                <?php if (!empty($birth_date) && $birth_date !== 'N/A') : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-calendar"></i> Born</span>
                     <span class="pup-fact-value"><?php echo esc_html($birth_date); ?></span>
                 </div>
+                <?php endif; ?>
 
+                <?php if (!empty($age)) : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-hourglass-half"></i> Age</span>
                     <span class="pup-fact-value"><?php echo esc_html($age); ?></span>
                 </div>
+                <?php endif; ?>
 
+                <?php if (!empty($color)) : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-palette"></i> Color</span>
                     <span class="pup-fact-value"><?php echo esc_html($color); ?></span>
                 </div>
+                <?php endif; ?>
 
+                <?php if (!empty($current_weight)) : ?>
                 <div class="pup-fact-row">
-                    <span class="pup-fact-label"><i class="fas fa-weight"></i> Weight</span>
+                    <span class="pup-fact-label"><i class="fas fa-weight"></i> Current Weight</span>
                     <span class="pup-fact-value"><?php echo esc_html($current_weight); ?></span>
                 </div>
+                <?php endif; ?>
 
+                <?php if (!empty($est_adult_weight)) : ?>
+                <div class="pup-fact-row">
+                    <span class="pup-fact-label"><i class="fas fa-arrows-alt-v"></i> Est. Adult Weight</span>
+                    <span class="pup-fact-value"><?php echo esc_html($est_adult_weight); ?> lbs</span>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!empty($location)) : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-map-marker-alt"></i> Location</span>
                     <span class="pup-fact-value"><?php echo esc_html($location); ?></span>
                 </div>
+                <?php endif; ?>
             </div>
 
             <!-- Video -->
@@ -1318,6 +1354,14 @@ body {
                     <span class="pup-cert-label">CCC Breeder</span>
                     <span class="pup-cert-status">Certified</span>
                 </div>
+                <?php endif; ?>
+
+                <?php if ($registry_info && !empty($registry_info['logo']) && !empty($registry_info['website'])) : ?>
+                <a href="<?php echo esc_url($registry_info['website']); ?>" target="_blank" rel="noopener noreferrer" class="pup-cert-badge certified">
+                    <img src="<?php echo esc_url($registry_info['logo']); ?>" alt="<?php echo esc_attr($registry_info['name'] ?? 'Registry'); ?>" class="pup-cert-logo" style="width: 120px; height: auto; margin-bottom: 8px;">
+                    <span class="pup-cert-label"><?php echo esc_html($registry_info['abbr'] ?? 'Registry'); ?></span>
+                    <span class="pup-cert-status">Registered</span>
+                </a>
                 <?php endif; ?>
 
                 <?php if ($parents_ofa_tested) : ?>

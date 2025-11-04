@@ -96,10 +96,15 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         <?php endif; ?>
                     </div>
 
-                    <!-- <h5 class="card-title pet-name fw-bold mb-2"><?php //echo sprintf( esc_html__( 'Hi, my name is %s!', 'happiness-is-pets' ), get_the_title() ); ?></h5> -->
-
+                    <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name ); ?></h5>
 
                     <div class="card-text">
+                        <?php if ( $ref_id ) : ?>
+                        <div class="pet-detail pet-ref-id d-flex align-items-center mb-1">
+                            <strong class="me-1"><?php esc_html_e( 'Ref ID:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $ref_id ); ?></span>
+                        </div>
+                        <?php endif; ?>
+
                         <?php if ( $breed ) : ?>
                         <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
                             <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $breed ); ?></span>
