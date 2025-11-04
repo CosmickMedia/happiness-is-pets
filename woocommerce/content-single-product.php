@@ -90,6 +90,7 @@ switch ( $status ) {
         break;
     case 'coming_soon': $status_label = 'Reserve Now'; break;
     case 'on_hold': $status_label = 'Reserved'; break;
+    case 'reserved_puppy': $status_label = 'Reserved'; break;
     default: $status_label = 'Contact Us'; break;
 }
 
@@ -1218,6 +1219,10 @@ body {
                         <a href="#contact-form" class="pup-status-pill text-decoration-none" style="cursor: pointer;">
                             <?php echo esc_html($status_label); ?>
                         </a>
+                    <?php elseif ($product->get_status() === 'reserved_puppy') : ?>
+                        <div class="pup-status-pill" style="background-color: #fbbf24; color: #78350f;">
+                            <?php echo esc_html($status_label); ?>
+                        </div>
                     <?php else : ?>
                         <div class="pup-status-pill"><?php echo esc_html($status_label); ?></div>
                     <?php endif; ?>

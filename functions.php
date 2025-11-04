@@ -1120,12 +1120,12 @@ add_filter( 'wc_ukm_get_custom_product_statuses', 'wc_ukm_add_custom_product_sta
 
 /**
  * Get array of product statuses that should be visible on the frontend
- * Includes: publish, coming_soon, and weight_watch (silently included)
+ * Includes: publish, coming_soon, weight_watch (silently included), and reserved_puppy
  *
  * @return array Array of post status slugs
  */
 function happiness_is_pets_get_visible_product_statuses() {
-    return array( 'publish', 'coming_soon', 'weight_watch' );
+    return array( 'publish', 'coming_soon', 'weight_watch', 'reserved_puppy' );
 }
 
 /**

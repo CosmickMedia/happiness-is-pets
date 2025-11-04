@@ -318,46 +318,60 @@ if ( $hero_image ) {
                             ?>
                             <div class="swiper-slide">
                                 <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
-                                    <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), $pet_name ) ); ?>">
-                                        <div class="position-relative">
-                                            <?php if ( $product->get_status() === 'coming_soon' ) : ?>
-                                            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
-                                                <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
-                                                   data-bs-toggle="modal"
-                                                   class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
-                                                   style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
-                                                   data-product-id="<?php echo esc_attr( $product_id ); ?>"
-                                                   data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
-                                                   data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
-                                                   data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
-                                                   data-gender="<?php echo esc_attr( $gender ); ?>"
-                                                   data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
-                                                   data-location="<?php echo esc_attr( $location ); ?>"
-                                                   data-product-url="<?php echo esc_url( get_permalink( $product_id ) ); ?>">
-                                                   Reserve Now
-                                                </a>
-                                            </div>
-                                            <?php endif; ?>
-                                            <?php
-                                            // Get the product image - use exact same method as the working slider
-                                            $image_id = $product->get_image_id();
-                                            if ( $image_id ) {
-                                                echo wp_get_attachment_image(
-                                                    $image_id,
-                                                    'medium',
-                                                    false,
-                                                    array(
-                                                        'class' => 'img-fluid w-100',
-                                                        'alt' => esc_attr( $breed ? $breed . ' puppy' : $pet_name )
-                                                    )
-                                                );
-                                            } else {
-                                                // Show placeholder if no image
-                                                echo '<img src="' . esc_url( wc_placeholder_img_src() ) . '" alt="' . esc_attr( $pet_name ) . '" class="img-fluid w-100" />';
-                                            }
-                                            ?>
+                                    <div class="position-relative">
+                                        <?php if ( $product->get_status() === 'coming_soon' ) : ?>
+                                        <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                                            <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                                               data-bs-toggle="modal"
+                                               class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
+                                               style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
+                                               data-product-id="<?php echo esc_attr( $product_id ); ?>"
+                                               data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                                               data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+                                               data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+                                               data-gender="<?php echo esc_attr( $gender ); ?>"
+                                               data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+                                               data-location="<?php echo esc_attr( $location ); ?>"
+                                               data-product-url="<?php echo esc_url( get_permalink( $product_id ) ); ?>">
+                                               Reserve Now
+                                            </a>
                                         </div>
-                                    </a>
+                                        <?php endif; ?>
+                                        <?php if ( $product->get_status() === 'reserved_puppy' ) : ?>
+                                        <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                                            <div class="badge shadow text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm"
+                                                 style="background-color: #fbbf24 !important; color: #78350f !important;">
+                                                Reserved
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                                            <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), $pet_name ) ); ?>">
+                                        <?php endif; ?>
+                                                <div class="position-relative">
+                                                <?php
+                                                // Get the product image - use exact same method as the working slider
+                                                $image_id = $product->get_image_id();
+                                                if ( $image_id ) {
+                                                    echo wp_get_attachment_image(
+                                                        $image_id,
+                                                        'medium',
+                                                        false,
+                                                        array(
+                                                            'class' => 'img-fluid w-100',
+                                                            'alt' => esc_attr( $breed ? $breed . ' puppy' : $pet_name )
+                                                        )
+                                                    );
+                                                } else {
+                                                    // Show placeholder if no image
+                                                    echo '<img src="' . esc_url( wc_placeholder_img_src() ) . '" alt="' . esc_attr( $pet_name ) . '" class="img-fluid w-100" />';
+                                                }
+                                                ?>
+                                                </div>
+                                        <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
 
                                     <div class="card-body p-3">
                                         <div class="row">
@@ -372,7 +386,13 @@ if ( $hero_image ) {
                                                     <?php endif; ?>
                                                 </div>
 
-                                                <h5 class="card-title pet-name fw-bold mb-2"><?php echo esc_html( $pet_name ); ?></h5>
+                                                <h5 class="card-title pet-name fw-bold mb-2">
+                                                    <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                                                        <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none text-dark"><?php echo esc_html( $pet_name ); ?></a>
+                                                    <?php else : ?>
+                                                        <?php echo esc_html( $pet_name ); ?>
+                                                    <?php endif; ?>
+                                                </h5>
 
                                                 <div class="card-text">
                                                     <?php if ( $ref_id ) : ?>
@@ -383,7 +403,14 @@ if ( $hero_image ) {
 
                                                     <?php if ( $breed ) : ?>
                                                     <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
-                                                        <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $breed ); ?></span>
+                                                        <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong>
+                                                        <span>
+                                                            <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                                                                <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none" style="color: inherit;"><?php echo esc_html( $breed ); ?></a>
+                                                            <?php else : ?>
+                                                                <?php echo esc_html( $breed ); ?>
+                                                            <?php endif; ?>
+                                                        </span>
                                                     </div>
                                                     <?php endif; ?>
 
