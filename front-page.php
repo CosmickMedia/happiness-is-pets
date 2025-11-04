@@ -32,52 +32,218 @@ if ( $hero_image ) {
 
     <main id="primary" class="site-main">
 
-        <?php // --- Hero Section --- ?>
-        <section class="front-page-hero">
-            <div class="paw-background" aria-hidden="true">
-                <i class="fas fa-paw"></i>
-                <i class="fas fa-paw"></i>
-                <i class="fas fa-paw"></i>
+        <?php // --- Jumbotron Hero Section --- ?>
+        <?php
+        $hero_image        = get_theme_mod( 'hero_image' );
+        $hero_image_mobile = get_theme_mod( 'hero_image_mobile' );
+        ?>
+        <section class="front-page-hero position-relative overflow-hidden" style="min-height: 650px; padding: 100px 0 60px 0; background: linear-gradient(135deg, rgba(0,200,186,0.9) 0%, rgba(0,168,156,0.95) 100%), url('<?php echo esc_url($hero_image ?: get_template_directory_uri() . '/assets/images/hero.webp'); ?>') center/cover; display: flex; align-items: center;">
+            <!-- Decorative Paw Background -->
+            <div class="paw-background position-absolute w-100 h-100" style="top: 0; left: 0; opacity: 0.05; pointer-events: none;" aria-hidden="true">
+                <i class="fas fa-paw position-absolute" style="font-size: 200px; top: 5%; left: 3%; transform: rotate(-25deg);"></i>
+                <i class="fas fa-paw position-absolute" style="font-size: 180px; top: 50%; right: 5%; transform: rotate(35deg);"></i>
+                <i class="fas fa-paw position-absolute" style="font-size: 160px; bottom: 10%; left: 50%; transform: rotate(-15deg);"></i>
             </div>
-            <div class="container">
-                <div class="row align-items-center">
-                    <?php
-                    $hero_image        = get_theme_mod( 'hero_image' );
-                    $hero_image_mobile = get_theme_mod( 'hero_image_mobile' );
-                    ?>
-                    <div class="col-12 col-md-6 p-0 hero-image mb-4 mb-md-0">
-                        <?php if ( $hero_image ) : ?>
-                            <picture>
-                                <?php if ( $hero_image_mobile ) : ?>
-                                    <source media="(max-width: 767px)" srcset="<?php echo esc_url( $hero_image_mobile ); ?>" type="image/webp">
-                                <?php endif; ?>
-                                <img src="<?php echo esc_url( $hero_image ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) . ' - ' . get_theme_mod( 'hero_heading', 'Welcome' ) ); ?>" width="800" height="600" fetchpriority="high" loading="eager" class="hero-img">
-                            </picture>
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="hero-content p-4 p-md-5 rounded text-center">
-                            <?php if ( $hero_heading = get_theme_mod( 'hero_heading' ) ) : ?>
-                                <h1 class="display-4 fw-bold mb-3" style="color: var(--color-primary-dark-teal); font-size: 2rem;">
-                                    <?php echo esc_html( $hero_heading ); ?>
-                                </h1>
-                            <?php endif; ?>
-                            <?php if ( $hero_text = get_theme_mod( 'hero_text' ) ) : ?>
-                                <p class="lead mb-4"><?php echo esc_html( $hero_text ); ?></p>
-                            <?php endif; ?>
-                            <?php
-                            $hero_button_text = get_theme_mod( 'hero_button_text' );
-                            $hero_button_url  = get_theme_mod( 'hero_button_url' );
-                            if ( $hero_button_text && $hero_button_url ) :
-                            ?>
-                                <a href="<?php echo esc_url( $hero_button_url ); ?>" class="theme-primary-btn mt-2">
-                                    <?php echo esc_html( $hero_button_text ); ?>
-                                </a>
-                            <?php endif; ?>
+
+            <div class="container position-relative" style="z-index: 2;">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-11 col-xl-10">
+                        <div class="text-center text-white hero-content">
+                            <!-- Main Headline -->
+                            <h1 class="display-2 fw-bold hero-headline" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.3); font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.2;">
+                                <?php echo esc_html( get_theme_mod( 'hero_heading', 'Find Your Perfect Companion Today!' ) ); ?>
+                            </h1>
+
+                            <!-- Subheadline -->
+                            <p class="lead hero-subheadline mx-auto" style="font-size: clamp(1rem, 3vw, 1.5rem); max-width: 800px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); line-height: 1.6;">
+                                <?php echo esc_html( get_theme_mod( 'hero_text', 'Visit us at either of our two convenient Indiana locations to meet healthy, happy puppies from trusted breeders!' ) ); ?>
+                            </p>
+
+                            <!-- Location Buttons Row -->
+                            <div class="row g-3 justify-content-center hero-locations">
+                                <!-- Indianapolis Location -->
+                                <div class="col-6 col-md-5 col-lg-4">
+                                    <div class="location-card p-4 rounded-4 shadow-lg" style="background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); transition: all 0.3s ease;">
+                                        <div class="d-flex align-items-center justify-content-center mb-2">
+                                            <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba; font-size: 1.3rem;"></i>
+                                            <h3 class="h5 mb-0 fw-bold" style="color: #2d3748;">Indianapolis</h3>
+                                        </div>
+                                        <p class="mb-3" style="color: #6c757d; font-size: 1rem;">
+                                            <i class="fas fa-phone me-1" style="color: #00c8ba; font-size: 1rem;"></i>
+                                            <a href="tel:<?php echo esc_attr( get_theme_mod('location_1_phone', '317-537-2480') ); ?>"
+                                               class="text-decoration-none" style="color: #6c757d;">
+                                                <?php echo esc_html( get_theme_mod('location_1_phone', '317-537-2480') ); ?>
+                                            </a>
+                                        </p>
+                                        <a href="https://www.happinessispets.com/pets/puppies-for-sale/?location=Indianapolis"
+                                           class="btn btn-lg w-100"
+                                           style="background: linear-gradient(135deg, #00c8ba 0%, #00a89c 100%); color: white; border: none; padding: 14px 24px; font-weight: 700; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,186,0.3);">
+                                            <i class="fas fa-paw me-2"></i>View Puppies
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Schererville Location -->
+                                <div class="col-6 col-md-5 col-lg-4">
+                                    <div class="location-card p-4 rounded-4 shadow-lg" style="background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); transition: all 0.3s ease;">
+                                        <div class="d-flex align-items-center justify-content-center mb-2">
+                                            <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba; font-size: 1.3rem;"></i>
+                                            <h3 class="h5 mb-0 fw-bold" style="color: #2d3748;">Schererville</h3>
+                                        </div>
+                                        <p class="mb-3" style="color: #6c757d; font-size: 1rem;">
+                                            <i class="fas fa-phone me-1" style="color: #00c8ba; font-size: 1rem;"></i>
+                                            <a href="tel:<?php echo esc_attr( get_theme_mod('location_2_phone', '219-865-3078') ); ?>"
+                                               class="text-decoration-none" style="color: #6c757d;">
+                                                <?php echo esc_html( get_theme_mod('location_2_phone', '219-865-3078') ); ?>
+                                            </a>
+                                        </p>
+                                        <a href="https://www.happinessispets.com/pets/puppies-for-sale/?location=Schererville"
+                                           class="btn btn-lg w-100"
+                                           style="background: linear-gradient(135deg, #00c8ba 0%, #00a89c 100%); color: white; border: none; padding: 14px 24px; font-weight: 700; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,186,0.3);">
+                                            <i class="fas fa-paw me-2"></i>View Puppies
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="d-flex flex-wrap justify-content-center gap-4 hero-badges" style="border-top: 2px solid rgba(255,255,255,0.3);">
+                                <div class="trust-badge">
+                                    <i class="fas fa-shield-alt mb-2" style="font-size: 2rem; color: white;"></i>
+                                    <p class="mb-0 small fw-semibold" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">2-Year Health Warranty</p>
+                                </div>
+                                <div class="trust-badge">
+                                    <i class="fas fa-certificate mb-2" style="font-size: 2rem; color: white;"></i>
+                                    <p class="mb-0 small fw-semibold" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Canine Care Certified</p>
+                                </div>
+                                <div class="trust-badge">
+                                    <i class="fas fa-heart mb-2" style="font-size: 2rem; color: white;"></i>
+                                    <p class="mb-0 small fw-semibold" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Trusted Breeders</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <style>
+                /* Hero content spacing */
+                .front-page-hero .hero-headline {
+                    margin-bottom: 1.5rem;
+                }
+
+                .front-page-hero .hero-subheadline {
+                    margin-bottom: 2rem;
+                }
+
+                .front-page-hero .hero-locations {
+                    margin-bottom: 1rem;
+                }
+
+                .front-page-hero .hero-badges {
+                    margin-top: 2rem;
+                    padding-top: 1.5rem;
+                }
+
+                /* Location card hover effects */
+                .front-page-hero .location-card:hover {
+                    transform: translateY(-8px) scale(1.02);
+                    box-shadow: 0 12px 30px rgba(0,0,0,0.2) !important;
+                }
+
+                .front-page-hero .location-card .btn:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 6px 20px rgba(0,200,186,0.5) !important;
+                }
+
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+                    .front-page-hero {
+                        min-height: auto !important;
+                        padding: 100px 0 60px 0 !important;
+                    }
+
+                    .front-page-hero .hero-headline {
+                        margin-bottom: 1rem;
+                    }
+
+                    .front-page-hero .hero-subheadline {
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .front-page-hero .hero-locations {
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .front-page-hero .hero-badges {
+                        margin-top: 1.5rem;
+                        padding-top: 1rem;
+                        gap: 1rem !important;
+                    }
+
+                    .front-page-hero .trust-badge {
+                        flex: 1 1 calc(50% - 1rem);
+                        min-width: 120px;
+                    }
+
+                    .front-page-hero .trust-badge i {
+                        font-size: 1.5rem !important;
+                    }
+                }
+
+                @media (max-width: 576px) {
+                    .front-page-hero {
+                        padding: 90px 0 50px 0 !important;
+                    }
+
+                    .front-page-hero .hero-headline {
+                        margin-bottom: 0.75rem;
+                    }
+
+                    .front-page-hero .hero-subheadline {
+                        margin-bottom: 1.25rem;
+                    }
+
+                    .front-page-hero .location-card {
+                        padding: 0.75rem !important;
+                    }
+
+                    .front-page-hero .location-card h3 {
+                        font-size: 0.9rem !important;
+                    }
+
+                    .front-page-hero .location-card p {
+                        font-size: 0.8rem !important;
+                    }
+
+                    .front-page-hero .location-card .btn {
+                        padding: 10px 16px !important;
+                        font-size: 0.85rem !important;
+                    }
+
+                    .front-page-hero .hero-badges {
+                        margin-top: 1rem;
+                        padding-top: 0.75rem;
+                        flex-wrap: nowrap !important;
+                        gap: 0.5rem !important;
+                    }
+
+                    .front-page-hero .trust-badge {
+                        flex: 1 1 auto;
+                        min-width: auto;
+                    }
+
+                    .front-page-hero .trust-badge i {
+                        font-size: 1.25rem !important;
+                        margin-bottom: 0.25rem !important;
+                    }
+
+                    .front-page-hero .trust-badge p {
+                        font-size: 0.65rem !important;
+                        line-height: 1.2;
+                    }
+                }
+            </style>
         </section>
 
         <?php // --- Available Puppies Slider --- ?>
@@ -154,6 +320,24 @@ if ( $hero_image ) {
                                 <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
                                     <a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), $pet_name ) ); ?>">
                                         <div class="position-relative">
+                                            <?php if ( $product->get_status() === 'coming_soon' ) : ?>
+                                            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                                                <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                                                   data-bs-toggle="modal"
+                                                   class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
+                                                   style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
+                                                   data-product-id="<?php echo esc_attr( $product_id ); ?>"
+                                                   data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                                                   data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+                                                   data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+                                                   data-gender="<?php echo esc_attr( $gender ); ?>"
+                                                   data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+                                                   data-location="<?php echo esc_attr( $location ); ?>"
+                                                   data-product-url="<?php echo esc_url( get_permalink( $product_id ) ); ?>">
+                                                   Reserve Now
+                                                </a>
+                                            </div>
+                                            <?php endif; ?>
                                             <?php
                                             // Get the product image - use exact same method as the working slider
                                             $image_id = $product->get_image_id();

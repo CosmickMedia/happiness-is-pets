@@ -88,7 +88,7 @@ switch ( $status ) {
             $status_label = 'Adopted';
         }
         break;
-    case 'coming_soon': $status_label = 'Coming Soon'; break;
+    case 'coming_soon': $status_label = 'Reserve Now'; break;
     case 'on_hold': $status_label = 'Reserved'; break;
     default: $status_label = 'Contact Us'; break;
 }
@@ -1214,7 +1214,13 @@ body {
         <div class="pup-gallery">
             <div class="pup-gallery-main">
                 <?php if ($status_label) : ?>
-                    <div class="pup-status-pill"><?php echo esc_html($status_label); ?></div>
+                    <?php if ($product->get_status() === 'coming_soon') : ?>
+                        <a href="#contact-form" class="pup-status-pill text-decoration-none" style="cursor: pointer;">
+                            <?php echo esc_html($status_label); ?>
+                        </a>
+                    <?php else : ?>
+                        <div class="pup-status-pill"><?php echo esc_html($status_label); ?></div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if ($images[0] === 'placeholder') : ?>
@@ -1388,7 +1394,7 @@ body {
     <div class="pup-content-flow">
 
         <!-- Contact Section -->
-        <div class="pup-section-card">
+        <div class="pup-section-card" id="contact-form">
             <div class="pup-section-header">
                 <div class="pup-section-icon">
                     <i class="fas fa-envelope"></i>

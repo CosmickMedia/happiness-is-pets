@@ -704,17 +704,6 @@ span.navbar-toggler-icon {}
 
 
 /* --- Front Page Specific Styles --- */
-.front-page-hero {
-    background-color: var(--color-secondary-light-pink);
-    height: 700px;
-    display: flex;
-    align-items: center;
-    overflow: visible; /* allow hero image to overlap */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
-}
 
 .hero-image {
     /*background-image: url('assets/images/homepage_hero.png');ss*/
@@ -736,7 +725,6 @@ span.navbar-toggler-icon {}
 
 /* Style the white overlay box */
 .hero-content {
-    background-color: rgba(255, 255, 255, 0.6) !important;
     border-radius: 1.5rem; /* more rounded edges */
     /* Padding handled by Bootstrap utilities p-4 p-md-5 */
 }

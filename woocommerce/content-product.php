@@ -50,8 +50,21 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                 </div--> 
                 <?php endif; ?>
 				<?php if ( $product->get_status() === 'coming_soon' ) :?>
-				<div class="position-absolute top-0 end-1 m-2 z-index-1">
-					<div style="background-color: #00c8ba !important; color: #fff !important;" class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm">Coming Soon</div>
+				<div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+					<a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+					   data-bs-toggle="modal"
+					   class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
+					   style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
+					   data-product-id="<?php echo esc_attr( $product_id ); ?>"
+					   data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+					   data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+					   data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+					   data-gender="<?php echo esc_attr( $gender ); ?>"
+					   data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+					   data-location="<?php echo esc_attr( $location ); ?>"
+					   data-product-url="<?php echo esc_url( get_permalink() ); ?>">
+					   Reserve Now
+					</a>
 				</div>
 				<?php endif; ?>
                 <?php
