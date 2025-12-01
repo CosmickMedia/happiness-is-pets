@@ -41,8 +41,11 @@
         breed: '',
         location: ''
     };
+    
+    // Expose activeFilters globally so infinite scroll can check it
+    window.activeFilters = activeFilters;
 
-    // Initialize filters from URL on page load
+        // Initialize filters from URL on page load
     function initializeFiltersFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
 
@@ -54,6 +57,9 @@
         if (!activeFilters.location) {
             $('.location-checkbox').prop('checked', true);
         }
+        
+        // Update global reference
+        window.activeFilters = activeFilters;
 
         console.log('[Custom Filters] Initialized from URL:', activeFilters);
     }
@@ -112,22 +118,37 @@
         showLoadingState($productsContainer);
 
         // Make AJAX request
+        const ajaxData = {
+            action: 'custom_filter_products',
+            nonce: customFilterParams.nonce,
+            gender: activeFilters.gender,
+            breed: activeFilters.breed,
+            location: activeFilters.location,
+            category: getCurrentCategory(),
+            page: page
+        };
+        
+        console.log('[Custom Filters] Sending AJAX request with data:', ajaxData);
+        console.log('[Custom Filters] Breed filter value:', activeFilters.breed);
+        console.log('[Custom Filters] Breed filter type:', typeof activeFilters.breed);
+        
         $.ajax({
             url: customFilterParams.ajaxurl,
             type: 'POST',
-            data: {
-                action: 'custom_filter_products',
-                nonce: customFilterParams.nonce,
-                gender: activeFilters.gender,
-                breed: activeFilters.breed,
-                location: activeFilters.location,
-                category: getCurrentCategory(),
-                page: page
-            },
+            data: ajaxData,
             success: function(response) {
                 console.log('[Custom Filters] Response received:', response);
 
                 if (response.success && response.data) {
+                    // Reset scroll tracking flag so infinite scroll won't auto-trigger immediately
+                    // But allow infinite scroll to work with filters
+                    if (window.infiniteScrollUserHasScrolled !== undefined) {
+                        window.infiniteScrollUserHasScrolled = false;
+                    }
+                    
+                    // Note: Infinite scroll will now work WITH filters
+                    // It will pass filter parameters to the AJAX call
+                    
                     // Replace products
                     $productsContainer.html(response.data.html);
 
@@ -144,10 +165,34 @@
                     // Update URL
                     updateURL();
 
-                    // Scroll to top of products smoothly
-                    $('html, body').animate({
-                        scrollTop: $productsContainer.offset().top - 150
-                    }, 400);
+                    // Mark that we're doing a programmatic scroll (not user scroll)
+                    window.isProgrammaticScroll = true;
+                    
+                    // Scroll to top of products smoothly, but only if container is below viewport
+                    const containerTop = $productsContainer.offset().top;
+                    const viewportTop = $(window).scrollTop();
+                    const viewportHeight = $(window).height();
+                    
+                    // Only scroll if container is significantly below current viewport
+                    if (containerTop > viewportTop + viewportHeight / 2) {
+                        $('html, body').animate({
+                            scrollTop: containerTop - 150
+                        }, 400, function() {
+                            // Clear flag after animation completes
+                            setTimeout(function() {
+                                window.isProgrammaticScroll = false;
+                            }, 100);
+                        });
+                    } else {
+                        // Just scroll to top if we're already near the container
+                        $('html, body').animate({
+                            scrollTop: 0
+                        }, 400, function() {
+                            setTimeout(function() {
+                                window.isProgrammaticScroll = false;
+                            }, 100);
+                        });
+                    }
 
                     console.log('[Custom Filters] Products updated successfully');
                 } else {
@@ -283,6 +328,9 @@
                 activeFilters[filterType] = '';
             }
         }
+        
+        // Update global reference
+        window.activeFilters = activeFilters;
 
         console.log('[Custom Filters] Active filters updated:', activeFilters);
 
@@ -307,6 +355,9 @@
             breed: '',
             location: ''
         };
+        
+        // Update global reference
+        window.activeFilters = activeFilters;
 
         // Reload without filters
         window.location.href = window.location.pathname + (getCurrentCategory() ? '?product_cat=' + getCurrentCategory() : '');

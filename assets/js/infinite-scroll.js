@@ -25,6 +25,29 @@
         console.error('Products container not found');
         return;
     }
+    
+    // Check if custom filters are active - if so, disable infinite scroll
+    // Custom filters handle their own pagination
+    function hasActiveFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasBreed = urlParams.get('filter_breed');
+        const hasGender = urlParams.get('filter_gender');
+        const hasLocation = urlParams.get('filter_location');
+        
+        // Also check if custom filter script is active
+        if (typeof window.activeFilters !== 'undefined') {
+            const filters = window.activeFilters;
+            if (filters && (filters.breed || filters.gender || filters.location)) {
+                return true;
+            }
+        }
+        
+        return !!(hasBreed || hasGender || hasLocation);
+    }
+    
+    // Note: Infinite scroll will work WITH filters now
+    // Filters will be passed to the AJAX call, so it will respect active filters
+    console.log('[Infinite Scroll] Initializing - will respect active filters if any');
 
     // Initialize displayedProductIds with products already on the page
     $container.find('[data-product-id]').each(function() {
@@ -72,6 +95,12 @@
 
     // Load more products function
     function loadMoreProducts() {
+        // Filters are now respected in the AJAX call, so we don't need to disable
+        // Just log that we're loading with filters
+        if (hasActiveFilters()) {
+            console.log('[Infinite Scroll] Loading more products with active filters');
+        }
+        
         if (loading || allLoaded) return;
 
         loading = true;
@@ -80,9 +109,21 @@
         // Show loader
         $loader.show();
 
-        // Get current location filter from URL
+        // Get current filters from URL and global activeFilters
         const urlParams = new URLSearchParams(window.location.search);
         const location = urlParams.get('location');
+        
+        // Get active filters (from URL or global variable)
+        let breed = urlParams.get('filter_breed') || '';
+        let gender = urlParams.get('filter_gender') || '';
+        let filterLocation = urlParams.get('filter_location') || location || '';
+        
+        // Also check global activeFilters if available
+        if (typeof window.activeFilters !== 'undefined' && window.activeFilters) {
+            if (window.activeFilters.breed) breed = window.activeFilters.breed;
+            if (window.activeFilters.gender) gender = window.activeFilters.gender;
+            if (window.activeFilters.location) filterLocation = window.activeFilters.location;
+        }
 
         $.ajax({
             url: infiniteScrollParams.ajaxurl,
@@ -91,7 +132,9 @@
                 action: 'load_more_products',
                 page: currentPage,
                 query_vars: infiniteScrollParams.query_vars,
-                location: location
+                location: filterLocation,
+                breed: breed,
+                gender: gender
             },
             success: function(response) {
                 if (response.success && response.data.html) {
@@ -169,25 +212,105 @@
         });
     }
 
+    // Track if user has scrolled (to prevent auto-trigger on page load/filter)
+    // Use global variable so custom filters can reset it
+    if (typeof window.infiniteScrollUserHasScrolled === 'undefined') {
+        window.infiniteScrollUserHasScrolled = false;
+    }
+    let userHasScrolled = window.infiniteScrollUserHasScrolled;
+    let initialScrollTop = $(window).scrollTop();
+    
+    // Mark that user has scrolled (ignore programmatic scrolls)
+    $(window).on('scroll', function() {
+        // Ignore programmatic scrolls (from filter animations, etc.)
+        if (window.isProgrammaticScroll) {
+            return;
+        }
+        
+        const currentScrollTop = $(window).scrollTop();
+        // Only mark as scrolled if user actually scrolled down (not just page load positioning)
+        if (Math.abs(currentScrollTop - initialScrollTop) > 50) {
+            userHasScrolled = true;
+            window.infiniteScrollUserHasScrolled = true;
+        }
+    });
+    
     // Use Intersection Observer to detect when sentinel comes into view
+    let observer;
     if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(function(entries) {
+        observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (entry.isIntersecting && !loading && !allLoaded) {
+                // Only trigger if user has scrolled (prevents auto-trigger after filtering)
+                // Update from global in case it was reset
+                userHasScrolled = window.infiniteScrollUserHasScrolled || false;
+                
+                // Don't trigger if it's a programmatic scroll
+                if (window.isProgrammaticScroll) {
+                    console.log('[Infinite Scroll] Programmatic scroll detected, ignoring sentinel');
+                    return;
+                }
+                
+                if (entry.isIntersecting && !loading && !allLoaded && userHasScrolled) {
                     loadMoreProducts();
+                } else if (entry.isIntersecting && !userHasScrolled) {
+                    console.log('[Infinite Scroll] Sentinel visible but user hasn\'t scrolled yet, waiting...');
                 }
             });
         }, {
             rootMargin: '0px 0px 400px 0px' // Start loading 400px before sentinel is visible
         });
 
-        observer.observe($sentinel[0]);
+        // Delay observing to prevent immediate trigger after page load/filtering
+        // Also check that user has scrolled before starting to observe
+        setTimeout(function() {
+            if ($sentinel.length && !hasActiveFilters()) {
+                // Check if sentinel is already in viewport - if so, wait for user scroll
+                const sentinelRect = $sentinel[0].getBoundingClientRect();
+                const isInViewport = sentinelRect.top < window.innerHeight + 400; // 400px is rootMargin
+                
+                if (isInViewport && !userHasScrolled) {
+                    console.log('[Infinite Scroll] Sentinel already in viewport, waiting for user scroll...');
+                    // Wait for user to scroll before observing
+                    const checkScroll = setInterval(function() {
+                        if (window.infiniteScrollUserHasScrolled || hasActiveFilters()) {
+                            clearInterval(checkScroll);
+                            if (!hasActiveFilters() && window.infiniteScrollUserHasScrolled) {
+                                observer.observe($sentinel[0]);
+                                console.log('[Infinite Scroll] User scrolled, now observing sentinel');
+                            }
+                        }
+                    }, 100);
+                    
+                    // Stop checking after 10 seconds
+                    setTimeout(function() {
+                        clearInterval(checkScroll);
+                        if (!hasActiveFilters() && $sentinel.length) {
+                            observer.observe($sentinel[0]);
+                        }
+                    }, 10000);
+                } else {
+                    observer.observe($sentinel[0]);
+                }
+            }
+        }, 500);
+        
+        // Store observer globally so custom filters can disable it
+        window.infiniteScrollObserver = observer;
     } else {
         // Fallback for older browsers - use scroll event
         let scrollTimeout;
-        $(window).on('scroll', function() {
+        const scrollHandler = function() {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(function() {
+                // Check if filters became active
+                if (hasActiveFilters()) {
+                    console.log('[Infinite Scroll] Filters detected, stopping infinite scroll');
+                    $(window).off('scroll', scrollHandler);
+                    $sentinel.remove();
+                    $loader.remove();
+                    return;
+                }
+                
                 if (loading || allLoaded) return;
 
                 const sentinelOffset = $sentinel.offset().top;
@@ -197,7 +320,8 @@
                     loadMoreProducts();
                 }
             }, 100);
-        });
+        };
+        $(window).on('scroll', scrollHandler);
     }
 
 })(jQuery);

@@ -1177,12 +1177,27 @@ function happiness_is_pets_load_more_products() {
     // Get the query vars and decode
     $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
 
+    // Get filter values from POST
+    $gender   = isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '';
+    $breed    = isset( $_POST['breed'] ) ? sanitize_text_field( $_POST['breed'] ) : '';
+    $location = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
+    $category = ! empty( $query_vars['product_cat'] ) ? $query_vars['product_cat'] : '';
+
+    // Build filters array
+    $filters = array_filter( array(
+        'gender'   => $gender,
+        'breed'    => $breed,
+        'location' => $location,
+    ) );
+
     // Build simple args (excluding Accessories)
     $args = array(
         'post_type'      => 'product',
         'post_status'    => happiness_is_pets_get_visible_product_statuses(),
         'paged'          => $paged,
         'posts_per_page' => 20,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
     );
 
     // Always exclude Accessories
@@ -1197,20 +1212,34 @@ function happiness_is_pets_load_more_products() {
     );
 
     // Add category if it exists
-    if ( ! empty( $query_vars['product_cat'] ) ) {
+    if ( ! empty( $category ) ) {
         $tax_query[] = array(
             'taxonomy' => 'product_cat',
             'field'    => 'slug',
-            'terms'    => $query_vars['product_cat'],
+            'terms'    => $category,
         );
     }
 
     $args['tax_query'] = $tax_query;
 
-    // Add location filter if it exists (from AJAX POST data)
-    if ( isset( $_POST['location'] ) && ! empty( $_POST['location'] ) ) {
-        $matching_products = happiness_is_pets_get_products_by_location( $_POST['location'] );
-        $args['post__in'] = $matching_products;
+    // Apply custom filters (breed, gender, location) if they exist
+    if ( ! empty( $filters ) ) {
+        $matching_products = happiness_is_pets_get_filtered_products( $filters );
+        
+        // If we have matching products from filters, use them
+        if ( ! empty( $matching_products ) && ! in_array( 0, $matching_products, true ) ) {
+            $args['post__in'] = $matching_products;
+            $args['orderby'] = 'post__in';
+        } else {
+            // No matching products, return empty result
+            $args['post__in'] = array( 0 );
+        }
+    } elseif ( ! empty( $location ) ) {
+        // Legacy location filter (for backward compatibility)
+        $matching_products = happiness_is_pets_get_products_by_location( $location );
+        if ( ! empty( $matching_products ) ) {
+            $args['post__in'] = $matching_products;
+        }
     }
 
     // Run the query
@@ -1774,19 +1803,50 @@ function happiness_is_pets_get_filtered_products( $filters = array() ) {
         // Check gender filter
         if ( ! empty( $filters['gender'] ) ) {
             $product_gender = get_field( 'gender', $product_id );
-            if ( strtolower( $product_gender ) !== strtolower( $filters['gender'] ) ) {
+            if ( empty( $product_gender ) || strtolower( trim( $product_gender ) ) !== strtolower( trim( $filters['gender'] ) ) ) {
                 $matches = false;
             }
         }
 
-        // Check breed filter
+        // Check breed filter - MUST match exactly (case-insensitive)
         if ( $matches && ! empty( $filters['breed'] ) ) {
             $product_breed = '';
+            $breed_matches = false;
+            $filter_breed = trim( $filters['breed'] );
+            
+            // First, try to get breed from pet object
             if ( function_exists( 'wc_ukm_get_pet' ) ) {
                 $pet = wc_ukm_get_pet( $product_id );
-                $product_breed = ! empty( $pet->breed ) ? $pet->breed : '';
+                $product_breed = ! empty( $pet->breed ) ? trim( $pet->breed ) : '';
+                
+                // Case-insensitive comparison
+                if ( ! empty( $product_breed ) && strcasecmp( $product_breed, $filter_breed ) === 0 ) {
+                    $breed_matches = true;
+                }
             }
-            if ( $product_breed !== $filters['breed'] ) {
+            
+            // If not found in pet object, check product categories (breeds might be categories)
+            if ( ! $breed_matches ) {
+                $categories = get_the_terms( $product_id, 'product_cat' );
+                if ( $categories && ! is_wp_error( $categories ) ) {
+                    foreach ( $categories as $cat ) {
+                        // Skip the main category (puppies-for-sale, kittens-for-sale, accessories)
+                        if ( in_array( $cat->slug, array( 'puppies-for-sale', 'kittens-for-sale', 'accessories' ), true ) ) {
+                            continue;
+                        }
+                        // Check if category name matches breed (case-insensitive)
+                        $cat_name = trim( $cat->name );
+                        if ( strcasecmp( $cat_name, $filter_breed ) === 0 ) {
+                            $breed_matches = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // STRICT: If breed filter is set, product MUST match the breed
+            // If no match found, exclude this product
+            if ( ! $breed_matches ) {
                 $matches = false;
             }
         }
@@ -1828,12 +1888,20 @@ function happiness_is_pets_ajax_custom_filter_products() {
     $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
     $page     = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
 
+    // Debug logging
+    error_log('[Breed Filter] Received breed: ' . $breed);
+    error_log('[Breed Filter] Received gender: ' . $gender);
+    error_log('[Breed Filter] Received location: ' . $location);
+    error_log('[Breed Filter] Received category: ' . $category);
+
     // Build filters array
     $filters = array_filter( array(
         'gender'   => $gender,
         'breed'    => $breed,
         'location' => $location,
     ) );
+    
+    error_log('[Breed Filter] Active filters: ' . print_r( $filters, true ) );
 
     // Build query args (always exclude Accessories)
     $args = array(
@@ -1856,7 +1924,30 @@ function happiness_is_pets_ajax_custom_filter_products() {
         ),
     );
 
-    // Add category filter if exists
+    // Add custom filters FIRST to get matching products
+    // This MUST happen before category filter to ensure breed filtering works
+    if ( ! empty( $filters ) ) {
+        $matching_products = happiness_is_pets_get_filtered_products( $filters );
+        
+        error_log('[Breed Filter] Matching products count: ' . count( $matching_products ) );
+        if ( ! empty( $matching_products ) && count( $matching_products ) <= 20 ) {
+            error_log('[Breed Filter] All product IDs: ' . implode( ', ', $matching_products ) );
+        } else {
+            error_log('[Breed Filter] First 10 product IDs: ' . implode( ', ', array_slice( $matching_products, 0, 10 ) ) );
+        }
+        
+        // If we have matching products from filters, use them
+        // This is the PRIMARY filter - only these products should show
+        if ( ! empty( $matching_products ) && ! in_array( 0, $matching_products, true ) ) {
+            $args['post__in'] = $matching_products;
+        } else {
+            // No matching products, return empty result
+            $args['post__in'] = array( 0 );
+        }
+    }
+
+    // Add category filter if exists (this will further filter the post__in results)
+    // Note: When post__in is set, tax_query will only filter within those products
     if ( ! empty( $category ) ) {
         $tax_query[] = array(
             'taxonomy' => 'product_cat',
@@ -1867,16 +1958,15 @@ function happiness_is_pets_ajax_custom_filter_products() {
 
     $args['tax_query'] = $tax_query;
 
-    // Add custom filters
-    if ( ! empty( $filters ) ) {
-        $matching_products = happiness_is_pets_get_filtered_products( $filters );
-        $args['post__in'] = $matching_products;
-
-        // Preserve order by date
-        if ( ! isset( $args['post__in'] ) || ! is_array( $args['post__in'] ) ) {
-            $args['orderby'] = 'post__in';
-        }
+    // If post__in is set, we need to ensure tax_query doesn't conflict
+    // When post__in is used, tax_query acts as an additional filter (AND operation)
+    if ( ! empty( $args['post__in'] ) && ! in_array( 0, $args['post__in'], true ) ) {
+        // Order by the post__in array to preserve order
+        $args['orderby'] = 'post__in';
     }
+    
+    error_log('[Breed Filter] Final query args - post__in count: ' . ( isset( $args['post__in'] ) ? count( $args['post__in'] ) : 0 ) );
+    error_log('[Breed Filter] Final query args - tax_query: ' . print_r( $args['tax_query'], true ) );
 
     // Run query
     $products = new WP_Query( $args );
