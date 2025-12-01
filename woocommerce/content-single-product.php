@@ -1311,13 +1311,6 @@ body {
                 </div>
                 <?php endif; ?>
 
-                <?php if (!empty($age)) : ?>
-                <div class="pup-fact-row">
-                    <span class="pup-fact-label"><i class="fas fa-hourglass-half"></i> Age</span>
-                    <span class="pup-fact-value"><?php echo esc_html($age); ?></span>
-                </div>
-                <?php endif; ?>
-
                 <?php if (!empty($color)) : ?>
                 <div class="pup-fact-row">
                     <span class="pup-fact-label"><i class="fas fa-palette"></i> Color</span>
