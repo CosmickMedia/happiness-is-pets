@@ -38,7 +38,7 @@ if (!empty($location)) {
 
 $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 ?>
-<div <?php wc_product_class( 'col' ); ?> >
+<div <?php wc_product_class( 'col' ); ?> data-product-id="<?php echo esc_attr( $product_id ); ?>" data-ref-id="<?php echo esc_attr( $ref_id ); ?>">
     <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
         <div class="position-relative">
             <?php if ( $product->get_status() === 'coming_soon' ) :?>

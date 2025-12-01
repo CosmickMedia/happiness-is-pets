@@ -11,6 +11,12 @@
     let maxPages = parseInt(infiniteScrollParams.max_pages);
     let loading = false;
     let allLoaded = false;
+    
+    // Use global variable to persist across page loads and AJAX calls
+    if (typeof window.displayedProductIds === 'undefined') {
+        window.displayedProductIds = new Set();
+    }
+    const displayedProductIds = window.displayedProductIds;
 
     // Find the products container
     const $container = $('.row.row-cols-2').first();
@@ -19,6 +25,37 @@
         console.error('Products container not found');
         return;
     }
+
+    // Initialize displayedProductIds with products already on the page
+    $container.find('[data-product-id]').each(function() {
+        const $item = $(this);
+        const productId = $item.attr('data-product-id');
+        const refId = $item.attr('data-ref-id');
+        
+        if (productId) {
+            displayedProductIds.add('id-' + productId);
+        }
+        if (refId) {
+            displayedProductIds.add('ref-' + refId);
+        }
+    });
+    
+    // Also check for products by looking at the Ref ID in the card content as fallback
+    $container.find('.pet-card').each(function() {
+        const $card = $(this).closest('[data-product-id]');
+        if (!$card.length) {
+            // Try to find Ref ID from card content
+            const $refIdElement = $(this).find('.pet-ref-id span');
+            if ($refIdElement.length) {
+                const refId = $refIdElement.text().trim();
+                if (refId) {
+                    displayedProductIds.add('ref-' + refId);
+                }
+            }
+        }
+    });
+    
+    console.log('Initialized with', displayedProductIds.size, 'products already on page');
 
     // Only proceed if there are more pages to load
     if (currentPage >= maxPages) {
@@ -58,8 +95,48 @@
             },
             success: function(response) {
                 if (response.success && response.data.html) {
-                    // Append new products
-                    $container.append(response.data.html);
+                    // Create a temporary container to parse the HTML
+                    const $tempContainer = $('<div>').html(response.data.html);
+                    let hasNewProducts = false;
+                    
+                    // Filter out duplicate products by checking both product ID and Ref ID
+                    $tempContainer.find('[data-product-id]').each(function() {
+                        const $item = $(this);
+                        const productId = $item.attr('data-product-id');
+                        const refId = $item.attr('data-ref-id');
+                        
+                        // Check if this product is already displayed
+                        const isDuplicate = (productId && displayedProductIds.has('id-' + productId)) ||
+                                          (refId && displayedProductIds.has('ref-' + refId));
+                        
+                        if (isDuplicate) {
+                            console.log('Duplicate detected and removed:', {
+                                productId: productId,
+                                refId: refId
+                            });
+                            $item.remove(); // Remove duplicate
+                        } else {
+                            // Track new product
+                            if (productId) {
+                                displayedProductIds.add('id-' + productId);
+                            }
+                            if (refId) {
+                                displayedProductIds.add('ref-' + refId);
+                            }
+                            hasNewProducts = true;
+                        }
+                    });
+                    
+                    // Only append if there are new products
+                    if (hasNewProducts) {
+                        const newProducts = $tempContainer.html();
+                        if (newProducts.trim()) {
+                            $container.append(newProducts);
+                        }
+                    } else {
+                        // No new products, might have reached the end
+                        console.log('No new products to display (all were duplicates)');
+                    }
 
                     // Update max pages if provided
                     if (response.data.max_pages) {

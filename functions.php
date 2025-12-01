@@ -1217,12 +1217,41 @@ function happiness_is_pets_load_more_products() {
     $products = new WP_Query( $args );
 
     if ( $products->have_posts() ) {
+        // Deduplicate post IDs at query level (products with multiple taxonomies can appear multiple times)
+        $all_post_ids = wp_list_pluck( $products->posts, 'ID' );
+        $unique_post_ids = array_values( array_unique( $all_post_ids ) );
+        
+        // If we found duplicates, rebuild the posts array
+        if ( count( $unique_post_ids ) !== count( $all_post_ids ) ) {
+            $unique_posts = array();
+            foreach ( $unique_post_ids as $post_id ) {
+                $post = get_post( $post_id );
+                if ( $post ) {
+                    $unique_posts[] = $post;
+                }
+            }
+            $products->posts = $unique_posts;
+            $products->post_count = count( $unique_posts );
+        }
+        
         ob_start();
 
+        // Track displayed product IDs to prevent duplicates (double-check)
+        $displayed_ids = array();
         while ( $products->have_posts() ) {
             $products->the_post();
+            $product_id = get_the_ID();
+            
+            // Skip if this product was already displayed
+            if ( in_array( $product_id, $displayed_ids, true ) ) {
+                continue;
+            }
+            
+            // Track this product ID
+            $displayed_ids[] = $product_id;
+            
             global $product;
-            $product = wc_get_product( get_the_ID() );
+            $product = wc_get_product( $product_id );
 
             if ( $product ) {
                 wc_get_template_part( 'content', 'product' );
@@ -1676,6 +1705,9 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
 
     // Include multiple post statuses (publish, coming_soon, weight_watch)
     $query->set( 'post_status', happiness_is_pets_get_visible_product_statuses() );
+    
+    // Prevent duplicate posts in query results (products with multiple taxonomies)
+    $query->set( 'distinct', true );
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
 
@@ -1850,12 +1882,41 @@ function happiness_is_pets_ajax_custom_filter_products() {
     $products = new WP_Query( $args );
 
     if ( $products->have_posts() ) {
+        // Deduplicate post IDs at query level (products with multiple taxonomies can appear multiple times)
+        $all_post_ids = wp_list_pluck( $products->posts, 'ID' );
+        $unique_post_ids = array_values( array_unique( $all_post_ids ) );
+        
+        // If we found duplicates, rebuild the posts array
+        if ( count( $unique_post_ids ) !== count( $all_post_ids ) ) {
+            $unique_posts = array();
+            foreach ( $unique_post_ids as $post_id ) {
+                $post = get_post( $post_id );
+                if ( $post ) {
+                    $unique_posts[] = $post;
+                }
+            }
+            $products->posts = $unique_posts;
+            $products->post_count = count( $unique_posts );
+        }
+        
         ob_start();
 
+        // Track displayed product IDs to prevent duplicates (double-check)
+        $displayed_ids = array();
         while ( $products->have_posts() ) {
             $products->the_post();
+            $product_id = get_the_ID();
+            
+            // Skip if this product was already displayed
+            if ( in_array( $product_id, $displayed_ids, true ) ) {
+                continue;
+            }
+            
+            // Track this product ID
+            $displayed_ids[] = $product_id;
+            
             global $product;
-            $product = wc_get_product( get_the_ID() );
+            $product = wc_get_product( $product_id );
 
             if ( $product ) {
                 wc_get_template_part( 'content', 'product' );
