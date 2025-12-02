@@ -133,6 +133,7 @@
         url.searchParams.delete('filter_gender');
         url.searchParams.delete('filter_breed');
         url.searchParams.delete('filter_location');
+        url.searchParams.delete('location'); // Also remove 'location' param
         url.searchParams.delete('paged');
 
         // Add active filters
@@ -143,10 +144,12 @@
             url.searchParams.set('filter_breed', activeFilters.breed);
         }
         if (activeFilters.location) {
-            url.searchParams.set('filter_location', activeFilters.location);
+            // Use 'location' parameter to match dropdown behavior
+            url.searchParams.set('location', activeFilters.location);
         }
 
         window.history.pushState({}, '', url);
+        console.log('[Custom Filters] URL updated to:', url.toString());
     }
 
     // Get current category from URL
@@ -375,13 +378,19 @@
                     $allLocationCheckboxes.prop('checked', true);
                 }
             } else {
-                // Only one location is checked
-                activeFilters.location = checkedLocations.first().val();
+                // Only one location is checked - extract location name from checkbox value
+                let checkboxValue = checkedLocations.first().val();
+                // Extract location name (remove "Happiness Is Pets " prefix if present)
+                if (checkboxValue && checkboxValue.includes('Happiness Is Pets ')) {
+                    checkboxValue = checkboxValue.replace('Happiness Is Pets ', '').trim();
+                }
+                activeFilters.location = checkboxValue;
             }
             
             // Sync location dropdown with checkbox selection
             const $dropdown = $('#locationDropdown');
             if ($dropdown.length) {
+                // Dropdown values are "Indianapolis" or "Schererville", not the full text
                 $dropdown.val(activeFilters.location || '');
                 console.log('[Custom Filters] Synced dropdown to:', activeFilters.location || 'All Locations');
             }

@@ -1334,8 +1334,9 @@ function happiness_is_pets_load_more_products() {
                     $unique_posts[] = $post;
                 }
             }
-            // Re-sort after deduplication if no filters
-            if ( empty( $filters ) ) {
+            // Re-sort after deduplication if no breed/gender filters (location filter alone should still sort)
+            $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+            if ( ! $has_breed_or_gender_filter ) {
                 usort( $unique_posts, function( $a, $b ) {
                     $breed_a = happiness_is_pets_get_product_breed( $a->ID );
                     $breed_b = happiness_is_pets_get_product_breed( $b->ID );
@@ -1907,9 +1908,10 @@ add_action( 'the_posts', function( $posts, $query ) {
         return $posts;
     }
 
-    // Don't sort if filters are active (let filters handle ordering)
-    if ( ! empty( $_GET['filter_breed'] ) || ! empty( $_GET['filter_gender'] ) || ! empty( $_GET['location'] ) ) {
-        error_log('[Breed Sort] Skipping - filters are active' );
+    // Don't sort if breed or gender filters are active (let filters handle ordering)
+    // Location filter alone should still allow breed sorting
+    if ( ! empty( $_GET['filter_breed'] ) || ! empty( $_GET['filter_gender'] ) ) {
+        error_log('[Breed Sort] Skipping - breed or gender filters are active' );
         return $posts;
     }
 
@@ -2252,8 +2254,10 @@ function happiness_is_pets_ajax_custom_filter_products() {
     // Run query
     $products = new WP_Query( $args );
 
-    // Sort by breed alphabetically if no filters are active
-    if ( empty( $filters ) && $products->have_posts() ) {
+    // Sort by breed alphabetically if no breed/gender filters are active
+    // Location filter alone should still allow breed sorting
+    $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+    if ( ! $has_breed_or_gender_filter && $products->have_posts() ) {
         $posts_array = $products->posts;
         usort( $posts_array, function( $a, $b ) {
             $breed_a = happiness_is_pets_get_product_breed( $a->ID );
@@ -2292,8 +2296,9 @@ function happiness_is_pets_ajax_custom_filter_products() {
                     $unique_posts[] = $post;
                 }
             }
-            // Re-sort after deduplication if no filters
-            if ( empty( $filters ) ) {
+            // Re-sort after deduplication if no breed/gender filters (location filter alone should still sort)
+            $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+            if ( ! $has_breed_or_gender_filter ) {
                 usort( $unique_posts, function( $a, $b ) {
                     $breed_a = happiness_is_pets_get_product_breed( $a->ID );
                     $breed_b = happiness_is_pets_get_product_breed( $b->ID );
