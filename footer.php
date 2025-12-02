@@ -57,6 +57,46 @@
                                aria-label="Indianapolis Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
+                            <a href="https://www.youtube.com/channel/UCbZRIK9Ze0ocj43m82nUybg"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://www.pinterest.com/HappinessispetsIndianapolis/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="https://www.threads.com/@hipindianapolis"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Threads">
+                                <i class="fab fa-threads"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/happiness-is-pets-indianapolis/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/discover/happiness-is-pets-pet-shop-indiana"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Tiktok">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -98,6 +138,46 @@
                                aria-label="Schererville Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
+                            <a href="https://www.youtube.com/channel/UCbZRIK9Ze0ocj43m82nUybg"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://in.pinterest.com/happinessispetsschererville/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="https://www.threads.com/@hipschererville"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Threads">
+                                <i class="fab fa-threads"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/happiness-is-pets-schererville/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/place/Happiness-is-Pets-21568226267653389"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Tiktok">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -110,14 +190,14 @@
                     <ul class="list-unstyled" style="font-size: 0.95rem; color: #495057;">
                         <?php
                         $hours = get_theme_mod(
-                                'store_hours',
-                                "Monday: 11:00 AM - 09:00 PM\n" .
-                                "Tuesday: 11:00 AM - 09:00 PM\n" .
-                                "Wednesday: 11:00 AM - 09:00 PM\n" .
-                                "Thursday: 11:00 AM - 09:00 PM\n" .
-                                "Friday: 11:00 AM - 09:00 PM\n" .
-                                "Saturday: 11:00 AM - 06:00 PM\n" .
-                                "Sunday: 11:00 AM - 05:00 PM"
+                            'store_hours',
+                            "Monday: 11:00 AM - 09:00 PM\n" .
+                            "Tuesday: 11:00 AM - 09:00 PM\n" .
+                            "Wednesday: 11:00 AM - 09:00 PM\n" .
+                            "Thursday: 11:00 AM - 09:00 PM\n" .
+                            "Friday: 11:00 AM - 09:00 PM\n" .
+                            "Saturday: 11:00 AM - 06:00 PM\n" .
+                            "Sunday: 11:00 AM - 05:00 PM"
                         );
 
                         foreach ( explode( "\n", $hours ) as $line ) :
@@ -141,12 +221,12 @@
                     <?php
                     if ( has_nav_menu( 'footer' ) ) {
                         wp_nav_menu(
-                                array(
-                                        'theme_location' => 'footer',
-                                        'menu_class'     => 'list-unstyled footer-links-menu',
-                                        'container'      => false,
-                                        'depth'          => 1,
-                                )
+                            array(
+                                'theme_location' => 'footer',
+                                'menu_class'     => 'list-unstyled footer-links-menu',
+                                'container'      => false,
+                                'depth'          => 1,
+                            )
                         );
                     }
                     ?>
