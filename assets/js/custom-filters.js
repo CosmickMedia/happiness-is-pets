@@ -51,11 +51,72 @@
 
         activeFilters.gender = urlParams.get('filter_gender') || '';
         activeFilters.breed = urlParams.get('filter_breed') || '';
-        activeFilters.location = urlParams.get('filter_location') || '';
+        // Check both 'filter_location' and 'location' parameters for backward compatibility
+        activeFilters.location = urlParams.get('filter_location') || urlParams.get('location') || '';
 
-        // Ensure both location checkboxes are checked if no location filter is active
-        if (!activeFilters.location) {
-            $('.location-checkbox').prop('checked', true);
+        // Normalize location value (case-insensitive)
+        if (activeFilters.location) {
+            const locationLower = activeFilters.location.toLowerCase().trim();
+            if (locationLower === 'indianapolis') {
+                activeFilters.location = 'Indianapolis';
+            } else if (locationLower === 'schererville') {
+                activeFilters.location = 'Schererville';
+            }
+        }
+
+        // Update location checkboxes based on URL parameter
+        // IMPORTANT: Only update if checkboxes exist (sidebar might not be loaded yet)
+        const $locationCheckboxes = $('.location-checkbox');
+        if ($locationCheckboxes.length > 0) {
+            console.log('[Custom Filters] Found', $locationCheckboxes.length, 'location checkboxes to sync');
+            if (!activeFilters.location) {
+                // No location filter - check all location checkboxes (default state)
+                $locationCheckboxes.each(function() {
+                    const $checkbox = $(this);
+                    $checkbox.prop('checked', true);
+                    $checkbox.attr('checked', 'checked');
+                });
+                console.log('[Custom Filters] No location filter - all checkboxes checked');
+            } else {
+                // Location filter active - check only the matching checkbox, uncheck others
+                $locationCheckboxes.each(function() {
+                    const $checkbox = $(this);
+                    const checkboxValue = $checkbox.val();
+                    
+                    // Checkbox value might be "Happiness Is Pets Indianapolis" or just "Indianapolis"
+                    // Extract location name from checkbox value (remove "Happiness Is Pets " prefix if present)
+                    let checkboxLocation = checkboxValue;
+                    if (checkboxValue.includes('Happiness Is Pets ')) {
+                        checkboxLocation = checkboxValue.replace('Happiness Is Pets ', '').trim();
+                    }
+                    
+                    // Compare normalized location with checkbox location (case-insensitive)
+                    const shouldBeChecked = (checkboxLocation.toLowerCase() === activeFilters.location.toLowerCase());
+                    
+                    console.log('[Custom Filters] Comparing checkbox:', checkboxValue, '->', checkboxLocation, 'with filter:', activeFilters.location, '-> match:', shouldBeChecked);
+                    
+                    if (shouldBeChecked) {
+                        // Use multiple methods to ensure checkbox is checked
+                        $checkbox.prop('checked', true);
+                        $checkbox.attr('checked', 'checked');
+                        if ($checkbox[0]) {
+                            $checkbox[0].checked = true; // Direct DOM manipulation
+                        }
+                        console.log('[Custom Filters] ✓ Checked:', checkboxValue);
+                    } else {
+                        // Use multiple methods to ensure checkbox is unchecked
+                        $checkbox.prop('checked', false);
+                        $checkbox.removeAttr('checked');
+                        if ($checkbox[0]) {
+                            $checkbox[0].checked = false; // Direct DOM manipulation
+                        }
+                        console.log('[Custom Filters] ✗ Unchecked:', checkboxValue);
+                    }
+                });
+                console.log('[Custom Filters] Location filter active:', activeFilters.location, '- only matching checkbox checked');
+            }
+        } else {
+            console.log('[Custom Filters] No location checkboxes found yet');
         }
         
         // Update global reference
@@ -317,6 +378,13 @@
                 // Only one location is checked
                 activeFilters.location = checkedLocations.first().val();
             }
+            
+            // Sync location dropdown with checkbox selection
+            const $dropdown = $('#locationDropdown');
+            if ($dropdown.length) {
+                $dropdown.val(activeFilters.location || '');
+                console.log('[Custom Filters] Synced dropdown to:', activeFilters.location || 'All Locations');
+            }
         } else {
             // For gender and breed, only allow one selection per filter type
             $('.product-filter-checkbox[data-filter-type="' + filterType + '"]').not($checkbox).prop('checked', false);
@@ -437,8 +505,127 @@
         }
     });
 
-    // Initialize on page load
-    initializeFiltersFromURL();
+    // Sync location checkboxes when offcanvas opens
+    $(document).on('shown.bs.offcanvas', '#petsFilterOffcanvas', function() {
+        console.log('[Custom Filters] Offcanvas opened, syncing location checkboxes from URL');
+        
+        // Get location from URL (check both 'location' and 'filter_location')
+        const urlParams = new URLSearchParams(window.location.search);
+        let locationFromURL = urlParams.get('filter_location') || urlParams.get('location') || '';
+        
+        // Normalize location value (case-insensitive)
+        if (locationFromURL) {
+            const locationLower = locationFromURL.toLowerCase().trim();
+            if (locationLower === 'indianapolis') {
+                locationFromURL = 'Indianapolis';
+            } else if (locationLower === 'schererville') {
+                locationFromURL = 'Schererville';
+            }
+        }
+        
+        // Update location checkboxes - IMPORTANT: Only check the matching one, uncheck others
+        const $locationCheckboxes = $('.location-checkbox');
+        
+        if (!locationFromURL || locationFromURL === '') {
+            // No location filter - check all location checkboxes (default state)
+            $locationCheckboxes.prop('checked', true);
+            console.log('[Custom Filters] No location filter - all locations checked');
+        } else {
+            // Location filter active - check ONLY the matching checkbox, UNCHECK others
+            $locationCheckboxes.each(function() {
+                const $checkbox = $(this);
+                const checkboxValue = $checkbox.val();
+                
+                // Checkbox value might be "Happiness Is Pets Indianapolis" or just "Indianapolis"
+                // Extract location name from checkbox value (remove "Happiness Is Pets " prefix if present)
+                let checkboxLocation = checkboxValue;
+                if (checkboxValue.includes('Happiness Is Pets ')) {
+                    checkboxLocation = checkboxValue.replace('Happiness Is Pets ', '').trim();
+                }
+                
+                // Compare normalized location with checkbox location (case-insensitive)
+                const shouldBeChecked = (checkboxLocation.toLowerCase() === locationFromURL.toLowerCase());
+                
+                console.log('[Custom Filters] Comparing checkbox:', checkboxValue, '->', checkboxLocation, 'with location:', locationFromURL, '-> match:', shouldBeChecked);
+                
+                if (shouldBeChecked) {
+                    $checkbox.prop('checked', true);
+                    $checkbox.attr('checked', 'checked');
+                    if ($checkbox[0]) {
+                        $checkbox[0].checked = true;
+                    }
+                    console.log('[Custom Filters] ✓ Checked checkbox for:', checkboxValue);
+                } else {
+                    $checkbox.prop('checked', false);
+                    $checkbox.removeAttr('checked');
+                    if ($checkbox[0]) {
+                        $checkbox[0].checked = false;
+                    }
+                    console.log('[Custom Filters] ✗ Unchecked checkbox for:', checkboxValue);
+                }
+            });
+            console.log('[Custom Filters] Location filter active:', locationFromURL, '- only matching checkbox should be checked');
+        }
+        
+        // Update activeFilters to match
+        activeFilters.location = locationFromURL;
+        window.activeFilters = activeFilters;
+    });
+
+    // Initialize on page load - use delay to ensure sidebar is rendered
+    $(document).ready(function() {
+        // Don't override PHP-set checkboxes immediately
+        // Only sync if URL parameter doesn't match current checkbox state
+        setTimeout(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationParam = urlParams.get('filter_location') || urlParams.get('location') || '';
+            
+            // Only initialize if we have a location parameter and checkboxes exist
+            if (locationParam) {
+                const $locationCheckboxes = $('.location-checkbox');
+                if ($locationCheckboxes.length > 0) {
+                    // Check if checkboxes are already correctly set by PHP
+                    let needsSync = false;
+                    const locationLower = locationParam.toLowerCase().trim();
+                    let normalizedLocation = '';
+                    if (locationLower === 'indianapolis') {
+                        normalizedLocation = 'Indianapolis';
+                    } else if (locationLower === 'schererville') {
+                        normalizedLocation = 'Schererville';
+                    }
+                    
+                    // Check if any checkbox is checked that shouldn't be, or if the right one isn't checked
+                    $locationCheckboxes.each(function() {
+                        const $checkbox = $(this);
+                        const checkboxValue = $checkbox.val();
+                        const isChecked = $checkbox.is(':checked');
+                        
+                        if (checkboxValue === normalizedLocation && !isChecked) {
+                            needsSync = true;
+                        } else if (checkboxValue !== normalizedLocation && isChecked) {
+                            needsSync = true;
+                        }
+                    });
+                    
+                    if (needsSync) {
+                        console.log('[Custom Filters] Checkboxes need sync, initializing from URL');
+                        initializeFiltersFromURL();
+                    } else {
+                        console.log('[Custom Filters] Checkboxes already correctly set by PHP');
+                        // Still update activeFilters
+                        activeFilters.location = normalizedLocation;
+                        window.activeFilters = activeFilters;
+                    }
+                } else {
+                    // No checkboxes found yet, try to initialize anyway
+                    initializeFiltersFromURL();
+                }
+            } else {
+                // No location parameter, just initialize normally
+                initializeFiltersFromURL();
+            }
+        }, 200);
+    });
 
     console.log('[Custom Filters] Ready and initialized');
 

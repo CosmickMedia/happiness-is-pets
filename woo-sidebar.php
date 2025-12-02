@@ -67,7 +67,21 @@ function get_filter_options() {
 // Get currently selected filters from URL
 $current_gender = isset($_GET['filter_gender']) ? sanitize_text_field($_GET['filter_gender']) : '';
 $current_breed = isset($_GET['filter_breed']) ? sanitize_text_field($_GET['filter_breed']) : '';
+// Check both 'filter_location' and 'location' parameters for backward compatibility
 $current_location = isset($_GET['filter_location']) ? sanitize_text_field($_GET['filter_location']) : '';
+if (empty($current_location) && isset($_GET['location'])) {
+    $current_location = sanitize_text_field($_GET['location']);
+}
+
+// Normalize location value to match option values (case-insensitive)
+if (!empty($current_location)) {
+    $location_lower = strtolower(trim($current_location));
+    if ($location_lower === 'indianapolis') {
+        $current_location = 'Indianapolis';
+    } elseif ($location_lower === 'schererville') {
+        $current_location = 'Schererville';
+    }
+}
 
 // By default, both locations are selected (empty means both)
 $location_is_default = empty($current_location);
