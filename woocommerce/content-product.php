@@ -38,6 +38,7 @@ if (!empty($location)) {
 
 $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 ?>
+
 <div <?php wc_product_class( 'col' ); ?> data-product-id="<?php echo esc_attr( $product_id ); ?>" data-ref-id="<?php echo esc_attr( $ref_id ); ?>">
     <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
         <div class="position-relative">
@@ -194,9 +195,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                        data-bs-toggle="modal"
                        class="btn btn-secondary-theme w-100 pet-details-trigger"
                        style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
-                       data-product-id="<?php echo esc_attr( $product_id ); ?>"
                        data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
-                       data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
                        data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
                        data-gender="<?php echo esc_attr( $gender ); ?>"
                        data-birth-date="<?php echo esc_attr( $birth_date ); ?>"

@@ -143,7 +143,9 @@
                     let hasNewProducts = false;
                     
                     // Filter out duplicate products by checking both product ID and Ref ID
-                    $tempContainer.find('[data-product-id]').each(function() {
+                    // IMPORTANT: Only select direct children with data-product-id (the product card wrapper)
+                    // Don't select nested elements like buttons that also have data-product-id
+                    $tempContainer.children('[data-product-id]').each(function() {
                         const $item = $(this);
                         const productId = $item.attr('data-product-id');
                         const refId = $item.attr('data-ref-id');
@@ -172,9 +174,10 @@
                     
                     // Only append if there are new products
                     if (hasNewProducts) {
-                        const newProducts = $tempContainer.html();
-                        if (newProducts.trim()) {
-                            $container.append(newProducts);
+                        // Get all children (product cards) instead of innerHTML to preserve structure
+                        const $newProducts = $tempContainer.children();
+                        if ($newProducts.length > 0) {
+                            $container.append($newProducts);
                         }
                     } else {
                         // No new products, might have reached the end
