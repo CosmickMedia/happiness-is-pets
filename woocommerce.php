@@ -21,8 +21,18 @@ get_template_part( 'template-parts/page', 'header' );
                     </button>
 
                     <?php
-                    // Get current location from URL
+                    // Get current location from URL and normalize it
                     $current_location = isset( $_GET['location'] ) ? sanitize_text_field( $_GET['location'] ) : '';
+                    
+                    // Normalize location value to match option values (case-insensitive)
+                    if ( ! empty( $current_location ) ) {
+                        $location_lower = strtolower( trim( $current_location ) );
+                        if ( $location_lower === 'indianapolis' ) {
+                            $current_location = 'Indianapolis';
+                        } elseif ( $location_lower === 'schererville' ) {
+                            $current_location = 'Schererville';
+                        }
+                    }
                     ?>
                     <div class="location-dropdown-wrapper" style="flex: 1; max-width: 350px;">
                         <label for="locationDropdown" class="visually-hidden">Change Location</label>
