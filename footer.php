@@ -89,7 +89,7 @@
                                aria-label="Indianapolis Linkedin">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            <a href="https://www.tiktok.com/discover/happiness-is-pets-pet-shop-indiana"
+                            <a href="https://www.tiktok.com/@hipindy"
                                target="_blank"
                                rel="noopener noreferrer"
                                class="social-icon d-flex align-items-center justify-content-center rounded-circle"
@@ -170,7 +170,7 @@
                                aria-label="Schererville Linkedin">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            <a href="https://www.tiktok.com/place/Happiness-is-Pets-21568226267653389"
+                            <a href="https://www.tiktok.com/@happinessispetssch"
                                target="_blank"
                                rel="noopener noreferrer"
                                class="social-icon d-flex align-items-center justify-content-center rounded-circle"

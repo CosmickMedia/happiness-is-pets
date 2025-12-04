@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.4.1' ); // Added placeholder images for products without photos
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.5.1-1' ); // Added placeholder images for products without photos
 }
 
 /**
