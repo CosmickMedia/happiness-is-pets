@@ -218,14 +218,14 @@
                     <ul class="list-unstyled" style="font-size: 0.95rem; color: #495057;">
                         <?php
                         $hours = get_theme_mod(
-                            'store_hours',
-                            "Monday: 11:00 AM - 09:00 PM\n" .
-                            "Tuesday: 11:00 AM - 09:00 PM\n" .
-                            "Wednesday: 11:00 AM - 09:00 PM\n" .
-                            "Thursday: 11:00 AM - 09:00 PM\n" .
-                            "Friday: 11:00 AM - 09:00 PM\n" .
-                            "Saturday: 11:00 AM - 06:00 PM\n" .
-                            "Sunday: 11:00 AM - 05:00 PM"
+                                'store_hours',
+                                "Monday: 11:00 AM - 09:00 PM\n" .
+                                "Tuesday: 11:00 AM - 09:00 PM\n" .
+                                "Wednesday: 11:00 AM - 09:00 PM\n" .
+                                "Thursday: 11:00 AM - 09:00 PM\n" .
+                                "Friday: 11:00 AM - 09:00 PM\n" .
+                                "Saturday: 11:00 AM - 06:00 PM\n" .
+                                "Sunday: 11:00 AM - 05:00 PM"
                         );
 
                         foreach ( explode( "\n", $hours ) as $line ) :
@@ -249,12 +249,12 @@
                     <?php
                     if ( has_nav_menu( 'footer' ) ) {
                         wp_nav_menu(
-                            array(
-                                'theme_location' => 'footer',
-                                'menu_class'     => 'list-unstyled footer-links-menu',
-                                'container'      => false,
-                                'depth'          => 1,
-                            )
+                                array(
+                                        'theme_location' => 'footer',
+                                        'menu_class'     => 'list-unstyled footer-links-menu',
+                                        'container'      => false,
+                                        'depth'          => 1,
+                                )
                         );
                     }
                     ?>
