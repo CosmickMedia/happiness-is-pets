@@ -22,10 +22,6 @@
                     <i class="fas fa-calendar-alt me-1"></i>
                     <?php echo get_the_date(); ?>
                 </span>
-                <span class="post-author ms-3">
-                    <i class="fas fa-user me-1"></i>
-                    <?php the_author(); ?>
-                </span>
                 <?php if ( has_category() ) : ?>
                     <span class="post-categories ms-3">
                         <i class="fas fa-folder me-1"></i>
