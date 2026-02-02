@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.5.2' ); // Added placeholder images for products without photos
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.6.0' ); // Added placeholder images for products without photos
 }
 
 /**
@@ -2364,4 +2364,5 @@ function happiness_is_pets_ajax_custom_filter_products() {
 }
 add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
+
 
