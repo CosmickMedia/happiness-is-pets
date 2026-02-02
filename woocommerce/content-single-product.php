@@ -1409,75 +1409,8 @@ body {
             </div>
         </div>
 
-        <!-- Parents Section -->
-        <div class="pup-section-card">
-            <div class="pup-section-header">
-                <div class="pup-section-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h2 class="pup-section-title">Meet The Parents</h2>
-            </div>
 
-            <div class="pup-parents-container">
-                <div class="pup-parent-showcase">
-                    <div class="pup-parent-badge">Mother</div>
-                    <div class="pup-parent-photo-wrap">
-                        <?php if (!empty($dam_photo)) : ?>
-                            <img src="<?php echo $dam_photo; ?>" alt="Mother" class="pup-parent-photo" />
-                        <?php else : ?>
-                            <div class="pup-parent-photo-placeholder">
-                                <i class="fas fa-paw"></i>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <h3 class="pup-parent-name">Meet Mom</h3>
-                    <div class="pup-parent-breed"><?php echo $dam_breed; ?></div>
-                    <div class="pup-parent-details">
-                        <div class="pup-parent-detail">
-                            <strong>Registry:</strong>
-                            <span><?php echo $dam_registry; ?></span>
-                        </div>
-                        <div class="pup-parent-detail">
-                            <strong>Weight:</strong>
-                            <span><?php echo $dam_weight; ?></span>
-                        </div>
-                        <div class="pup-parent-detail">
-                            <strong>OFA Tested:</strong>
-                            <span><?php echo $dam_ofa ? 'Yes' : 'No'; ?></span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="pup-parent-showcase">
-                    <div class="pup-parent-badge">Father</div>
-                    <div class="pup-parent-photo-wrap">
-                        <?php if (!empty($sire_photo)) : ?>
-                            <img src="<?php echo $sire_photo; ?>" alt="Father" class="pup-parent-photo" />
-                        <?php else : ?>
-                            <div class="pup-parent-photo-placeholder">
-                                <i class="fas fa-paw"></i>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <h3 class="pup-parent-name">Meet Dad</h3>
-                    <div class="pup-parent-breed"><?php echo $sire_breed; ?></div>
-                    <div class="pup-parent-details">
-                        <div class="pup-parent-detail">
-                            <strong>Registry:</strong>
-                            <span><?php echo $sire_registry; ?></span>
-                        </div>
-                        <div class="pup-parent-detail">
-                            <strong>Weight:</strong>
-                            <span><?php echo $sire_weight; ?></span>
-                        </div>
-                        <div class="pup-parent-detail">
-                            <strong>OFA Tested:</strong>
-                            <span><?php echo $sire_ofa ? 'Yes' : 'No'; ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Breed Info Section -->
         <?php if (!is_wp_error($pet_kb_data) && !empty($pet_kb_data)) : ?>
