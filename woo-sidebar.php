@@ -10,59 +10,94 @@
 function get_filter_options() {
     global $wpdb;
 
+    // Return cached result if available (cache for 1 hour)
+    $cached = get_transient( 'hip_filter_options' );
+    if ( false !== $cached ) {
+        return $cached;
+    }
+
     $options = array(
         'genders' => array(),
-        'breeds' => array(),
+        'breeds'  => array(),
         'locations' => array()
     );
 
-    // Get all published products (excluding Accessories)
-    $products = get_posts(array(
-        'post_type' => 'product',
-        'post_status' => happiness_is_pets_get_visible_product_statuses(),
-        'posts_per_page' => -1,
-        'fields' => 'ids',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'slug',
-                'terms'    => 'accessories',
-                'operator' => 'NOT IN',
-            ),
-        ),
-    ));
+    $statuses = happiness_is_pets_get_visible_product_statuses();
+    $status_placeholders = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
 
-    foreach ($products as $product_id) {
-        // Get gender from ACF
-        $gender = get_field('gender', $product_id);
-        if ($gender && !in_array($gender, $options['genders'])) {
-            $options['genders'][] = $gender;
-        }
-
-        // Get breed and location from WC Unified KM
-        if (function_exists('wc_ukm_get_pet')) {
-            $pet = wc_ukm_get_pet($product_id);
-
-            if (!empty($pet->breed) && !in_array($pet->breed, $options['breeds'])) {
-                $options['breeds'][] = $pet->breed;
-            }
-
-            if (!empty($pet->location)) {
-                $location = trim($pet->location);
-                if (!in_array($location, $options['locations'])) {
-                    $options['locations'][] = $location;
-                }
-            }
-        }
+    // Get product IDs excluding Accessories in one query
+    $accessories_term = get_term_by( 'slug', 'accessories', 'product_cat' );
+    $exclude_clause = '';
+    $query_params = $statuses;
+    if ( $accessories_term ) {
+        $exclude_clause = "AND p.ID NOT IN (
+            SELECT object_id FROM {$wpdb->term_relationships}
+            WHERE term_taxonomy_id = %d
+        )";
+        $query_params[] = $accessories_term->term_taxonomy_id;
     }
 
-    // Sort options alphabetically
-    sort($options['genders']);
-    sort($options['breeds']);
-    sort($options['locations']);
+    // Get distinct genders from ACF postmeta in one query
+    $genders = $wpdb->get_col( $wpdb->prepare(
+        "SELECT DISTINCT pm.meta_value
+         FROM {$wpdb->postmeta} pm
+         INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+         WHERE p.post_type = 'product'
+         AND p.post_status IN ($status_placeholders)
+         AND pm.meta_key = 'gender'
+         AND pm.meta_value != ''
+         AND pm.meta_value IS NOT NULL
+         $exclude_clause
+         ORDER BY pm.meta_value ASC",
+        ...$query_params
+    ) );
+    $options['genders'] = $genders ?: array();
+
+    // Get distinct breeds and locations from pet reference index in one query each
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    if ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table ) {
+        $breeds = $wpdb->get_col( $wpdb->prepare(
+            "SELECT DISTINCT pri.breed
+             FROM {$ref_table} pri
+             INNER JOIN {$wpdb->posts} p ON p.ID = pri.pet_id
+             WHERE p.post_type = 'product'
+             AND p.post_status IN ($status_placeholders)
+             AND pri.breed != ''
+             AND pri.breed IS NOT NULL
+             $exclude_clause
+             ORDER BY pri.breed ASC",
+            ...$query_params
+        ) );
+        $options['breeds'] = $breeds ?: array();
+
+        $locations = $wpdb->get_col( $wpdb->prepare(
+            "SELECT DISTINCT pri.location_slug
+             FROM {$ref_table} pri
+             INNER JOIN {$wpdb->posts} p ON p.ID = pri.pet_id
+             WHERE p.post_type = 'product'
+             AND p.post_status IN ($status_placeholders)
+             AND pri.location_slug != ''
+             AND pri.location_slug IS NOT NULL
+             $exclude_clause
+             ORDER BY pri.location_slug ASC",
+            ...$query_params
+        ) );
+        $options['locations'] = $locations ?: array();
+    }
+
+    set_transient( 'hip_filter_options', $options, HOUR_IN_SECONDS );
 
     return $options;
 }
+
+// Clear filter options cache when products are updated
+function hip_clear_filter_options_cache( $post_id ) {
+    if ( get_post_type( $post_id ) === 'product' ) {
+        delete_transient( 'hip_filter_options' );
+    }
+}
+add_action( 'save_post', 'hip_clear_filter_options_cache' );
+add_action( 'woocommerce_update_product', 'hip_clear_filter_options_cache' );
 
 // Get currently selected filters from URL
 $current_gender = isset($_GET['filter_gender']) ? sanitize_text_field($_GET['filter_gender']) : '';
@@ -91,11 +126,9 @@ $filter_options = get_filter_options();
 
 <div class="woo-custom-sidebar">
     <div class="sidebar-header mb-4">
-        <?php if ($current_gender || $current_breed || !$location_is_default) : ?>
-            <button type="button" class="btn btn-sm btn-outline-secondary w-100 clear-all-filters">
-                <i class="fas fa-times me-1"></i>Clear All Filters
-            </button>
-        <?php endif; ?>
+        <button type="button" class="btn btn-sm btn-outline-secondary w-100 clear-all-filters">
+            <i class="fas fa-times me-1"></i>Clear All Filters
+        </button>
     </div>
 
     <!-- Location Filter - NOW FIRST -->

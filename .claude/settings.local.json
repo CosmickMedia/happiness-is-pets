@@ -11,7 +11,9 @@
       "Bash(wp db query:*)",
       "Bash(/opt/homebrew/bin/cwebp -q 85 our-puppies.png -o our-puppies.webp)",
       "Bash(/opt/homebrew/bin/cwebp:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(php -l:*)",
+      "Bash(node -c:*)"
     ],
     "deny": [],
     "ask": []

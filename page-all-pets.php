@@ -35,19 +35,16 @@ get_template_part( 'template-parts/page', 'header' );
         $pets = new WP_Query( $args );
 
         if ( $pets->have_posts() ) :
-            // Deduplicate post IDs at query level
-            $all_post_ids = wp_list_pluck( $pets->posts, 'ID' );
-            $unique_post_ids = array_values( array_unique( $all_post_ids ) );
-            
-            // If we found duplicates, rebuild the posts array
-            if ( count( $unique_post_ids ) !== count( $all_post_ids ) ) {
-                $unique_posts = array();
-                foreach ( $unique_post_ids as $post_id ) {
-                    $post = get_post( $post_id );
-                    if ( $post ) {
-                        $unique_posts[] = $post;
-                    }
+            // Deduplicate posts using already-loaded post objects (no extra queries)
+            $seen_ids = array();
+            $unique_posts = array();
+            foreach ( $pets->posts as $post ) {
+                if ( ! isset( $seen_ids[ $post->ID ] ) ) {
+                    $seen_ids[ $post->ID ] = true;
+                    $unique_posts[] = $post;
                 }
+            }
+            if ( count( $unique_posts ) !== count( $pets->posts ) ) {
                 $pets->posts = $unique_posts;
                 $pets->post_count = count( $unique_posts );
             }
