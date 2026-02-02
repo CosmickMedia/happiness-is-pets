@@ -75,7 +75,7 @@ if ( $hero_image ) {
                                                 <?php echo esc_html( get_theme_mod('location_1_phone', '317-537-2480') ); ?>
                                             </a>
                                         </p>
-                                        <a href="https://www.happinessispets.com/pets/puppies-for-sale/?location=Indianapolis"
+                                        <a href="/puppies-for-sale/?location=Indianapolis"
                                            class="btn btn-lg w-100"
                                            style="background: linear-gradient(135deg, #00c8ba 0%, #00a89c 100%); color: white; border: none; padding: 14px 24px; font-weight: 700; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,186,0.3);">
                                             <i class="fas fa-paw me-2"></i>View Puppies
@@ -97,7 +97,7 @@ if ( $hero_image ) {
                                                 <?php echo esc_html( get_theme_mod('location_2_phone', '219-865-3078') ); ?>
                                             </a>
                                         </p>
-                                        <a href="https://www.happinessispets.com/pets/puppies-for-sale/?location=Schererville"
+                                        <a href="/puppies-for-sale/?location=Schererville"
                                            class="btn btn-lg w-100"
                                            style="background: linear-gradient(135deg, #00c8ba 0%, #00a89c 100%); color: white; border: none; padding: 14px 24px; font-weight: 700; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,186,0.3);">
                                             <i class="fas fa-paw me-2"></i>View Puppies

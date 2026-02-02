@@ -6,32 +6,6 @@
 (function($) {
     'use strict';
 
-    console.log('[Custom Filters] Script loaded');
-
-    // Fix for lazy loading images in blog posts
-    function fixLazyImages() {
-        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-        lazyImages.forEach(img => {
-            if (img.complete) {
-                img.classList.add('loaded');
-            } else {
-                img.addEventListener('load', function() {
-                    this.classList.add('loaded');
-                });
-            }
-        });
-    }
-
-    // Run on page load
-    $(document).ready(function() {
-        fixLazyImages();
-    });
-
-    // Run when images are loaded
-    $(window).on('load', function() {
-        fixLazyImages();
-    });
-
     // State management
     let isFiltering = false;
     let currentPage = 1;
@@ -42,33 +16,58 @@
         location: ''
     };
 
+    // Expose activeFilters globally so infinite scroll can check it
+    window.activeFilters = activeFilters;
+
     // Initialize filters from URL on page load
     function initializeFiltersFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
 
         activeFilters.gender = urlParams.get('filter_gender') || '';
         activeFilters.breed = urlParams.get('filter_breed') || '';
-        activeFilters.location = urlParams.get('filter_location') || '';
+        activeFilters.location = urlParams.get('filter_location') || urlParams.get('location') || '';
 
-        // Ensure both location checkboxes are checked if no location filter is active
-        if (!activeFilters.location) {
-            $('.location-checkbox').prop('checked', true);
+        // Normalize location value
+        if (activeFilters.location) {
+            const locationLower = activeFilters.location.toLowerCase().trim();
+            if (locationLower === 'indianapolis') {
+                activeFilters.location = 'Indianapolis';
+            } else if (locationLower === 'schererville') {
+                activeFilters.location = 'Schererville';
+            }
         }
 
-        console.log('[Custom Filters] Initialized from URL:', activeFilters);
+        // Update location checkboxes based on URL parameter
+        const $locationCheckboxes = $('.location-checkbox');
+        if ($locationCheckboxes.length > 0) {
+            if (!activeFilters.location) {
+                $locationCheckboxes.prop('checked', true);
+            } else {
+                $locationCheckboxes.each(function() {
+                    const checkboxValue = this.value;
+                    let checkboxLocation = checkboxValue;
+                    if (checkboxValue.includes('Happiness Is Pets ')) {
+                        checkboxLocation = checkboxValue.replace('Happiness Is Pets ', '').trim();
+                    }
+                    const shouldBeChecked = (checkboxLocation.toLowerCase() === activeFilters.location.toLowerCase());
+                    this.checked = shouldBeChecked;
+                });
+            }
+        }
+
+        window.activeFilters = activeFilters;
     }
 
     // Update URL without page reload
     function updateURL() {
         const url = new URL(window.location.href);
 
-        // Remove old filter params
         url.searchParams.delete('filter_gender');
         url.searchParams.delete('filter_breed');
         url.searchParams.delete('filter_location');
+        url.searchParams.delete('location');
         url.searchParams.delete('paged');
 
-        // Add active filters
         if (activeFilters.gender) {
             url.searchParams.set('filter_gender', activeFilters.gender);
         }
@@ -76,7 +75,7 @@
             url.searchParams.set('filter_breed', activeFilters.breed);
         }
         if (activeFilters.location) {
-            url.searchParams.set('filter_location', activeFilters.location);
+            url.searchParams.set('location', activeFilters.location);
         }
 
         window.history.pushState({}, '', url);
@@ -89,29 +88,26 @@
     }
 
     // Main filter function
-    function filterProducts(page = 1) {
-        if (isFiltering) {
-            console.log('[Custom Filters] Already filtering, skipping');
-            return;
-        }
+    function filterProducts(page) {
+        page = page || 1;
+        if (isFiltering) return;
 
-        console.log('[Custom Filters] Starting filter with:', activeFilters, 'Page:', page);
         isFiltering = true;
         currentPage = page;
 
-        // Find products container
         const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
-
         if (!$productsContainer.length) {
-            console.error('[Custom Filters] Products container not found');
             isFiltering = false;
             return;
         }
 
-        // Show loading state
         showLoadingState($productsContainer);
 
-        // Make AJAX request
+        // Reset infinite scroll product tracking on filter change
+        if (typeof window.resetInfiniteScrollProducts === 'function') {
+            window.resetInfiniteScrollProducts();
+        }
+
         $.ajax({
             url: customFilterParams.ajaxurl,
             type: 'POST',
@@ -125,31 +121,37 @@
                 page: page
             },
             success: function(response) {
-                console.log('[Custom Filters] Response received:', response);
-
                 if (response.success && response.data) {
-                    // Replace products
+                    // Reset scroll tracking flag
+                    if (window.infiniteScrollUserHasScrolled !== undefined) {
+                        window.infiniteScrollUserHasScrolled = false;
+                    }
+
                     $productsContainer.html(response.data.html);
 
-                    // Update pagination
                     maxPages = response.data.max_pages || 1;
                     updatePagination(response.data.count, response.data.max_pages);
-
-                    // Update results count
                     updateResultsInfo(response.data.count);
 
-                    // Update count in offcanvas header
                     $('.pets-count-display').text(response.data.count);
 
-                    // Update URL
                     updateURL();
 
-                    // Scroll to top of products smoothly
-                    $('html, body').animate({
-                        scrollTop: $productsContainer.offset().top - 150
-                    }, 400);
+                    // Programmatic scroll
+                    window.isProgrammaticScroll = true;
+                    const containerTop = $productsContainer.offset().top;
+                    const viewportTop = $(window).scrollTop();
+                    const viewportHeight = $(window).height();
 
-                    console.log('[Custom Filters] Products updated successfully');
+                    const scrollTarget = containerTop > viewportTop + viewportHeight / 2
+                        ? containerTop - 150
+                        : 0;
+
+                    $('html, body').animate({ scrollTop: scrollTarget }, 400, function() {
+                        setTimeout(function() {
+                            window.isProgrammaticScroll = false;
+                        }, 100);
+                    });
                 } else {
                     showError($productsContainer);
                 }
@@ -157,8 +159,7 @@
                 hideLoadingState($productsContainer);
                 isFiltering = false;
             },
-            error: function(xhr, status, error) {
-                console.error('[Custom Filters] AJAX error:', error);
+            error: function() {
                 showError($productsContainer);
                 hideLoadingState($productsContainer);
                 isFiltering = false;
@@ -209,11 +210,9 @@
 
     // Update pagination
     function updatePagination(totalResults, totalPages) {
-        // Remove existing pagination
         $('.woocommerce-pagination').remove();
 
         if (totalPages > 1) {
-            // Create new pagination
             const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
             const $pagination = createPaginationHTML(totalPages, currentPage);
             $productsContainer.after($pagination);
@@ -224,12 +223,10 @@
     function createPaginationHTML(totalPages, current) {
         let html = '<nav class="woocommerce-pagination"><ul class="page-numbers">';
 
-        // Previous button
         if (current > 1) {
             html += '<li><a class="prev page-numbers filter-page-link" data-page="' + (current - 1) + '" href="#">Previous</a></li>';
         }
 
-        // Page numbers
         for (let i = 1; i <= totalPages; i++) {
             if (i === current) {
                 html += '<li><span aria-current="page" class="page-numbers current">' + i + '</span></li>';
@@ -238,7 +235,6 @@
             }
         }
 
-        // Next button
         if (current < totalPages) {
             html += '<li><a class="next page-numbers filter-page-link" data-page="' + (current + 1) + '" href="#">Next</a></li>';
         }
@@ -254,29 +250,30 @@
         const value = $checkbox.val();
         const isChecked = $checkbox.is(':checked');
 
-        console.log('[Custom Filters] Checkbox changed:', filterType, value, isChecked);
-
-        // Special handling for location - allow multiple checkboxes
         if (filterType === 'location') {
             const $allLocationCheckboxes = $('.location-checkbox');
             const checkedLocations = $allLocationCheckboxes.filter(':checked');
 
-            // If both are checked or none are checked, treat as "all locations" (no filter)
             if (checkedLocations.length === 0 || checkedLocations.length === $allLocationCheckboxes.length) {
                 activeFilters.location = '';
-                // Check all if none are checked
                 if (checkedLocations.length === 0) {
                     $allLocationCheckboxes.prop('checked', true);
                 }
             } else {
-                // Only one location is checked
-                activeFilters.location = checkedLocations.first().val();
+                let checkboxValue = checkedLocations.first().val();
+                if (checkboxValue && checkboxValue.includes('Happiness Is Pets ')) {
+                    checkboxValue = checkboxValue.replace('Happiness Is Pets ', '').trim();
+                }
+                activeFilters.location = checkboxValue;
+            }
+
+            const $dropdown = $('#locationDropdown');
+            if ($dropdown.length) {
+                $dropdown.val(activeFilters.location || '');
             }
         } else {
-            // For gender and breed, only allow one selection per filter type
             $('.product-filter-checkbox[data-filter-type="' + filterType + '"]').not($checkbox).prop('checked', false);
 
-            // Update active filters
             if (isChecked) {
                 activeFilters[filterType] = value;
             } else {
@@ -284,56 +281,40 @@
             }
         }
 
-        console.log('[Custom Filters] Active filters updated:', activeFilters);
-
-        // Trigger filter
+        window.activeFilters = activeFilters;
         filterProducts(1);
     });
 
     // Handle clear all filters
     $(document).on('click', '.clear-all-filters', function(e) {
         e.preventDefault();
-        console.log('[Custom Filters] Clearing all filters');
 
-        // Uncheck all non-location checkboxes
         $('.product-filter-checkbox').not('.location-checkbox').prop('checked', false);
-
-        // Check all location checkboxes (default state)
         $('.location-checkbox').prop('checked', true);
 
-        // Reset active filters
-        activeFilters = {
-            gender: '',
-            breed: '',
-            location: ''
-        };
+        activeFilters = { gender: '', breed: '', location: '' };
+        window.activeFilters = activeFilters;
 
-        // Reload without filters
-        window.location.href = window.location.pathname + (getCurrentCategory() ? '?product_cat=' + getCurrentCategory() : '');
+        filterProducts(1);
+        updateURL();
     });
 
     // Handle pagination clicks
     $(document).on('click', '.filter-page-link', function(e) {
         e.preventDefault();
         const page = parseInt($(this).data('page'));
-        console.log('[Custom Filters] Pagination clicked:', page);
         filterProducts(page);
     });
 
-    // Optional: Load More button functionality
+    // Load More button functionality
     $(document).on('click', '.load-more-products', function(e) {
         e.preventDefault();
         const $button = $(this);
         const nextPage = currentPage + 1;
 
-        if (nextPage > maxPages || isFiltering) {
-            return;
-        }
-
-        console.log('[Custom Filters] Load More clicked for page:', nextPage);
+        if (nextPage > maxPages || isFiltering) return;
 
         $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
-
         isFiltering = true;
 
         $.ajax({
@@ -350,14 +331,12 @@
             },
             success: function(response) {
                 if (response.success && response.data && response.data.html) {
-                    // Append new products
                     const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
                     $productsContainer.append(response.data.html);
 
                     currentPage = nextPage;
                     maxPages = response.data.max_pages || maxPages;
 
-                    // Hide button if no more pages
                     if (currentPage >= maxPages) {
                         $button.replaceWith('<p class="text-center text-muted"><i class="fas fa-check me-2"></i>All pets loaded!</p>');
                     } else {
@@ -375,7 +354,6 @@
 
     // Auto-close offcanvas after filter selection (mobile)
     $(document).on('change', '.product-filter-checkbox', function() {
-        // Close offcanvas on mobile after a short delay to show selection
         if (window.innerWidth < 992) {
             setTimeout(function() {
                 const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('petsFilterOffcanvas'));
@@ -386,9 +364,42 @@
         }
     });
 
-    // Initialize on page load
-    initializeFiltersFromURL();
+    // Sync location checkboxes when offcanvas opens
+    $(document).on('shown.bs.offcanvas', '#petsFilterOffcanvas', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let locationFromURL = urlParams.get('filter_location') || urlParams.get('location') || '';
 
-    console.log('[Custom Filters] Ready and initialized');
+        if (locationFromURL) {
+            const locationLower = locationFromURL.toLowerCase().trim();
+            if (locationLower === 'indianapolis') {
+                locationFromURL = 'Indianapolis';
+            } else if (locationLower === 'schererville') {
+                locationFromURL = 'Schererville';
+            }
+        }
+
+        const $locationCheckboxes = $('.location-checkbox');
+        if (!locationFromURL) {
+            $locationCheckboxes.prop('checked', true);
+        } else {
+            $locationCheckboxes.each(function() {
+                let checkboxLocation = this.value;
+                if (checkboxLocation.includes('Happiness Is Pets ')) {
+                    checkboxLocation = checkboxLocation.replace('Happiness Is Pets ', '').trim();
+                }
+                this.checked = (checkboxLocation.toLowerCase() === locationFromURL.toLowerCase());
+            });
+        }
+
+        activeFilters.location = locationFromURL;
+        window.activeFilters = activeFilters;
+    });
+
+    // Initialize on page load
+    $(document).ready(function() {
+        setTimeout(function() {
+            initializeFiltersFromURL();
+        }, 200);
+    });
 
 })(jQuery);

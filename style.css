@@ -4,7 +4,7 @@ Theme URI: https://cosmickmedia.com/
 Author: Cosmick Media
 Author URI: https://cosmickmedia.com/
 Description: Custom theme for Happiness Is Pets Boutique integrating Bootstrap 5, Font Awesome 6, and WooCommerce support.
-Version: 1.4.1
+Version: 1.5.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-background, custom-logo, custom-menu, featured-images, theme-options, translation-ready, block-styles, responsive-layout, two-columns, left-sidebar, right-sidebar, woocommerce
@@ -4704,6 +4704,90 @@ html {
 .pagination-wrapper ul.page-numbers li a.next,
 .pagination-wrapper ul.page-numbers li a.prev {
     padding: 0.5rem 1.25rem;
+}
+
+/* WooCommerce AJAX Pagination */
+.woocommerce-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.woocommerce-pagination ul.page-numbers {
+    list-style: none !important;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.woocommerce-pagination ul.page-numbers li {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block;
+}
+
+.woocommerce-pagination ul.page-numbers li a,
+.woocommerce-pagination ul.page-numbers li span {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 45px;
+    height: 45px;
+    padding: 0.5rem 1rem;
+    background: #ffffff !important;
+    color: var(--color-primary-dark-teal) !important;
+    text-decoration: none !important;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-primary-light-blue-grey) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.woocommerce-pagination ul.page-numbers li a:hover {
+    background: var(--color-primary-dark-teal) !important;
+    color: white !important;
+    border-color: var(--color-primary-dark-teal) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.woocommerce-pagination ul.page-numbers li span.current {
+    background: var(--color-primary-dark-teal) !important;
+    color: white !important;
+    border-color: var(--color-primary-dark-teal) !important;
+    cursor: default;
+}
+
+.woocommerce-pagination ul.page-numbers li span.dots {
+    background: transparent !important;
+    border: none !important;
+    color: var(--color-primary-dark-grey) !important;
+    cursor: default;
+    box-shadow: none !important;
+    min-width: auto;
+}
+
+.woocommerce-pagination ul.page-numbers li a.next,
+.woocommerce-pagination ul.page-numbers li a.prev {
+    padding: 0.5rem 1.25rem;
+}
+
+@media (max-width: 767.98px) {
+    .woocommerce-pagination ul.page-numbers li a,
+    .woocommerce-pagination ul.page-numbers li span {
+        min-width: 40px;
+        height: 40px;
+        font-size: 0.875rem;
+        padding: 0.4rem 0.75rem;
+    }
 }
 
 .pagination {

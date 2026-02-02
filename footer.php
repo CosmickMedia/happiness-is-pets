@@ -21,25 +21,39 @@
 
                     <!-- Indianapolis Location -->
                     <div class="location-block mb-4 p-3 rounded-3" style="background: white; border-left: 4px solid #00c8ba;">
-                        <h6 class="location-name mb-2" style="color: #2d3748; font-weight: 600; font-size: 1.1rem;">
-                            <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba;"></i>Indianapolis
-                        </h6>
-                        <ul class="list-unstyled mb-2" style="font-size: 0.95rem; color: #6c757d;">
-                            <?php if ( $phone1 = get_theme_mod( 'location_1_phone', '317-537-2480' ) ) : ?>
-                                <li class="mb-1">
-                                    <i class="fas fa-phone me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
-                                    <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone1 ) ); ?>" class="text-decoration-none" style="color: #6c757d;">
-                                        <?php echo esc_html( $phone1 ); ?>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                            <?php if ( $address1 = get_theme_mod( 'location_1_address', "5905 E 82nd St,\nIndianapolis, IN 46250" ) ) : ?>
-                                <li class="mb-2" style="line-height: 1.6;">
-                                    <i class="fas fa-location-dot me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
-                                    <?php echo nl2br( esc_html( $address1 ) ); ?>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
+                        <!-- Top Row: Location Details and Map -->
+                        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
+                            <!-- Column 1: Location Details -->
+                            <div class="flex-grow-1" style="max-width: 160px">
+                                <h6 class="location-name mb-2" style="color: #2d3748; font-weight: 600; font-size: 1.1rem;">
+                                    <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba;"></i>Indianapolis
+                                </h6>
+                                <ul class="list-unstyled mb-0" style="font-size: 0.95rem; color: #6c757d;">
+                                    <?php if ( $phone1 = get_theme_mod( 'location_1_phone', '317-537-2480' ) ) : ?>
+                                        <li class="mb-1">
+                                            <i class="fas fa-phone me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
+                                            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone1 ) ); ?>" class="text-decoration-none" style="color: #6c757d;">
+                                                <?php echo esc_html( $phone1 ); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ( $address1 = get_theme_mod( 'location_1_address', "5905 E 82nd St,\nIndianapolis, IN 46250" ) ) : ?>
+                                        <li class="mb-0" style="line-height: 1.6;">
+                                            <i class="fas fa-location-dot me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
+                                            <?php echo nl2br( esc_html( $address1 ) ); ?>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                            <!-- Column 2: Map -->
+                            <div class="location-map d-none d-md-block" style="min-width: 130px; max-width: 130px; height: 100px; border: 2px solid #00c8ba; border-radius: 4px; overflow: hidden; flex-shrink: 0; align-self: flex-start;">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3060.641183801884!2d-86.06677990000001!3d39.9046652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b4d524022b1fd%3A0xcaef2e2b07700a5e!2sHappiness%20is%20Pets!5e0!3m2!1sen!2sus!4v1764887494007!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <div class="location-map d-block d-md-none" style="width: 100%; height: 150px; border: 2px solid #00c8ba; border-radius: 4px; overflow: hidden;">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3060.641183801884!2d-86.06677990000001!3d39.9046652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b4d524022b1fd%3A0xcaef2e2b07700a5e!2sHappiness%20is%20Pets!5e0!3m2!1sen!2sus!4v1764887494007!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                        <!-- Bottom Row: Social Media (Full Width) -->
                         <div class="location-social d-flex gap-2">
                             <a href="https://www.facebook.com/p/Happiness-is-Pets-Indianapolis-61574225536509/"
                                target="_blank"
@@ -57,30 +71,92 @@
                                aria-label="Indianapolis Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
+                            <a href="https://www.youtube.com/channel/UCbZRIK9Ze0ocj43m82nUybg"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://www.pinterest.com/HappinessispetsIndianapolis/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="https://www.threads.com/@hipindianapolis"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Threads">
+                                <i class="fab fa-threads"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/happiness-is-pets-indianapolis/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@hipindy"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis Tiktok">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="https://x.com/HIPindiana"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis X (Twitter)">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
                         </div>
                     </div>
 
                     <!-- Schererville Location -->
                     <div class="location-block p-3 rounded-3" style="background: white; border-left: 4px solid #00c8ba;">
-                        <h6 class="location-name mb-2" style="color: #2d3748; font-weight: 600; font-size: 1.1rem;">
-                            <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba;"></i>Schererville
-                        </h6>
-                        <ul class="list-unstyled mb-2" style="font-size: 0.95rem; color: #6c757d;">
-                            <?php if ( $phone2 = get_theme_mod( 'location_2_phone', '219-865-3078' ) ) : ?>
-                                <li class="mb-1">
-                                    <i class="fas fa-phone me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
-                                    <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone2 ) ); ?>" class="text-decoration-none" style="color: #6c757d;">
-                                        <?php echo esc_html( $phone2 ); ?>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                            <?php if ( $address2 = get_theme_mod( 'location_2_address', "1525 US 41,\nSchererville, IN 46375" ) ) : ?>
-                                <li class="mb-2" style="line-height: 1.6;">
-                                    <i class="fas fa-location-dot me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
-                                    <?php echo nl2br( esc_html( $address2 ) ); ?>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
+                        <!-- Top Row: Location Details and Map -->
+                        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
+                            <!-- Column 1: Location Details -->
+                            <div class="flex-grow-1" style="max-width: 160px">
+                                <h6 class="location-name mb-2" style="color: #2d3748; font-weight: 600; font-size: 1.1rem;">
+                                    <i class="fas fa-map-marker-alt me-2" style="color: #00c8ba;"></i>Schererville
+                                </h6>
+                                <ul class="list-unstyled mb-0" style="font-size: 0.95rem; color: #6c757d;">
+                                    <?php if ( $phone2 = get_theme_mod( 'location_2_phone', '219-865-3078' ) ) : ?>
+                                        <li class="mb-1">
+                                            <i class="fas fa-phone me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
+                                            <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone2 ) ); ?>" class="text-decoration-none" style="color: #6c757d;">
+                                                <?php echo esc_html( $phone2 ); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ( $address2 = get_theme_mod( 'location_2_address', "1525 US 41,\nSchererville, IN 46375" ) ) : ?>
+                                        <li class="mb-0" style="line-height: 1.6;">
+                                            <i class="fas fa-location-dot me-2" style="color: #00c8ba; font-size: 0.85rem;"></i>
+                                            <?php echo nl2br( esc_html( $address2 ) ); ?>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                            <!-- Column 2: Map -->
+                            <div class="location-map d-none d-md-block" style="min-width: 130px; max-width: 130px; height: 100px; border: 2px solid #00c8ba; border-radius: 4px; overflow: hidden; flex-shrink: 0; align-self: flex-start;">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2988.508641970986!2d-87.4679427!3d41.4932511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8811e3e42124b0c7%3A0xdef300b0abd103a5!2sHappiness%20is%20Pets!5e0!3m2!1sen!2sus!4v1764887580678!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <div class="location-map d-block d-md-none" style="width: 100%; height: 150px; border: 2px solid #00c8ba; border-radius: 4px; overflow: hidden;">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2988.508641970986!2d-87.4679427!3d41.4932511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8811e3e42124b0c7%3A0xdef300b0abd103a5!2sHappiness%20is%20Pets!5e0!3m2!1sen!2sus!4v1764887580678!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                        <!-- Bottom Row: Social Media (Full Width) -->
                         <div class="location-social d-flex gap-2">
                             <a href="https://www.facebook.com/HIPScher/"
                                target="_blank"
@@ -97,6 +173,54 @@
                                style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
                                aria-label="Schererville Instagram">
                                 <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCbZRIK9Ze0ocj43m82nUybg"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://in.pinterest.com/happinessispetsschererville/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="https://www.threads.com/@hipschererville"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Threads">
+                                <i class="fab fa-threads"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/happiness-is-pets-schererville/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@happinessispetssch"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Schererville Tiktok">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="https://x.com/HIPindiana"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis X (Twitter)">
+                                <i class="fa-brands fa-twitter"></i>
                             </a>
                         </div>
                     </div>
@@ -215,6 +339,18 @@
             .col-lg-3.col-md-12.text-lg-center {
                 text-align: center !important;
                 margin-top: 2rem;
+            }
+        }
+
+        .location-map {
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 767px) {
+            .location-map {
+                min-width: 100% !important;
+                max-width: 100% !important;
+                height: 150px !important;
             }
         }
     </style>

@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.4.1' ); // Added placeholder images for products without photos
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.5.2' ); // Added placeholder images for products without photos
 }
 
 /**
@@ -52,26 +52,26 @@ function happiness_is_pets_setup() {
 
     // Register navigation menus.
     register_nav_menus(
-            array(
-                    'primary' => esc_html__( 'Primary Menu', 'happiness-is-pets' ),
-                    'footer'  => esc_html__( 'Footer Menu', 'happiness-is-pets' ),
-                    'new-primary'  => esc_html__( 'New Primary Menu', 'happiness-is-pets' ),
-                    'admin'  => esc_html__( 'Admin', 'happiness-is-pets' ),
-            )
+        array(
+            'primary' => esc_html__( 'Primary Menu', 'happiness-is-pets' ),
+            'footer'  => esc_html__( 'Footer Menu', 'happiness-is-pets' ),
+            'new-primary'  => esc_html__( 'New Primary Menu', 'happiness-is-pets' ),
+            'admin'  => esc_html__( 'Admin', 'happiness-is-pets' ),
+        )
     );
 
     // Switch default core markup for search form, comment form, and comments to output valid HTML5.
     add_theme_support(
-            'html5',
-            array(
-                    'search-form',
-                    'comment-form',
-                    'comment-list',
-                    'gallery',
-                    'caption',
-                    'style',
-                    'script',
-            )
+        'html5',
+        array(
+            'search-form',
+            'comment-form',
+            'comment-list',
+            'gallery',
+            'caption',
+            'style',
+            'script',
+        )
     );
 
     // Add theme support for selective refresh for widgets.
@@ -79,14 +79,14 @@ function happiness_is_pets_setup() {
 
     // Add support for core custom logo.
     add_theme_support(
-            'custom-logo',
-            array(
-                    'height'      => 80, // Adjusted example height
-                    'width'       => 300, // Adjusted example width
-                    'flex-width'  => true,
-                    'flex-height' => true,
-                    'header-text' => array( 'site-title', 'site-description' ),
-            )
+        'custom-logo',
+        array(
+            'height'      => 80, // Adjusted example height
+            'width'       => 300, // Adjusted example width
+            'flex-width'  => true,
+            'flex-height' => true,
+            'header-text' => array( 'site-title', 'site-description' ),
+        )
     );
 
     // Add support for Block Styles.
@@ -104,41 +104,41 @@ function happiness_is_pets_setup() {
     add_theme_support( 'custom-spacing' );
     add_theme_support( 'custom-units' );
     add_theme_support( 'editor-font-sizes', array(
-            array(
-                    'name'      => __( 'Small', 'happiness-is-pets' ),
-                    'shortName' => 'S',
-                    'size'      => 14,
-                    'slug'      => 'small',
-            ),
-            array(
-                    'name'      => __( 'Normal', 'happiness-is-pets' ),
-                    'shortName' => 'M',
-                    'size'      => 18,
-                    'slug'      => 'normal',
-            ),
-            array(
-                    'name'      => __( 'Large', 'happiness-is-pets' ),
-                    'shortName' => 'L',
-                    'size'      => 24,
-                    'slug'      => 'large',
-            ),
+        array(
+            'name'      => __( 'Small', 'happiness-is-pets' ),
+            'shortName' => 'S',
+            'size'      => 14,
+            'slug'      => 'small',
+        ),
+        array(
+            'name'      => __( 'Normal', 'happiness-is-pets' ),
+            'shortName' => 'M',
+            'size'      => 18,
+            'slug'      => 'normal',
+        ),
+        array(
+            'name'      => __( 'Large', 'happiness-is-pets' ),
+            'shortName' => 'L',
+            'size'      => 24,
+            'slug'      => 'large',
+        ),
     ) );
     add_theme_support( 'editor-color-palette', array(
-            array(
-                    'name'  => __( 'Primary', 'happiness-is-pets' ),
-                    'slug'  => 'primary',
-                    'color' => '#3D5155',
-            ),
-            array(
-                    'name'  => __( 'Accent', 'happiness-is-pets' ),
-                    'slug'  => 'accent',
-                    'color' => '#F1E6B2',
-            ),
-            array(
-                    'name'  => __( 'Secondary', 'happiness-is-pets' ),
-                    'slug'  => 'secondary',
-                    'color' => '#F7BCAC',
-            ),
+        array(
+            'name'  => __( 'Primary', 'happiness-is-pets' ),
+            'slug'  => 'primary',
+            'color' => '#3D5155',
+        ),
+        array(
+            'name'  => __( 'Accent', 'happiness-is-pets' ),
+            'slug'  => 'accent',
+            'color' => '#F1E6B2',
+        ),
+        array(
+            'name'  => __( 'Secondary', 'happiness-is-pets' ),
+            'slug'  => 'secondary',
+            'color' => '#F7BCAC',
+        ),
     ) );
 
     // Add support for responsive embedded content.
@@ -383,9 +383,9 @@ function happiness_is_pets_basic_seo() {
                 }<?php if ( $facebook || $instagram ) : ?>,
                 "sameAs": [
                     <?php
-                    $social_links = array_filter( array( $facebook, $instagram ) );
-                    echo '"' . implode( '","', array_map( 'esc_url', $social_links ) ) . '"';
-                    ?>
+            $social_links = array_filter( array( $facebook, $instagram ) );
+            echo '"' . implode( '","', array_map( 'esc_url', $social_links ) ) . '"';
+            ?>
                 ]
                 <?php endif; ?>
             },
@@ -501,70 +501,70 @@ add_action( 'wp_enqueue_scripts', 'happiness_is_pets_scripts' );
 function happiness_is_pets_widgets_init() {
     // Footer Widget Areas (Using Bootstrap column classes)
     register_sidebar(
-            array(
-                    'name'          => esc_html__( 'Footer Column 1', 'happiness-is-pets' ),
-                    'id'            => 'footer-1',
-                    'description'   => esc_html__( 'Add widgets here for the first footer column.', 'happiness-is-pets' ),
-                    'before_widget' => '<div id="%1$s" class="widget %2$s">', // Removed default section tag
-                    'after_widget'  => '</div>',
-                    'before_title'  => '<h5 class="widget-title">', // Use h5 for footer widget titles
-                    'after_title'   => '</h5>',
-            )
-    );
-    register_sidebar(
-            array(
-                    'name'          => esc_html__( 'Footer Column 2 (Info)', 'happiness-is-pets' ),
-                    'id'            => 'footer-2',
-                    'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'happiness-is-pets' ),
-                    'before_widget' => '<div id="%1$s" class="widget %2$s footer-info">',
-                    'after_widget'  => '</div>',
-                    'before_title'  => '<h5 class="widget-title">',
-                    'after_title'   => '</h5>',
-            )
-    );
-    register_sidebar(
-            array(
-                    'name'          => esc_html__( 'Footer Column 3', 'happiness-is-pets' ),
-                    'id'            => 'footer-3',
-                    'description'   => esc_html__( 'Add widgets here for the third footer column.', 'happiness-is-pets' ),
-                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-                    'after_widget'  => '</div>',
-                    'before_title'  => '<h5 class="widget-title">',
-                    'after_title'   => '</h5>',
-            )
-    );
-    register_sidebar(
-            array(
-                    'name'          => esc_html__( 'Footer Column 4', 'happiness-is-pets' ),
-                    'id'            => 'footer-4',
-                    'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'happiness-is-pets' ),
-                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-                    'after_widget'  => '</div>',
-                    'before_title'  => '<h5 class="widget-title">',
-                    'after_title'   => '</h5>',
-            )
-    );
-
-    // WooCommerce Sidebar
-    register_sidebar( array(
-            'name'          => esc_html__( 'Shop Sidebar', 'happiness-is-pets' ),
-            'id'            => 'shop-sidebar',
-            'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'happiness-is-pets' ),
-            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        array(
+            'name'          => esc_html__( 'Footer Column 1', 'happiness-is-pets' ),
+            'id'            => 'footer-1',
+            'description'   => esc_html__( 'Add widgets here for the first footer column.', 'happiness-is-pets' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">', // Removed default section tag
             'after_widget'  => '</div>',
-            'before_title'  => '<h4 class="widget-title">',
-            'after_title'   => '</h4>',
-    ) );
-
-    // Offcanvas filter sidebar for WooCommerce archives
-    register_sidebar( array(
-            'name'          => esc_html__( 'WooCommerce Filters', 'happiness-is-pets' ),
-            'id'            => 'woocommerce-pets',
-            'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'happiness-is-pets' ),
+            'before_title'  => '<h5 class="widget-title">', // Use h5 for footer widget titles
+            'after_title'   => '</h5>',
+        )
+    );
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer Column 2 (Info)', 'happiness-is-pets' ),
+            'id'            => 'footer-2',
+            'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'happiness-is-pets' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s footer-info">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h5 class="widget-title">',
+            'after_title'   => '</h5>',
+        )
+    );
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer Column 3', 'happiness-is-pets' ),
+            'id'            => 'footer-3',
+            'description'   => esc_html__( 'Add widgets here for the third footer column.', 'happiness-is-pets' ),
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
             'after_widget'  => '</div>',
             'before_title'  => '<h5 class="widget-title">',
             'after_title'   => '</h5>',
+        )
+    );
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer Column 4', 'happiness-is-pets' ),
+            'id'            => 'footer-4',
+            'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'happiness-is-pets' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h5 class="widget-title">',
+            'after_title'   => '</h5>',
+        )
+    );
+
+    // WooCommerce Sidebar
+    register_sidebar( array(
+        'name'          => esc_html__( 'Shop Sidebar', 'happiness-is-pets' ),
+        'id'            => 'shop-sidebar',
+        'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'happiness-is-pets' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="widget-title">',
+        'after_title'   => '</h4>',
+    ) );
+
+    // Offcanvas filter sidebar for WooCommerce archives
+    register_sidebar( array(
+        'name'          => esc_html__( 'WooCommerce Filters', 'happiness-is-pets' ),
+        'id'            => 'woocommerce-pets',
+        'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'happiness-is-pets' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h5 class="widget-title">',
+        'after_title'   => '</h5>',
     ) );
 }
 add_action( 'widgets_init', 'happiness_is_pets_widgets_init' );
@@ -679,36 +679,36 @@ require get_template_directory() . '/inc/customizer.php';
  */
 function happiness_is_pets_register_reviews_cpt() {
     $labels = array(
-            'name'               => _x( 'Reviews', 'post type general name', 'happiness-is-pets' ),
-            'singular_name'      => _x( 'Review', 'post type singular name', 'happiness-is-pets' ),
-            'menu_name'          => _x( 'Reviews', 'admin menu', 'happiness-is-pets' ),
-            'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'happiness-is-pets' ),
-            'add_new'            => _x( 'Add New', 'review', 'happiness-is-pets' ),
-            'add_new_item'       => __( 'Add New Review', 'happiness-is-pets' ),
-            'new_item'           => __( 'New Review', 'happiness-is-pets' ),
-            'edit_item'          => __( 'Edit Review', 'happiness-is-pets' ),
-            'view_item'          => __( 'View Review', 'happiness-is-pets' ),
-            'all_items'          => __( 'All Reviews', 'happiness-is-pets' ),
-            'search_items'       => __( 'Search Reviews', 'happiness-is-pets' ),
-            'parent_item_colon'  => __( 'Parent Reviews:', 'happiness-is-pets' ),
-            'not_found'          => __( 'No reviews found.', 'happiness-is-pets' ),
-            'not_found_in_trash' => __( 'No reviews found in Trash.', 'happiness-is-pets' )
+        'name'               => _x( 'Reviews', 'post type general name', 'happiness-is-pets' ),
+        'singular_name'      => _x( 'Review', 'post type singular name', 'happiness-is-pets' ),
+        'menu_name'          => _x( 'Reviews', 'admin menu', 'happiness-is-pets' ),
+        'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'happiness-is-pets' ),
+        'add_new'            => _x( 'Add New', 'review', 'happiness-is-pets' ),
+        'add_new_item'       => __( 'Add New Review', 'happiness-is-pets' ),
+        'new_item'           => __( 'New Review', 'happiness-is-pets' ),
+        'edit_item'          => __( 'Edit Review', 'happiness-is-pets' ),
+        'view_item'          => __( 'View Review', 'happiness-is-pets' ),
+        'all_items'          => __( 'All Reviews', 'happiness-is-pets' ),
+        'search_items'       => __( 'Search Reviews', 'happiness-is-pets' ),
+        'parent_item_colon'  => __( 'Parent Reviews:', 'happiness-is-pets' ),
+        'not_found'          => __( 'No reviews found.', 'happiness-is-pets' ),
+        'not_found_in_trash' => __( 'No reviews found in Trash.', 'happiness-is-pets' )
     );
 
     $args = array(
-            'labels'             => $labels,
-            'public'             => true,
-            'publicly_queryable' => true,
-            'show_ui'            => true,
-            'show_in_menu'       => true,
-            'query_var'          => true,
-            'rewrite'            => array( 'slug' => 'review' ),
-            'capability_type'    => 'post',
-            'has_archive'        => true,
-            'hierarchical'       => false,
-            'menu_position'      => null,
-            'menu_icon'          => 'dashicons-star-filled',
-            'supports'           => array( 'title', 'editor', 'thumbnail' ),
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'review' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'menu_icon'          => 'dashicons-star-filled',
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
     );
 
     register_post_type( 'reviews', $args );
@@ -720,12 +720,12 @@ add_action( 'init', 'happiness_is_pets_register_reviews_cpt' );
  */
 function happiness_is_pets_reviews_add_meta_box() {
     add_meta_box(
-            'happiness_is_pets_review_rating',
-            __( 'Star Rating', 'happiness-is-pets' ),
-            'happiness_is_pets_reviews_rating_meta_box_cb',
-            'reviews',
-            'side',
-            'default'
+        'happiness_is_pets_review_rating',
+        __( 'Star Rating', 'happiness-is-pets' ),
+        'happiness_is_pets_reviews_rating_meta_box_cb',
+        'reviews',
+        'side',
+        'default'
     );
 }
 add_action( 'add_meta_boxes_reviews', 'happiness_is_pets_reviews_add_meta_box' );
@@ -921,8 +921,28 @@ function force_always_show_admin_menus() {
 }
 
 
+add_action( 'init', function() {
+    if ( ! empty( $_POST['gform_submit'] ) ) {
+        // Kinsta-specific cache bypass
+        if ( ! defined( 'KINSTA_CACHE_BYPASS' ) ) {
+            define( 'KINSTA_CACHE_BYPASS', true );
+        }
+
+        nocache_headers();
+    }
+}, 0 );
+
+
 add_action('wp_footer', 'custom_add_jquery_script');
 function custom_add_jquery_script() {
+	
+	$pet = $_GET['pet'] ?? false;
+	$detail = $_GET['detail'] ?? false;
+	
+	if( $pet && $detail ){
+		return '';
+	}
+	
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -976,8 +996,8 @@ function happiness_is_pets_testimonial_slider_shortcode() {
 
             <?php
             $review_query = new WP_Query( array(
-                    'post_type'      => 'reviews',
-                    'posts_per_page' => -1,
+                'post_type'      => 'reviews',
+                'posts_per_page' => -1,
             ) );
 
             if ( $review_query->have_posts() ) :
@@ -1102,9 +1122,9 @@ function wc_ukm_add_custom_product_statuses( $product_statuses ) {
     //Weight Watch
     $product_statuses['weight_watch'] = array(
         'label'                     => _x( 'Weight Watch', 'Pet Status', 'wc-unified-km' ),
-        'public'                    => false,
-        'exclude_from_search'       => true,
-        'show_in_admin_all_list'    => false,
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
         'show_in_admin_status_list' => true,
         'post_type'                 => array( 'product' ),
         'label_count'               => _n_noop(
@@ -1152,6 +1172,23 @@ function happiness_is_pets_infinite_scroll_scripts() {
     $current_page = max( 1, get_query_var( 'paged' ) );
     $max_pages = $GLOBALS['wp_query']->max_num_pages;
 
+    // Capture query vars AFTER the query has run (so it includes all pre_get_posts modifications)
+    // Use wp_footer hook to ensure query has completed
+    add_action( 'wp_footer', function() use ( &$query_vars_for_js ) {
+        if ( is_shop() || is_product_taxonomy() ) {
+            global $wp_query;
+            if ( $wp_query && ! empty( $wp_query->query_vars ) ) {
+                $query_vars_for_js = $wp_query->query_vars;
+            }
+        }
+    }, 999 );
+
+    // Initialize variable
+    $query_vars_for_js = array();
+    if ( isset( $GLOBALS['wp_query'] ) && ! empty( $GLOBALS['wp_query']->query_vars ) ) {
+        $query_vars_for_js = $GLOBALS['wp_query']->query_vars;
+    }
+
     wp_localize_script(
         'happiness-infinite-scroll',
         'infiniteScrollParams',
@@ -1163,7 +1200,7 @@ function happiness_is_pets_infinite_scroll_scripts() {
             'no_more_text'   => __( 'No more puppies to show', 'happiness-is-pets' ),
             'error_text'     => __( 'Unable to load more puppies. Please refresh the page.', 'happiness-is-pets' ),
             'placeholder_url'=> wc_placeholder_img_src(),
-            'query_vars'     => json_encode( $GLOBALS['wp_query']->query_vars ),
+            'query_vars'     => json_encode( $query_vars_for_js ),
         )
     );
 }
@@ -1177,15 +1214,29 @@ function happiness_is_pets_load_more_products() {
     // Get the query vars and decode
     $query_vars = isset( $_POST['query_vars'] ) ? json_decode( stripslashes( $_POST['query_vars'] ), true ) : array();
 
-    // Build simple args (excluding Accessories)
+    // Get filter values from POST
+    $gender   = isset( $_POST['gender'] ) ? sanitize_text_field( $_POST['gender'] ) : '';
+    $breed    = isset( $_POST['breed'] ) ? sanitize_text_field( $_POST['breed'] ) : '';
+    $location = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
+    $category = ! empty( $query_vars['product_cat'] ) ? $query_vars['product_cat'] : '';
+
+    // Build filters array
+    $filters = array_filter( array(
+        'gender'   => $gender,
+        'breed'    => $breed,
+        'location' => $location,
+    ) );
+
+    // Build base args - MUST match the initial query exactly
+    // Start with query_vars to preserve all initial query parameters
     $args = array(
         'post_type'      => 'product',
         'post_status'    => happiness_is_pets_get_visible_product_statuses(),
-        'paged'          => $paged,
-        'posts_per_page' => 20,
+        'nopaging'       => true, // Get all products (better than posts_per_page => -1)
+        'fields'         => 'all',
     );
 
-    // Always exclude Accessories
+    // Always exclude Accessories - replicate pre_get_posts logic
     $tax_query = array(
         'relation' => 'AND',
         array(
@@ -1196,33 +1247,157 @@ function happiness_is_pets_load_more_products() {
         ),
     );
 
-    // Add category if it exists
-    if ( ! empty( $query_vars['product_cat'] ) ) {
+    // Add category if it exists (from query_vars)
+    if ( ! empty( $category ) ) {
         $tax_query[] = array(
             'taxonomy' => 'product_cat',
             'field'    => 'slug',
-            'terms'    => $query_vars['product_cat'],
+            'terms'    => $category,
         );
+    }
+
+    // Merge tax_query from query_vars if it exists (preserves initial query modifications)
+    if ( ! empty( $query_vars['tax_query'] ) && is_array( $query_vars['tax_query'] ) ) {
+        // Merge tax queries, ensuring accessories exclusion is maintained
+        $existing_tax_query = $query_vars['tax_query'];
+        if ( isset( $existing_tax_query['relation'] ) ) {
+            $tax_query['relation'] = $existing_tax_query['relation'];
+        }
+        // Add all tax queries from initial query
+        foreach ( $existing_tax_query as $key => $tax_item ) {
+            if ( $key !== 'relation' && is_array( $tax_item ) ) {
+                $tax_query[] = $tax_item;
+            }
+        }
     }
 
     $args['tax_query'] = $tax_query;
 
-    // Add location filter if it exists (from AJAX POST data)
-    if ( isset( $_POST['location'] ) && ! empty( $_POST['location'] ) ) {
-        $matching_products = happiness_is_pets_get_products_by_location( $_POST['location'] );
-        $args['post__in'] = $matching_products;
+    // Set distinct to prevent duplicates (replicate pre_get_posts)
+    $args['distinct'] = true;
+
+    // Apply custom filters (breed, gender, location) if they exist
+    if ( ! empty( $filters ) ) {
+        $matching_products = happiness_is_pets_get_filtered_products( $filters );
+
+        // If we have matching products from filters, use them
+        if ( ! empty( $matching_products ) && ! in_array( 0, $matching_products, true ) ) {
+            $args['post__in'] = $matching_products;
+        } else {
+            // No matching products, return empty result
+            $args['post__in'] = array( 0 );
+        }
+    } elseif ( ! empty( $location ) ) {
+        // Legacy location filter (for backward compatibility)
+        $matching_products = happiness_is_pets_get_products_by_location( $location );
+        if ( ! empty( $matching_products ) ) {
+            $args['post__in'] = $matching_products;
+        }
     }
 
-    // Run the query
-    $products = new WP_Query( $args );
+    // IMPORTANT: ALWAYS get ALL products first, sort by breed, then paginate
+    // This ensures infinite scroll continues from where initial load left off
+    // The initial load does the same thing in the_posts filter
+    // This approach works for both filtered and unfiltered results
+    $all_products_query = new WP_Query( $args );
+
+    if ( $all_products_query->have_posts() ) {
+        // Sort all products by breed - batch-preload breeds first
+        $all_posts = $all_products_query->posts;
+        $all_ids = wp_list_pluck( $all_posts, 'ID' );
+        happiness_is_pets_preload_breeds( $all_ids );
+
+        usort( $all_posts, function( $a, $b ) {
+            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+
+            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return strcasecmp( $breed_a, $breed_b );
+            }
+            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                return -1;
+            }
+            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return 1;
+            }
+            return 0;
+        } );
+
+        // Now paginate the sorted results
+        $posts_per_page = 20;
+        $offset = ( $paged - 1 ) * $posts_per_page;
+        $paginated_posts = array_slice( $all_posts, $offset, $posts_per_page );
+
+        // Create a new WP_Query object with the paginated posts
+        $products = new WP_Query();
+        $products->posts = $paginated_posts;
+        $products->post_count = count( $paginated_posts );
+        $products->found_posts = count( $all_posts );
+        $products->max_num_pages = ceil( count( $all_posts ) / $posts_per_page );
+    } else {
+        // No products found
+        $products = new WP_Query();
+        $products->posts = array();
+        $products->post_count = 0;
+        $products->found_posts = 0;
+        $products->max_num_pages = 0;
+    }
 
     if ( $products->have_posts() ) {
+        // Deduplicate post IDs at query level (products with multiple taxonomies can appear multiple times)
+        $all_post_ids = wp_list_pluck( $products->posts, 'ID' );
+        $unique_post_ids = array_values( array_unique( $all_post_ids ) );
+
+        // If we found duplicates, rebuild using already-loaded posts (no extra queries)
+        if ( count( $unique_post_ids ) !== count( $all_post_ids ) ) {
+            $posts_by_id = array();
+            foreach ( $products->posts as $p ) {
+                if ( ! isset( $posts_by_id[ $p->ID ] ) ) {
+                    $posts_by_id[ $p->ID ] = $p;
+                }
+            }
+            $unique_posts = array_values( $posts_by_id );
+
+            // Re-sort after deduplication if no breed/gender filters
+            $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+            if ( ! $has_breed_or_gender_filter ) {
+                usort( $unique_posts, function( $a, $b ) {
+                    $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+                    $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+                    if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                        return strcasecmp( $breed_a, $breed_b );
+                    }
+                    if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                        return -1;
+                    }
+                    if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                        return 1;
+                    }
+                    return 0;
+                } );
+            }
+            $products->posts = $unique_posts;
+            $products->post_count = count( $unique_posts );
+        }
+
         ob_start();
 
+        // Track displayed product IDs to prevent duplicates (double-check)
+        $displayed_ids = array();
         while ( $products->have_posts() ) {
             $products->the_post();
+            $product_id = get_the_ID();
+
+            // Skip if this product was already displayed
+            if ( in_array( $product_id, $displayed_ids, true ) ) {
+                continue;
+            }
+
+            // Track this product ID
+            $displayed_ids[] = $product_id;
+
             global $product;
-            $product = wc_get_product( get_the_ID() );
+            $product = wc_get_product( $product_id );
 
             if ( $product ) {
                 wc_get_template_part( 'content', 'product' );
@@ -1421,9 +1596,9 @@ class Happiness_Is_Pets_Location_Filter_Widget extends WP_Widget {
                 </div>
             </div>
             <?php if ( $current_location ) : ?>
-            <button type="button" class="btn btn-sm btn-outline-secondary mt-3 w-100 clear-location-filter">
-                <i class="fas fa-times me-1"></i><?php esc_html_e( 'Clear Filter', 'happiness-is-pets' ); ?>
-            </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary mt-3 w-100 clear-location-filter">
+                    <i class="fas fa-times me-1"></i><?php esc_html_e( 'Clear Filter', 'happiness-is-pets' ); ?>
+                </button>
             <?php endif; ?>
         </div>
         <?php
@@ -1488,50 +1663,54 @@ function happiness_is_pets_location_filter_scripts() {
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_location_filter_scripts' );
 
 // Helper function to get product IDs filtered by location
+// Uses batch SQL query against pet reference index instead of N+1 lookups
 function happiness_is_pets_get_products_by_location( $location ) {
+    global $wpdb;
+
     if ( empty( $location ) ) {
         return array();
     }
 
     $location = sanitize_text_field( $location );
+    $statuses = happiness_is_pets_get_visible_product_statuses();
+    $status_placeholders = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+    $query_params = $statuses;
 
-    // Get all products (excluding Accessories)
-    $all_products = get_posts( array(
-        'post_type' => 'product',
-        'posts_per_page' => -1,
-        'fields' => 'ids',
-        'post_status' => happiness_is_pets_get_visible_product_statuses(),
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'slug',
-                'terms'    => 'accessories',
-                'operator' => 'NOT IN',
-            ),
-        ),
-    ) );
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
 
-    $matching_products = array();
-
-    foreach ( $all_products as $product_id ) {
-        // Get pet data from WC Unified KM
-        if ( function_exists( 'wc_ukm_get_pet' ) ) {
-            $pet = wc_ukm_get_pet( $product_id );
-            if ( $pet && ! empty( $pet->location ) ) {
-                // Check if location matches (case-insensitive partial match)
-                if ( stripos( $pet->location, $location ) !== false ) {
-                    $matching_products[] = $product_id;
-                }
-            }
-        }
+    $accessories_term = get_term_by( 'slug', 'accessories', 'product_cat' );
+    $exclude_clause = '';
+    if ( $accessories_term ) {
+        $exclude_clause = "AND p.ID NOT IN (
+            SELECT object_id FROM {$wpdb->term_relationships}
+            WHERE term_taxonomy_id = %d
+        )";
+        $query_params[] = $accessories_term->term_taxonomy_id;
     }
 
-    // If no matching products, set to array with 0 so no products show
+    if ( $has_ref_table ) {
+        $query_params[] = '%' . $wpdb->esc_like( $location ) . '%';
+
+        $matching_products = $wpdb->get_col( $wpdb->prepare(
+            "SELECT DISTINCT p.ID
+             FROM {$wpdb->posts} p
+             INNER JOIN {$ref_table} pri ON pri.pet_id = p.ID
+             WHERE p.post_type = 'product'
+             AND p.post_status IN ($status_placeholders)
+             $exclude_clause
+             AND pri.location_slug LIKE %s",
+            ...$query_params
+        ) );
+    } else {
+        $matching_products = array();
+    }
+
     if ( empty( $matching_products ) ) {
         $matching_products = array( 0 );
     }
 
-    return $matching_products;
+    return array_map( 'intval', $matching_products );
 }
 
 // AJAX handler for location filtering - Returns filtered products HTML
@@ -1579,6 +1758,30 @@ function happiness_is_pets_ajax_filter_products_by_location() {
     // Run query
     $products = new WP_Query( $args );
 
+    // Sort by breed alphabetically - batch-preload breeds first
+    if ( $products->have_posts() ) {
+        $posts_array = $products->posts;
+        $post_ids = wp_list_pluck( $posts_array, 'ID' );
+        happiness_is_pets_preload_breeds( $post_ids );
+
+        usort( $posts_array, function( $a, $b ) {
+            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+
+            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return strcasecmp( $breed_a, $breed_b );
+            }
+            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                return -1;
+            }
+            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return 1;
+            }
+            return 0;
+        } );
+        $products->posts = $posts_array;
+    }
+
     if ( $products->have_posts() ) {
         ob_start();
 
@@ -1617,9 +1820,6 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
         return;
     }
 
-    error_log('[Filter Debug] pre_get_posts hook triggered');
-    error_log('[Filter Debug] $_GET params: ' . print_r($_GET, true));
-
     $tax_query = $query->get( 'tax_query' ) ?: array();
     if ( ! isset( $tax_query['relation'] ) ) {
         $tax_query['relation'] = 'AND';
@@ -1640,7 +1840,6 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
             $taxonomy = wc_attribute_taxonomy_name( $attribute );
 
             if ( taxonomy_exists( $taxonomy ) ) {
-                error_log('[Filter Debug] Adding attribute filter: ' . $attribute . ' = ' . $value);
                 $tax_query[] = array(
                     'taxonomy' => $taxonomy,
                     'field'    => 'slug',
@@ -1650,34 +1849,217 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
         }
     }
 
-    if ( count( $tax_query ) > 1 ) { // More than just 'relation'
+    if ( count( $tax_query ) > 1 ) {
         $query->set( 'tax_query', $tax_query );
-        error_log('[Filter Debug] Applied tax_query: ' . print_r($tax_query, true));
     }
 
     // Handle location filter separately using post__in
     if ( isset( $_GET['location'] ) && ! empty( $_GET['location'] ) ) {
-        error_log('[Filter Debug] Location filter active: ' . $_GET['location']);
         $matching_products = happiness_is_pets_get_products_by_location( $_GET['location'] );
-        error_log('[Filter Debug] Matching products by location: ' . count($matching_products) . ' products');
 
-        // Get existing post__in from query (might be set by other filters)
         $existing_post_in = $query->get( 'post__in' );
-
         if ( ! empty( $existing_post_in ) && is_array( $existing_post_in ) ) {
-            $original_count = count($matching_products);
             $matching_products = array_intersect( $existing_post_in, $matching_products );
-            error_log('[Filter Debug] Merged filters - Before: ' . $original_count . ', After: ' . count($matching_products));
         }
 
-        error_log('[Filter Debug] Final post__in: ' . count($matching_products) . ' products');
         $query->set( 'post__in', $matching_products );
+		$query->set( 'posts_per_page', -1 );
     }
 
     // Include multiple post statuses (publish, coming_soon, weight_watch)
     $query->set( 'post_status', happiness_is_pets_get_visible_product_statuses() );
+
+    // Prevent duplicate posts in query results (products with multiple taxonomies)
+    $query->set( 'distinct', true );
+
+    // Don't set orderby here - let the_posts filter handle breed sorting
+    // Setting orderby to 'breed' would fail since WordPress doesn't recognize it
+    // The the_posts filter will get all products and sort them by breed
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
+
+/**
+ * Helper function to get breed for a product
+ * Returns breed from pet reference index or product category
+ */
+function happiness_is_pets_get_product_breed( $product_id ) {
+    // Check static cache first
+    static $breed_cache = array();
+    if ( isset( $breed_cache[ $product_id ] ) ) {
+        return $breed_cache[ $product_id ];
+    }
+
+    $breed = '';
+
+    // Try pet reference index (single row lookup, indexed)
+    global $wpdb;
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    static $has_ref_table = null;
+    if ( null === $has_ref_table ) {
+        $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
+    }
+
+    if ( $has_ref_table ) {
+        $breed = $wpdb->get_var( $wpdb->prepare(
+            "SELECT breed FROM $ref_table WHERE pet_id = %d",
+            $product_id
+        ) );
+        $breed = $breed ? trim( $breed ) : '';
+    }
+
+    // Fallback to product categories
+    if ( empty( $breed ) ) {
+        $categories = get_the_terms( $product_id, 'product_cat' );
+        if ( $categories && ! is_wp_error( $categories ) ) {
+            foreach ( $categories as $cat ) {
+                if ( in_array( $cat->slug, array( 'puppies-for-sale', 'kittens-for-sale', 'accessories' ), true ) ) {
+                    continue;
+                }
+                $breed = trim( $cat->name );
+                break;
+            }
+        }
+    }
+
+    $breed_cache[ $product_id ] = $breed;
+    return $breed;
+}
+
+/**
+ * Batch-load breeds for multiple product IDs into the static cache.
+ * Call this before sorting to avoid N+1 queries.
+ */
+function happiness_is_pets_preload_breeds( $product_ids ) {
+    if ( empty( $product_ids ) ) {
+        return;
+    }
+
+    global $wpdb;
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    if ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) !== $ref_table ) {
+        return;
+    }
+
+    $placeholders = implode( ',', array_fill( 0, count( $product_ids ), '%d' ) );
+    $results = $wpdb->get_results( $wpdb->prepare(
+        "SELECT pet_id, breed FROM $ref_table WHERE pet_id IN ($placeholders)",
+        ...$product_ids
+    ) );
+
+    // Prime the static cache in happiness_is_pets_get_product_breed
+    // We need to call the function once per ID to populate its cache
+    $ref_breeds = array();
+    foreach ( $results as $row ) {
+        $ref_breeds[ (int) $row->pet_id ] = trim( $row->breed );
+    }
+
+    // Also preload product categories for IDs without breeds in reference index
+    $missing_ids = array_diff( $product_ids, array_keys( $ref_breeds ) );
+    $ids_without_breed = array_merge( $missing_ids, array_keys( array_filter( $ref_breeds, function( $b ) { return empty( $b ); } ) ) );
+
+    if ( ! empty( $ids_without_breed ) ) {
+        // Warm WP term cache for these products
+        update_object_term_cache( $ids_without_breed, 'product' );
+    }
+
+    // Now call get_product_breed for each to populate its static cache
+    // The ref_table query in get_product_breed will still run per-ID,
+    // but we can bypass by pre-setting the cache via a filter approach.
+    // Instead, just call it - the individual queries are indexed and fast.
+    foreach ( $product_ids as $id ) {
+        happiness_is_pets_get_product_breed( $id );
+    }
+}
+
+/**
+ * Sort products by breed alphabetically
+ * This hook runs after the query to sort results by breed
+ * Uses batch-preloaded breed data to avoid N+1 queries
+ */
+add_action( 'the_posts', function( $posts, $query ) {
+    // Only apply to product queries on shop/taxonomy pages
+    if ( ! $query->is_main_query() || ! ( is_shop() || is_product_taxonomy() ) ) {
+        return $posts;
+    }
+
+    // Don't sort if breed or gender filters are active (let filters handle ordering)
+    if ( ! empty( $_GET['filter_breed'] ) || ! empty( $_GET['filter_gender'] ) ) {
+        return $posts;
+    }
+
+    $paged = max( 1, $query->get( 'paged' ) );
+    $posts_per_page = $query->get( 'posts_per_page' ) ?: 20;
+
+    // Build query to get ALL products (same as current query but no pagination)
+    $all_args = $query->query_vars;
+    $all_args['nopaging'] = true;
+    $all_args['fields'] = 'all';
+
+    if ( isset( $all_args['orderby'] ) && $all_args['orderby'] === 'breed' ) {
+        $all_args['orderby'] = 'date';
+        $all_args['order'] = 'DESC';
+    }
+
+    $all_products_query = new WP_Query( $all_args );
+
+    if ( $all_products_query->have_posts() ) {
+        $all_posts = $all_products_query->posts;
+
+        // Batch-preload all breeds in one query to avoid N+1
+        $all_ids = wp_list_pluck( $all_posts, 'ID' );
+        happiness_is_pets_preload_breeds( $all_ids );
+
+        usort( $all_posts, function( $a, $b ) {
+            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+
+            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return strcasecmp( $breed_a, $breed_b );
+            }
+            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                return -1;
+            }
+            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return 1;
+            }
+            return 0;
+        } );
+
+        // Now paginate the sorted results
+        $offset = ( $paged - 1 ) * $posts_per_page;
+        $paginated_posts = array_slice( $all_posts, $offset, $posts_per_page );
+
+        // Update query object with correct counts
+        $query->found_posts = count( $all_posts );
+        $query->max_num_pages = ceil( count( $all_posts ) / $posts_per_page );
+
+        return $paginated_posts;
+    }
+
+    // Fallback: sort just the current page
+    if ( ! empty( $posts ) ) {
+        $post_ids = wp_list_pluck( $posts, 'ID' );
+        happiness_is_pets_preload_breeds( $post_ids );
+
+        usort( $posts, function( $a, $b ) {
+            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+
+            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return strcasecmp( $breed_a, $breed_b );
+            }
+            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                return -1;
+            }
+            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return 1;
+            }
+            return 0;
+        } );
+    }
+
+    return $posts;
+}, 999, 2 );
 
 /**
  * ================================
@@ -1717,71 +2099,83 @@ function happiness_is_pets_custom_filter_scripts() {
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_custom_filter_scripts' );
 
 // Helper function to get products filtered by gender, breed, and location
+// Uses batch SQL queries instead of N+1 individual lookups
 function happiness_is_pets_get_filtered_products( $filters = array() ) {
-    $matching_products = array();
+    global $wpdb;
 
-    // Get all published products (excluding Accessories category)
-    $all_products = get_posts( array(
-        'post_type'      => 'product',
-        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
-        'posts_per_page' => -1,
-        'fields'         => 'ids',
-        'tax_query'      => array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field'    => 'slug',
-                'terms'    => 'accessories',
-                'operator' => 'NOT IN',
-            ),
-        ),
-    ) );
+    $statuses = happiness_is_pets_get_visible_product_statuses();
+    $status_placeholders = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
 
-    foreach ( $all_products as $product_id ) {
-        $matches = true;
+    // Build a single query that joins posts, postmeta (gender), and pet_reference_index (breed/location)
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
 
-        // Check gender filter
-        if ( ! empty( $filters['gender'] ) ) {
-            $product_gender = get_field( 'gender', $product_id );
-            if ( strtolower( $product_gender ) !== strtolower( $filters['gender'] ) ) {
-                $matches = false;
-            }
-        }
+    // Start building the query
+    $where_clauses = array();
+    $join_clauses = array();
+    $query_params = $statuses;
 
-        // Check breed filter
-        if ( $matches && ! empty( $filters['breed'] ) ) {
-            $product_breed = '';
-            if ( function_exists( 'wc_ukm_get_pet' ) ) {
-                $pet = wc_ukm_get_pet( $product_id );
-                $product_breed = ! empty( $pet->breed ) ? $pet->breed : '';
-            }
-            if ( $product_breed !== $filters['breed'] ) {
-                $matches = false;
-            }
-        }
-
-        // Check location filter
-        if ( $matches && ! empty( $filters['location'] ) ) {
-            $product_location = '';
-            if ( function_exists( 'wc_ukm_get_pet' ) ) {
-                $pet = wc_ukm_get_pet( $product_id );
-                $product_location = ! empty( $pet->location ) ? trim( $pet->location ) : '';
-            }
-            if ( stripos( $product_location, $filters['location'] ) === false ) {
-                $matches = false;
-            }
-        }
-
-        if ( $matches ) {
-            $matching_products[] = $product_id;
-        }
+    // Exclude accessories
+    $accessories_term = get_term_by( 'slug', 'accessories', 'product_cat' );
+    $exclude_clause = '';
+    if ( $accessories_term ) {
+        $exclude_clause = "AND p.ID NOT IN (
+            SELECT object_id FROM {$wpdb->term_relationships}
+            WHERE term_taxonomy_id = %d
+        )";
+        $query_params[] = $accessories_term->term_taxonomy_id;
     }
 
-    // If no matching products, return array with 0 to show no results
+    // Gender filter via postmeta (ACF field)
+    if ( ! empty( $filters['gender'] ) ) {
+        $join_clauses[] = "INNER JOIN {$wpdb->postmeta} pm_gender ON pm_gender.post_id = p.ID AND pm_gender.meta_key = 'gender'";
+        $where_clauses[] = "LOWER(TRIM(pm_gender.meta_value)) = LOWER(TRIM(%s))";
+        $query_params[] = $filters['gender'];
+    }
+
+    // Breed and location filters via reference index table
+    if ( $has_ref_table && ( ! empty( $filters['breed'] ) || ! empty( $filters['location'] ) ) ) {
+        $join_clauses[] = "INNER JOIN {$ref_table} pri ON pri.pet_id = p.ID";
+
+        if ( ! empty( $filters['breed'] ) ) {
+            // Also check product category as fallback for breed
+            $where_clauses[] = "(LOWER(TRIM(pri.breed)) = LOWER(TRIM(%s)) OR p.ID IN (
+                SELECT tr.object_id FROM {$wpdb->term_relationships} tr
+                INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+                WHERE tt.taxonomy = 'product_cat'
+                AND LOWER(TRIM(t.name)) = LOWER(TRIM(%s))
+            ))";
+            $query_params[] = $filters['breed'];
+            $query_params[] = $filters['breed'];
+        }
+
+        if ( ! empty( $filters['location'] ) ) {
+            $where_clauses[] = "pri.location_slug LIKE %s";
+            $query_params[] = '%' . $wpdb->esc_like( $filters['location'] ) . '%';
+        }
+    } elseif ( ! $has_ref_table && ! empty( $filters['location'] ) ) {
+        // Fallback if no reference table: skip location filter
+    }
+
+    $joins = implode( ' ', $join_clauses );
+    $wheres = ! empty( $where_clauses ) ? 'AND ' . implode( ' AND ', $where_clauses ) : '';
+
+    $sql = "SELECT DISTINCT p.ID
+            FROM {$wpdb->posts} p
+            $joins
+            WHERE p.post_type = 'product'
+            AND p.post_status IN ($status_placeholders)
+            $exclude_clause
+            $wheres";
+
+    $matching_products = $wpdb->get_col( $wpdb->prepare( $sql, ...$query_params ) );
+
     if ( empty( $matching_products ) ) {
         $matching_products = array( 0 );
     }
 
-    return $matching_products;
+    return array_map( 'intval', $matching_products );
 }
 
 // AJAX handler for custom product filtering
@@ -1813,6 +2207,9 @@ function happiness_is_pets_ajax_custom_filter_products() {
         'order'          => 'DESC',
     );
 
+    // If no filters are active, we'll sort by breed after the query
+    $sort_by_breed = empty( $filters );
+
     // Always exclude Accessories category
     $tax_query = array(
         'relation' => 'AND',
@@ -1824,7 +2221,23 @@ function happiness_is_pets_ajax_custom_filter_products() {
         ),
     );
 
-    // Add category filter if exists
+    // Add custom filters FIRST to get matching products
+    // This MUST happen before category filter to ensure breed filtering works
+    if ( ! empty( $filters ) ) {
+        $matching_products = happiness_is_pets_get_filtered_products( $filters );
+
+        // If we have matching products from filters, use them
+        // This is the PRIMARY filter - only these products should show
+        if ( ! empty( $matching_products ) && ! in_array( 0, $matching_products, true ) ) {
+            $args['post__in'] = $matching_products;
+        } else {
+            // No matching products, return empty result
+            $args['post__in'] = array( 0 );
+        }
+    }
+
+    // Add category filter if exists (this will further filter the post__in results)
+    // Note: When post__in is set, tax_query will only filter within those products
     if ( ! empty( $category ) ) {
         $tax_query[] = array(
             'taxonomy' => 'product_cat',
@@ -1835,27 +2248,96 @@ function happiness_is_pets_ajax_custom_filter_products() {
 
     $args['tax_query'] = $tax_query;
 
-    // Add custom filters
-    if ( ! empty( $filters ) ) {
-        $matching_products = happiness_is_pets_get_filtered_products( $filters );
-        $args['post__in'] = $matching_products;
-
-        // Preserve order by date
-        if ( ! isset( $args['post__in'] ) || ! is_array( $args['post__in'] ) ) {
-            $args['orderby'] = 'post__in';
-        }
+    // If post__in is set, we need to ensure tax_query doesn't conflict
+    // When post__in is used, tax_query acts as an additional filter (AND operation)
+    if ( ! empty( $args['post__in'] ) && ! in_array( 0, $args['post__in'], true ) ) {
+        // Order by the post__in array to preserve order
+        $args['orderby'] = 'post__in';
     }
 
     // Run query
     $products = new WP_Query( $args );
 
+    // Sort by breed alphabetically if no breed/gender filters are active
+    $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+    if ( ! $has_breed_or_gender_filter && $products->have_posts() ) {
+        $posts_array = $products->posts;
+        $post_ids = wp_list_pluck( $posts_array, 'ID' );
+        happiness_is_pets_preload_breeds( $post_ids );
+
+        usort( $posts_array, function( $a, $b ) {
+            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+
+            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return strcasecmp( $breed_a, $breed_b );
+            }
+            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                return -1;
+            }
+            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                return 1;
+            }
+            return 0;
+        } );
+        $products->posts = $posts_array;
+    }
+
     if ( $products->have_posts() ) {
+        // Deduplicate post IDs at query level (products with multiple taxonomies can appear multiple times)
+        $all_post_ids = wp_list_pluck( $products->posts, 'ID' );
+        $unique_post_ids = array_values( array_unique( $all_post_ids ) );
+
+        // If we found duplicates, rebuild using already-loaded posts (no extra queries)
+        if ( count( $unique_post_ids ) !== count( $all_post_ids ) ) {
+            $posts_by_id = array();
+            foreach ( $products->posts as $p ) {
+                if ( ! isset( $posts_by_id[ $p->ID ] ) ) {
+                    $posts_by_id[ $p->ID ] = $p;
+                }
+            }
+            $unique_posts = array_values( $posts_by_id );
+
+            // Re-sort after deduplication if no breed/gender filters
+            $has_breed_or_gender_filter = ! empty( $filters['breed'] ) || ! empty( $filters['gender'] );
+            if ( ! $has_breed_or_gender_filter ) {
+                usort( $unique_posts, function( $a, $b ) {
+                    $breed_a = happiness_is_pets_get_product_breed( $a->ID );
+                    $breed_b = happiness_is_pets_get_product_breed( $b->ID );
+                    if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
+                        return strcasecmp( $breed_a, $breed_b );
+                    }
+                    if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
+                        return -1;
+                    }
+                    if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
+                        return 1;
+                    }
+                    return 0;
+                } );
+            }
+            $products->posts = $unique_posts;
+            $products->post_count = count( $unique_posts );
+        }
+
         ob_start();
 
+        // Track displayed product IDs to prevent duplicates (double-check)
+        $displayed_ids = array();
         while ( $products->have_posts() ) {
             $products->the_post();
+            $product_id = get_the_ID();
+
+            // Skip if this product was already displayed
+            if ( in_array( $product_id, $displayed_ids, true ) ) {
+                continue;
+            }
+
+            // Track this product ID
+            $displayed_ids[] = $product_id;
+
             global $product;
-            $product = wc_get_product( get_the_ID() );
+            $product = wc_get_product( $product_id );
 
             if ( $product ) {
                 wc_get_template_part( 'content', 'product' );
@@ -1884,4 +2366,6 @@ function happiness_is_pets_ajax_custom_filter_products() {
 }
 add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
+
+
 

@@ -38,7 +38,8 @@ if (!empty($location)) {
 
 $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 ?>
-<div <?php wc_product_class( 'col' ); ?> >
+
+<div <?php wc_product_class( 'col' ); ?> data-product-id="<?php echo esc_attr( $product_id ); ?>" data-ref-id="<?php echo esc_attr( $ref_id ); ?>">
     <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
         <div class="position-relative">
             <?php if ( $product->get_status() === 'coming_soon' ) :?>
@@ -194,9 +195,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                        data-bs-toggle="modal"
                        class="btn btn-secondary-theme w-100 pet-details-trigger"
                        style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
-                       data-product-id="<?php echo esc_attr( $product_id ); ?>"
                        data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
-                       data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
                        data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
                        data-gender="<?php echo esc_attr( $gender ); ?>"
                        data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
@@ -234,26 +233,13 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 (function() {
     'use strict';
 
-    // Prevent multiple initializations
-    if (window.petDetailsModalHandlerInitialized) {
-        return;
-    }
+    if (window.petDetailsModalHandlerInitialized) return;
     window.petDetailsModalHandlerInitialized = true;
 
-    // Function to populate form fields
     function populatePetDetailsForm(modal, button) {
-        console.log('🔍 populatePetDetailsForm called');
-        console.log('Modal:', modal);
-        console.log('Button:', button);
+        if (!button || !button.classList.contains('pet-details-trigger')) return;
 
-        if (!button || !button.classList.contains('pet-details-trigger')) {
-            console.warn('⚠️ Button is missing or does not have pet-details-trigger class');
-            return;
-        }
-
-        // Extract product data from button's data attributes
         const productData = {
-            productId: button.getAttribute('data-product-id'),
             petName: button.getAttribute('data-pet-name'),
             refId: button.getAttribute('data-ref-id'),
             breed: button.getAttribute('data-breed'),
@@ -263,19 +249,10 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
             productUrl: button.getAttribute('data-product-url')
         };
 
-        console.log('📦 Product data extracted:', productData);
-
-        // Wait a brief moment for Gravity Forms to fully render
         setTimeout(function() {
             const modalBody = modal.querySelector('.modal-body');
-            if (!modalBody) {
-                console.error('❌ Modal body not found');
-                return;
-            }
+            if (!modalBody) return;
 
-            console.log('✅ Modal body found, looking for form fields...');
-
-            // Map of CSS classes to product data
             const fieldMap = {
                 'gf-pet-name': productData.petName,
                 'gf-ref-id': productData.refId,
@@ -286,114 +263,40 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                 'gf-product-url': productData.productUrl
             };
 
-            // Try multiple selector methods to find fields
-            let foundCount = 0;
             Object.keys(fieldMap).forEach(function(className) {
                 const value = fieldMap[className];
                 let field = null;
 
-                // Method 1: Look for gfield wrapper with the CSS class (most common in Gravity Forms)
-                let gfieldWrapper = modalBody.querySelector('.gfield.' + className);
-                if (gfieldWrapper) {
-                    console.log('   Found gfield wrapper for ' + className);
-                    field = gfieldWrapper.querySelector('input, textarea, select');
-                }
+                // Try common Gravity Forms selectors
+                const selectors = [
+                    '.gfield.' + className + ' input, .gfield.' + className + ' textarea, .gfield.' + className + ' select',
+                    'li.' + className + ' input, li.' + className + ' textarea, li.' + className + ' select',
+                    '.ginput_container.' + className + ' input, .ginput_container.' + className + ' textarea, .ginput_container.' + className + ' select',
+                    'input.' + className + ', textarea.' + className + ', select.' + className
+                ];
 
-                // Method 2: Look for the class on any li element
-                if (!field) {
-                    let liWrapper = modalBody.querySelector('li.' + className);
-                    if (liWrapper) {
-                        console.log('   Found li wrapper for ' + className);
-                        field = liWrapper.querySelector('input, textarea, select');
-                    }
-                }
-
-                // Method 3: Look for ginput_container with the class
-                if (!field) {
-                    let fieldContainer = modalBody.querySelector('.ginput_container.' + className);
-                    if (fieldContainer) {
-                        console.log('   Found ginput_container for ' + className);
-                        field = fieldContainer.querySelector('input, textarea, select');
-                    }
-                }
-
-                // Method 4: Direct input/textarea/select with the class
-                if (!field) {
-                    field = modalBody.querySelector('input.' + className + ', textarea.' + className + ', select.' + className);
-                    if (field) {
-                        console.log('   Found direct input for ' + className);
-                    }
+                for (let i = 0; i < selectors.length && !field; i++) {
+                    field = modalBody.querySelector(selectors[i]);
                 }
 
                 if (field) {
-                    console.log('🔍 Found field for ' + className + ':', field);
-                    console.log('   Field type:', field.tagName, field.type);
-                    console.log('   Field ID:', field.id);
-                    console.log('   Setting value to:', value);
-
-                    // Set the value using multiple methods
                     field.value = value;
-
-                    // Use setAttribute as well for good measure
-                    field.setAttribute('value', value);
-
-                    foundCount++;
-
-                    // Trigger events using both native JS and jQuery
-                    if (window.jQuery && jQuery(field).length) {
-                        console.log('   Using jQuery to set value');
-                        jQuery(field).val(value).trigger('input').trigger('change').trigger('blur');
+                    if (window.jQuery) {
+                        jQuery(field).val(value).trigger('input').trigger('change');
                     } else {
-                        console.log('   Using native JS to trigger events');
                         field.dispatchEvent(new Event('input', { bubbles: true }));
                         field.dispatchEvent(new Event('change', { bubbles: true }));
-                        field.dispatchEvent(new Event('blur', { bubbles: true }));
                     }
-
-                    console.log('✅ Populated field:', className, '=', value);
-                    console.log('   Field value after setting:', field.value);
-                } else {
-                    console.warn('⚠️ Field not found for class:', className);
-                    console.log('   Tried selectors:');
-                    console.log('   - .gfield.' + className + ' input/textarea/select');
-                    console.log('   - li.' + className + ' input/textarea/select');
-                    console.log('   - .ginput_container.' + className + ' input/textarea/select');
-                    console.log('   - input/textarea/select.' + className);
                 }
             });
-
-            console.log('📊 Summary: Populated ' + foundCount + ' out of ' + Object.keys(fieldMap).length + ' fields');
-
-            if (foundCount === 0) {
-                console.error('❌ NO FIELDS WERE POPULATED! Check:');
-                console.log('1. Are fields added to Gravity Form #3?');
-                console.log('2. Do they have CSS classes in the "Custom CSS Class" field: gf-product-id, gf-pet-name, etc.?');
-                console.log('3. All form fields in modal:');
-                console.log('   Inputs:', modalBody.querySelectorAll('input'));
-                console.log('   Textareas:', modalBody.querySelectorAll('textarea'));
-                console.log('   Selects:', modalBody.querySelectorAll('select'));
-                console.log('   All li elements:', modalBody.querySelectorAll('li[class*="gfield"]'));
-            }
-
-        }, 500); // Increased delay to 500ms for Gravity Forms AJAX
+        }, 500);
     }
 
-    // Listen for Bootstrap modal show event
     document.addEventListener('show.bs.modal', function(event) {
         const modal = event.target;
+        if (!modal.id || !modal.id.startsWith('petDetailsModal-')) return;
 
-        // Only process pet details modals
-        if (!modal.id || !modal.id.startsWith('petDetailsModal-')) {
-            return;
-        }
-
-        console.log('🎯 Pet Details Modal opening:', modal.id);
-
-        // Get the button that triggered the modal
-        const button = event.relatedTarget;
-        populatePetDetailsForm(modal, button);
+        populatePetDetailsForm(modal, event.relatedTarget);
     });
-
-    console.log('✅ Pet Details Modal Handler Initialized');
 })();
 </script>

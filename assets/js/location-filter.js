@@ -5,39 +5,66 @@
 (function($) {
     'use strict';
 
-    console.log('[Location Filter] Script loaded');
-
     let isFiltering = false;
 
     // Handle location dropdown changes
     $(document).on('change', '#locationDropdown', function() {
-        console.log('[Location Filter] Dropdown changed, isFiltering:', isFiltering);
         if (isFiltering) return;
 
         const selectedLocation = $(this).val();
-        console.log('[Location Filter] Selected location:', selectedLocation);
+        syncLocationCheckboxes(selectedLocation);
         filterProductsByLocation(selectedLocation);
     });
 
+    // Sync location checkboxes with dropdown selection
+    function syncLocationCheckboxes(selectedLocation) {
+        const $locationCheckboxes = $('.location-checkbox');
+        if ($locationCheckboxes.length === 0) return false;
+
+        // Normalize the location value
+        let normalizedLocation = '';
+        if (selectedLocation) {
+            const locationLower = String(selectedLocation).toLowerCase().trim();
+            if (locationLower === 'indianapolis') {
+                normalizedLocation = 'Indianapolis';
+            } else if (locationLower === 'schererville') {
+                normalizedLocation = 'Schererville';
+            } else {
+                normalizedLocation = selectedLocation;
+            }
+        }
+
+        if (!normalizedLocation) {
+            $locationCheckboxes.prop('checked', true);
+        } else {
+            $locationCheckboxes.each(function() {
+                let checkboxLocation = this.value;
+                if (checkboxLocation.includes('Happiness Is Pets ')) {
+                    checkboxLocation = checkboxLocation.replace('Happiness Is Pets ', '').trim();
+                }
+                this.checked = (checkboxLocation.toLowerCase() === normalizedLocation.toLowerCase());
+            });
+        }
+
+        if (typeof window.activeFilters !== 'undefined') {
+            window.activeFilters.location = normalizedLocation || '';
+        }
+
+        return true;
+    }
+
     // Main filter function using AJAX
     function filterProductsByLocation(selectedLocation) {
-        console.log('[Location Filter] filterProductsByLocation called with:', selectedLocation);
         isFiltering = true;
 
-        // Find the products container
         const $productsContainer = $('.woocommerce .products, ul.products, .row.row-cols-2').first();
-        console.log('[Location Filter] Products container found:', $productsContainer.length > 0, $productsContainer);
-
         if (!$productsContainer.length) {
-            console.error('[Location Filter] Products container not found');
             isFiltering = false;
             return;
         }
 
-        // Show loading state
         $productsContainer.css('opacity', '0.5');
 
-        // Add loading spinner if not exists
         let $loader = $('.location-filter-loader');
         if (!$loader.length) {
             $loader = $('<div class="location-filter-loader text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-3">Filtering pets...</p></div>');
@@ -46,16 +73,8 @@
             $loader.show();
         }
 
-        // Get current category from URL
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('product_cat') || '';
-
-        // Make AJAX request
-        console.log('[Location Filter] Making AJAX request with data:', {
-            action: 'filter_products_by_location',
-            location: selectedLocation,
-            category: category
-        });
 
         $.ajax({
             url: locationFilterParams.ajaxurl,
@@ -66,12 +85,9 @@
                 category: category
             },
             success: function(response) {
-                console.log('[Location Filter] AJAX response:', response);
                 if (response.success && response.data.html) {
-                    // Replace products
                     $productsContainer.html(response.data.html);
 
-                    // Update URL without reload
                     const newUrl = new URL(window.location.href);
                     if (selectedLocation) {
                         newUrl.searchParams.set('location', selectedLocation);
@@ -80,12 +96,10 @@
                     }
                     window.history.pushState({}, '', newUrl);
 
-                    // Scroll to top of products
                     $('html, body').animate({
                         scrollTop: $productsContainer.offset().top - 100
                     }, 400);
                 } else {
-                    // Show no results message
                     $productsContainer.html('<div class="col-12"><p class="woocommerce-info">No pets found at this location.</p></div>');
                 }
 
@@ -93,8 +107,7 @@
                 $productsContainer.css('opacity', '1');
                 isFiltering = false;
             },
-            error: function(xhr, status, error) {
-                console.error('Filter error:', error);
+            error: function() {
                 alert('An error occurred while filtering. Please refresh the page and try again.');
                 $loader.hide();
                 $productsContainer.css('opacity', '1');
@@ -103,20 +116,15 @@
         });
     }
 
-    // Handle location checkbox changes (for sidebar widget if used)
+    // Handle location checkbox changes (for sidebar widget)
     $(document).on('change', '.location-filter-checkbox', function() {
         const $checkbox = $(this);
         const selectedLocation = $checkbox.data('location');
         const isChecked = $checkbox.is(':checked');
 
-        // Uncheck other location checkboxes (only one location at a time)
         $('.location-filter-checkbox').not($checkbox).prop('checked', false);
 
-        if (isChecked) {
-            filterProductsByLocation(selectedLocation);
-        } else {
-            filterProductsByLocation('');
-        }
+        filterProductsByLocation(isChecked ? selectedLocation : '');
     });
 
     // Handle clear filter button
@@ -124,5 +132,54 @@
         $('#locationDropdown').val('').trigger('change');
         $('.location-filter-checkbox').prop('checked', false);
     });
+
+    // Get normalized location from URL
+    function getLocationFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationParam = urlParams.get('location') || urlParams.get('filter_location') || '';
+
+        if (!locationParam) return '';
+
+        const locationLower = locationParam.toLowerCase().trim();
+        if (locationLower === 'indianapolis') return 'Indianapolis';
+        if (locationLower === 'schererville') return 'Schererville';
+        return locationParam;
+    }
+
+    // Initialize dropdown from URL on page load and sync checkboxes (once)
+    $(document).ready(function() {
+        const normalizedLocation = getLocationFromURL();
+
+        // Set dropdown value
+        const $dropdown = $('#locationDropdown');
+        if ($dropdown.length) {
+            if (normalizedLocation && $dropdown.val() !== normalizedLocation) {
+                $dropdown.val(normalizedLocation);
+            } else if (!normalizedLocation && $dropdown.val() !== '') {
+                $dropdown.val('');
+            }
+        }
+
+        // Sync checkboxes - single attempt with one retry
+        const $locationCheckboxes = $('.location-checkbox');
+        if ($locationCheckboxes.length > 0) {
+            syncLocationCheckboxes(normalizedLocation);
+        } else {
+            // Retry once after sidebar renders
+            setTimeout(function() {
+                if ($('.location-checkbox').length > 0) {
+                    syncLocationCheckboxes(normalizedLocation);
+                }
+            }, 500);
+        }
+    });
+
+    // Sync when offcanvas opens
+    $(document).on('shown.bs.offcanvas', '#petsFilterOffcanvas', function() {
+        syncLocationCheckboxes(getLocationFromURL());
+    });
+
+    // Expose sync function globally
+    window.syncLocationCheckboxes = syncLocationCheckboxes;
 
 })(jQuery);

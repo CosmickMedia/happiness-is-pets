@@ -35,9 +35,34 @@ get_template_part( 'template-parts/page', 'header' );
         $pets = new WP_Query( $args );
 
         if ( $pets->have_posts() ) :
+            // Deduplicate posts using already-loaded post objects (no extra queries)
+            $seen_ids = array();
+            $unique_posts = array();
+            foreach ( $pets->posts as $post ) {
+                if ( ! isset( $seen_ids[ $post->ID ] ) ) {
+                    $seen_ids[ $post->ID ] = true;
+                    $unique_posts[] = $post;
+                }
+            }
+            if ( count( $unique_posts ) !== count( $pets->posts ) ) {
+                $pets->posts = $unique_posts;
+                $pets->post_count = count( $unique_posts );
+            }
+            
             woocommerce_product_loop_start();
+            
+            // Track displayed IDs as double-check
+            $displayed_ids = array();
             while ( $pets->have_posts() ) :
                 $pets->the_post();
+                $product_id = get_the_ID();
+                
+                // Skip if already displayed
+                if ( in_array( $product_id, $displayed_ids, true ) ) {
+                    continue;
+                }
+                $displayed_ids[] = $product_id;
+                
                 wc_get_template_part( 'content', 'product' );
             endwhile;
             woocommerce_product_loop_end();
