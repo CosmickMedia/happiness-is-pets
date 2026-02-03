@@ -34,6 +34,10 @@ function happiness_is_pets_breadcrumb() {
     }
 }
 
+add_filter( 'woocommerce_product_related_products_heading', function() {
+    return 'Related Pets';
+});
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  */
