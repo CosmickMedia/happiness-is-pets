@@ -66,7 +66,7 @@ $locations = happiness_is_pets_get_locations();
                 <div class="d-flex align-items-center">
                     <?php // Hamburger Menu Toggle ?>
                     <button
-                            class="navbar-toggler happiness-is-pets-toggler me-2 me-md-3 d-md-none mobile-menu-toggle"
+                            class="navbar-toggler happiness-is-pets-toggler me-2 me-md-3 mobile-menu-toggle"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#mobileNavOffcanvas"
@@ -92,7 +92,7 @@ $locations = happiness_is_pets_get_locations();
                     </div>
                 </div>
 
-                <div class="navbar-horizontal-menu d-none d-md-flex flex-grow-1 justify-content-center">
+                <div class="navbar-horizontal-menu d-none">
                     <?php
                     wp_nav_menu(
                             array(

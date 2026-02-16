@@ -111,6 +111,14 @@
                                aria-label="Indianapolis Tiktok">
                                 <i class="fa-brands fa-tiktok"></i>
                             </a>
+                            <a href="https://x.com/HIPindiana"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis X (Twitter)">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -205,6 +213,14 @@
                                style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
                                aria-label="Schererville Tiktok">
                                 <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="https://x.com/HIPindiana"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="social-icon d-flex align-items-center justify-content-center rounded-circle"
+                               style="width: 36px; height: 36px; background: #00c8ba; color: white; text-decoration: none; transition: all 0.3s ease;"
+                               aria-label="Indianapolis X (Twitter)">
+                                <i class="fa-brands fa-twitter"></i>
                             </a>
                         </div>
                     </div>

@@ -470,8 +470,6 @@ if ( $hero_image ) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
                 </div>
                 <div class="text-center">
                     <a href="<?php echo esc_url( get_theme_mod( 'puppies_button_url', '/all-pets/' ) ); ?>" class="see-all-puppies btn">
@@ -509,46 +507,22 @@ if ( $hero_image ) {
 
         <script>
             document.addEventListener( 'DOMContentLoaded', function() {
-                // Only initialize Swiper on tablet and desktop (768px and up)
-                // Mobile uses native horizontal scroll
-                if (window.innerWidth >= 768) {
-                    new Swiper( '.available-puppies-swiper', {
-                        slidesPerView: 6,
-                        spaceBetween: 20,
-                        navigation: {
-                            nextEl: '.available-puppies-swiper .swiper-button-next',
-                            prevEl: '.available-puppies-swiper .swiper-button-prev',
-                        },
-                        grabCursor: true,
-                        speed: 400,
-                        breakpoints: {
-                            768: { slidesPerView: 4 },
-                            992: { slidesPerView: 5 },
-                            1200: { slidesPerView: 6 },
-                        },
-                    } );
-                } else {
-                    // Setup mobile horizontal scroll
-                    var swiperContainer = document.querySelector('.available-puppies-swiper');
-                    var swiperWrapper = document.querySelector('.available-puppies-swiper .swiper-wrapper');
-                    if (swiperContainer && swiperWrapper) {
-                        // Force horizontal scroll on mobile
-                        swiperContainer.style.overflowX = 'scroll';
-                        swiperContainer.style.overflowY = 'hidden';
-                        swiperContainer.style.WebkitOverflowScrolling = 'touch';
-
-                        swiperWrapper.style.display = 'flex';
-                        swiperWrapper.style.flexWrap = 'nowrap';
-                        swiperWrapper.style.width = 'auto';
-                        swiperWrapper.style.transform = 'none';
-
-                        // Set each slide width
-                        var slides = swiperWrapper.querySelectorAll('.swiper-slide');
-                        slides.forEach(function(slide) {
-                            slide.style.flexShrink = '0';
-                            slide.style.width = '280px';
-                        });
-                    }
+                // Horizontal scroll for available puppies (all viewports)
+                var swiperContainer = document.querySelector('.available-puppies-swiper');
+                var swiperWrapper = document.querySelector('.available-puppies-swiper .swiper-wrapper');
+                if (swiperContainer && swiperWrapper) {
+                    swiperContainer.style.overflowX = 'scroll';
+                    swiperContainer.style.overflowY = 'hidden';
+                    swiperContainer.style.WebkitOverflowScrolling = 'touch';
+                    swiperWrapper.style.display = 'flex';
+                    swiperWrapper.style.flexWrap = 'nowrap';
+                    swiperWrapper.style.width = 'auto';
+                    swiperWrapper.style.transform = 'none';
+                    var slides = swiperWrapper.querySelectorAll('.swiper-slide');
+                    slides.forEach(function(slide) {
+                        slide.style.flexShrink = '0';
+                        slide.style.width = '280px';
+                    });
                 }
                 new Swiper( '.reviews-swiper', {
                     slidesPerView: 3,
