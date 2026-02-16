@@ -4,7 +4,7 @@ Theme URI: https://cosmickmedia.com/
 Author: Cosmick Media
 Author URI: https://cosmickmedia.com/
 Description: Custom theme for Happiness Is Pets Boutique integrating Bootstrap 5, Font Awesome 6, and WooCommerce support.
-Version: 1.5.2
+Version: 1.5.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-background, custom-logo, custom-menu, featured-images, theme-options, translation-ready, block-styles, responsive-layout, two-columns, left-sidebar, right-sidebar, woocommerce
@@ -4928,6 +4928,164 @@ html {
     .products.row.row-cols-2 > * {
         flex: 0 0 auto !important;
         width: 50% !important;
+    }
+}
+
+/****************************************
+ * Areas We Serve Template Styles
+ ****************************************/
+
+/* Container spacing for Areas We Serve template */
+.page-template-page-areas-we-serve .page__content,
+.page-areas-we-serve .page__content,
+body.page-template-page-areas-we-serve .page__content,
+.page__content:has(.info-boxes) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.page-template-page-areas-we-serve .l-constrain,
+.page-areas-we-serve .l-constrain,
+body.page-template-page-areas-we-serve .l-constrain,
+.page__content:has(.info-boxes) .l-constrain {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.page-template-page-areas-we-serve .petkey,
+.page-areas-we-serve .petkey,
+body.page-template-page-areas-we-serve .petkey,
+.page__content:has(.info-boxes) .petkey {
+    padding-top: 20px;
+}
+
+/* Remove checkmark from product cards */
+.page__content .products li:before,
+.page__content .woocommerce .products li:before,
+.aws-products-section .products li:before,
+.aws-products-section .woocommerce .products li:before {
+    display: none !important;
+    content: none !important;
+}
+
+.info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.info-box {
+    flex: 1;
+    min-width: 150px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-box-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.info-box-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #173468;
+    margin: 0;
+}
+
+.content-section {
+    background: white;
+    border-left: 4px solid #173468;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.read-more-content {
+    display: none;
+}
+
+.read-more-btn {
+    background: #173468;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.read-more-btn:hover {
+    background: #0f2a5a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 52, 104, 0.3);
+}
+
+.read-more-btn .chevron {
+    transition: transform 0.3s ease;
+}
+
+.read-more-btn.expanded .chevron {
+    transform: rotate(180deg);
+}
+
+.no-pets-message {
+    font-size: 18px;
+    color: #666;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.pets-container .pet {
+    transition: all 0.3s ease;
+}
+
+.pets-container .pet.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .page-template-page-areas-we-serve .page__content,
+    .page-areas-we-serve .page__content,
+    body.page-template-page-areas-we-serve .page__content,
+    .page__content:has(.info-boxes) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .page-template-page-areas-we-serve .l-constrain,
+    .page-areas-we-serve .l-constrain,
+    body.page-template-page-areas-we-serve .l-constrain,
+    .page__content:has(.info-boxes) .l-constrain {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .info-boxes {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    
+    .info-box {
+        min-width: auto;
     }
 }
 
