@@ -68,7 +68,15 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                 </div>
             </div>
             <?php endif; ?>
-            <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+            <?php if ( $product->get_status() === 'sold_puppy' || ( ! $product->is_in_stock() && $product->get_status() === 'publish' ) ) :?>
+            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                <div class="badge shadow text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm"
+                     style="background-color: #ff9800 !important; color: #fff !important;">
+                    Sold
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
                 <a href="<?php the_permalink(); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), get_the_title() ) ); ?>">
             <?php endif; ?>
                     <div class="position-relative">
@@ -99,7 +107,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     }
                     ?>
                     </div>
-            <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
                 </a>
             <?php endif; ?>
         </div>
@@ -118,7 +126,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </div>
 
                     <h5 class="card-title pet-name fw-bold mb-2">
-                        <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                        <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
                             <a href="<?php the_permalink(); ?>" class="text-decoration-none text-dark"><?php echo esc_html( $pet_name ); ?></a>
                         <?php else : ?>
                             <?php echo esc_html( $pet_name ); ?>
@@ -136,7 +144,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
                             <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong>
                             <span>
-                                <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+                                <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
                                     <a href="<?php the_permalink(); ?>" class="text-decoration-none" style="color: inherit;"><?php echo esc_html( $breed ); ?></a>
                                 <?php else : ?>
                                     <?php echo esc_html( $breed ); ?>
@@ -205,7 +213,11 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </a>
                 </div>
             </div>
+            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
             <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
+            <?php else : ?>
+            <div class="btn btn-secondary w-100" style="opacity: 0.6; cursor: not-allowed;"><?php esc_html_e( 'Sold', 'happiness-is-pets' ); ?></div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
