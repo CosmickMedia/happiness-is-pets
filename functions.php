@@ -9,7 +9,7 @@
 
 if ( ! defined( 'HAPPINESS_IS_PETS_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'HAPPINESS_IS_PETS_VERSION', '1.5.2' ); // Added placeholder images for products without photos
+    define( 'HAPPINESS_IS_PETS_VERSION', '1.5.3' ); // Added placeholder images for products without photos
 }
 
 /**
@@ -33,6 +33,10 @@ function happiness_is_pets_breadcrumb() {
         woocommerce_breadcrumb();
     }
 }
+
+add_filter( 'woocommerce_product_related_products_heading', function() {
+    return 'Related Puppies';
+});
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -241,9 +245,9 @@ function happiness_is_pets_woocommerce_category_seo() {
 
     ?>
     <!-- WooCommerce Category SEO Meta Tags -->
-    <meta name="description" content="<?php echo esc_attr( $meta_description ); ?>">
+    
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="<?php echo esc_url( $site_url ); ?>">
+    
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:locale" content="en_US">
@@ -2366,6 +2370,8 @@ function happiness_is_pets_ajax_custom_filter_products() {
 }
 add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
+add_filter('wpseo_json_ld_output', '__return_false');
 
+include_once('assets/add-ons/areas-we-serve.php');
 
 
