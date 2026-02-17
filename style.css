@@ -2288,7 +2288,7 @@ body .product-primary-info h1.product_title {
     background-color: var(--color-secondary-dark-pink);
     color: var(--color-primary-dark-teal);
 }
-.product-gallery .badge-status.status-sold { background-color: var(--color-secondary-dark-maroon); }
+.product-gallery .badge-status.status-sold { background-color: #ff9800; }
 .product-gallery .badge-status.status-on-hold { background-color: var(--color-primary-light-yellow); color: var(--color-primary-dark-teal); }
 .product-gallery .badge-status.status-coming-soon { background-color: var(--color-secondary-light-pink); color: var(--color-primary-dark-teal); }
 

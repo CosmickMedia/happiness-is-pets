@@ -80,17 +80,23 @@ $dam_weight         = ! empty( $pet_dam->weight ) ? esc_html( $pet_dam->weight .
 
 // Status
 $status_label = '';
+$is_sold = false;
 switch ( $status ) {
     case 'publish':
         if ( $product->is_in_stock() ) {
             $status_label = $product->is_on_sale() ? 'Special!' : 'Available Now';
         } else {
-            $status_label = 'Adopted';
+            $status_label = 'Sold';
+            $is_sold = true;
         }
         break;
     case 'coming_soon': $status_label = 'Reserve Now'; break;
     case 'on_hold': $status_label = 'Reserved'; break;
     case 'reserved_puppy': $status_label = 'Reserved'; break;
+    case 'sold_puppy': 
+        $status_label = 'Sold';
+        $is_sold = true;
+        break;
     default: $status_label = 'Contact Us'; break;
 }
 
@@ -1221,6 +1227,10 @@ body {
                         </a>
                     <?php elseif ($product->get_status() === 'reserved_puppy') : ?>
                         <div class="pup-status-pill" style="background-color: #fbbf24; color: #78350f;">
+                            <?php echo esc_html($status_label); ?>
+                        </div>
+                    <?php elseif ($is_sold) : ?>
+                        <div class="pup-status-pill status-sold" style="background-color: #ff9800; color: #fff;">
                             <?php echo esc_html($status_label); ?>
                         </div>
                     <?php else : ?>
