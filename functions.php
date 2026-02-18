@@ -56,26 +56,26 @@ function happiness_is_pets_setup() {
 
     // Register navigation menus.
     register_nav_menus(
-        array(
-            'primary' => esc_html__( 'Primary Menu', 'happiness-is-pets' ),
-            'footer'  => esc_html__( 'Footer Menu', 'happiness-is-pets' ),
-            'new-primary'  => esc_html__( 'New Primary Menu', 'happiness-is-pets' ),
-            'admin'  => esc_html__( 'Admin', 'happiness-is-pets' ),
-        )
+            array(
+                    'primary' => esc_html__( 'Primary Menu', 'happiness-is-pets' ),
+                    'footer'  => esc_html__( 'Footer Menu', 'happiness-is-pets' ),
+                    'new-primary'  => esc_html__( 'New Primary Menu', 'happiness-is-pets' ),
+                    'admin'  => esc_html__( 'Admin', 'happiness-is-pets' ),
+            )
     );
 
     // Switch default core markup for search form, comment form, and comments to output valid HTML5.
     add_theme_support(
-        'html5',
-        array(
-            'search-form',
-            'comment-form',
-            'comment-list',
-            'gallery',
-            'caption',
-            'style',
-            'script',
-        )
+            'html5',
+            array(
+                    'search-form',
+                    'comment-form',
+                    'comment-list',
+                    'gallery',
+                    'caption',
+                    'style',
+                    'script',
+            )
     );
 
     // Add theme support for selective refresh for widgets.
@@ -83,14 +83,14 @@ function happiness_is_pets_setup() {
 
     // Add support for core custom logo.
     add_theme_support(
-        'custom-logo',
-        array(
-            'height'      => 80, // Adjusted example height
-            'width'       => 300, // Adjusted example width
-            'flex-width'  => true,
-            'flex-height' => true,
-            'header-text' => array( 'site-title', 'site-description' ),
-        )
+            'custom-logo',
+            array(
+                    'height'      => 80, // Adjusted example height
+                    'width'       => 300, // Adjusted example width
+                    'flex-width'  => true,
+                    'flex-height' => true,
+                    'header-text' => array( 'site-title', 'site-description' ),
+            )
     );
 
     // Add support for Block Styles.
@@ -108,41 +108,41 @@ function happiness_is_pets_setup() {
     add_theme_support( 'custom-spacing' );
     add_theme_support( 'custom-units' );
     add_theme_support( 'editor-font-sizes', array(
-        array(
-            'name'      => __( 'Small', 'happiness-is-pets' ),
-            'shortName' => 'S',
-            'size'      => 14,
-            'slug'      => 'small',
-        ),
-        array(
-            'name'      => __( 'Normal', 'happiness-is-pets' ),
-            'shortName' => 'M',
-            'size'      => 18,
-            'slug'      => 'normal',
-        ),
-        array(
-            'name'      => __( 'Large', 'happiness-is-pets' ),
-            'shortName' => 'L',
-            'size'      => 24,
-            'slug'      => 'large',
-        ),
+            array(
+                    'name'      => __( 'Small', 'happiness-is-pets' ),
+                    'shortName' => 'S',
+                    'size'      => 14,
+                    'slug'      => 'small',
+            ),
+            array(
+                    'name'      => __( 'Normal', 'happiness-is-pets' ),
+                    'shortName' => 'M',
+                    'size'      => 18,
+                    'slug'      => 'normal',
+            ),
+            array(
+                    'name'      => __( 'Large', 'happiness-is-pets' ),
+                    'shortName' => 'L',
+                    'size'      => 24,
+                    'slug'      => 'large',
+            ),
     ) );
     add_theme_support( 'editor-color-palette', array(
-        array(
-            'name'  => __( 'Primary', 'happiness-is-pets' ),
-            'slug'  => 'primary',
-            'color' => '#3D5155',
-        ),
-        array(
-            'name'  => __( 'Accent', 'happiness-is-pets' ),
-            'slug'  => 'accent',
-            'color' => '#F1E6B2',
-        ),
-        array(
-            'name'  => __( 'Secondary', 'happiness-is-pets' ),
-            'slug'  => 'secondary',
-            'color' => '#F7BCAC',
-        ),
+            array(
+                    'name'  => __( 'Primary', 'happiness-is-pets' ),
+                    'slug'  => 'primary',
+                    'color' => '#3D5155',
+            ),
+            array(
+                    'name'  => __( 'Accent', 'happiness-is-pets' ),
+                    'slug'  => 'accent',
+                    'color' => '#F1E6B2',
+            ),
+            array(
+                    'name'  => __( 'Secondary', 'happiness-is-pets' ),
+                    'slug'  => 'secondary',
+                    'color' => '#F7BCAC',
+            ),
     ) );
 
     // Add support for responsive embedded content.
@@ -245,9 +245,9 @@ function happiness_is_pets_woocommerce_category_seo() {
 
     ?>
     <!-- WooCommerce Category SEO Meta Tags -->
-    
+
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    
+
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:locale" content="en_US">
@@ -268,10 +268,10 @@ function happiness_is_pets_woocommerce_category_seo() {
 
     <!-- Schema.org Structured Data for Product Categories -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "<?php echo esc_js( $meta_title ); ?>",
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "<?php echo esc_js( $meta_title ); ?>",
         "description": "<?php echo esc_js( $meta_description ); ?>",
         "url": "<?php echo esc_url( $site_url ); ?>",
         "isPartOf": {
@@ -367,12 +367,12 @@ function happiness_is_pets_basic_seo() {
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "Organization",
-                "@id": "<?php echo esc_url( $site_url ); ?>#organization",
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Organization",
+                    "@id": "<?php echo esc_url( $site_url ); ?>#organization",
                 "name": "<?php echo esc_js( $site_name ); ?>",
                 "url": "<?php echo esc_url( $site_url ); ?>",
                 "logo": {
@@ -392,10 +392,10 @@ function happiness_is_pets_basic_seo() {
             ?>
                 ]
                 <?php endif; ?>
-            },
-            {
-                "@type": "PetStore",
-                "@id": "<?php echo esc_url( $site_url ); ?>#petstore",
+        },
+        {
+            "@type": "PetStore",
+            "@id": "<?php echo esc_url( $site_url ); ?>#petstore",
                 "name": "<?php echo esc_js( $site_name ); ?>",
                 "description": "<?php echo esc_js( $meta_description ); ?>",
                 "url": "<?php echo esc_url( $site_url ); ?>",
@@ -505,70 +505,70 @@ add_action( 'wp_enqueue_scripts', 'happiness_is_pets_scripts' );
 function happiness_is_pets_widgets_init() {
     // Footer Widget Areas (Using Bootstrap column classes)
     register_sidebar(
-        array(
-            'name'          => esc_html__( 'Footer Column 1', 'happiness-is-pets' ),
-            'id'            => 'footer-1',
-            'description'   => esc_html__( 'Add widgets here for the first footer column.', 'happiness-is-pets' ),
-            'before_widget' => '<div id="%1$s" class="widget %2$s">', // Removed default section tag
-            'after_widget'  => '</div>',
-            'before_title'  => '<h5 class="widget-title">', // Use h5 for footer widget titles
-            'after_title'   => '</h5>',
-        )
+            array(
+                    'name'          => esc_html__( 'Footer Column 1', 'happiness-is-pets' ),
+                    'id'            => 'footer-1',
+                    'description'   => esc_html__( 'Add widgets here for the first footer column.', 'happiness-is-pets' ),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">', // Removed default section tag
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h5 class="widget-title">', // Use h5 for footer widget titles
+                    'after_title'   => '</h5>',
+            )
     );
     register_sidebar(
-        array(
-            'name'          => esc_html__( 'Footer Column 2 (Info)', 'happiness-is-pets' ),
-            'id'            => 'footer-2',
-            'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'happiness-is-pets' ),
-            'before_widget' => '<div id="%1$s" class="widget %2$s footer-info">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h5 class="widget-title">',
-            'after_title'   => '</h5>',
-        )
+            array(
+                    'name'          => esc_html__( 'Footer Column 2 (Info)', 'happiness-is-pets' ),
+                    'id'            => 'footer-2',
+                    'description'   => esc_html__( 'Add widgets here for the second footer column (e.g., address, hours).', 'happiness-is-pets' ),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s footer-info">',
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h5 class="widget-title">',
+                    'after_title'   => '</h5>',
+            )
     );
     register_sidebar(
-        array(
-            'name'          => esc_html__( 'Footer Column 3', 'happiness-is-pets' ),
-            'id'            => 'footer-3',
-            'description'   => esc_html__( 'Add widgets here for the third footer column.', 'happiness-is-pets' ),
-            'before_widget' => '<div id="%1$s" class="widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h5 class="widget-title">',
-            'after_title'   => '</h5>',
-        )
+            array(
+                    'name'          => esc_html__( 'Footer Column 3', 'happiness-is-pets' ),
+                    'id'            => 'footer-3',
+                    'description'   => esc_html__( 'Add widgets here for the third footer column.', 'happiness-is-pets' ),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h5 class="widget-title">',
+                    'after_title'   => '</h5>',
+            )
     );
     register_sidebar(
-        array(
-            'name'          => esc_html__( 'Footer Column 4', 'happiness-is-pets' ),
-            'id'            => 'footer-4',
-            'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'happiness-is-pets' ),
-            'before_widget' => '<div id="%1$s" class="widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h5 class="widget-title">',
-            'after_title'   => '</h5>',
-        )
+            array(
+                    'name'          => esc_html__( 'Footer Column 4', 'happiness-is-pets' ),
+                    'id'            => 'footer-4',
+                    'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'happiness-is-pets' ),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+                    'after_widget'  => '</div>',
+                    'before_title'  => '<h5 class="widget-title">',
+                    'after_title'   => '</h5>',
+            )
     );
 
     // WooCommerce Sidebar
     register_sidebar( array(
-        'name'          => esc_html__( 'Shop Sidebar', 'happiness-is-pets' ),
-        'id'            => 'shop-sidebar',
-        'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'happiness-is-pets' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="widget-title">',
-        'after_title'   => '</h4>',
+            'name'          => esc_html__( 'Shop Sidebar', 'happiness-is-pets' ),
+            'id'            => 'shop-sidebar',
+            'description'   => esc_html__( 'Widgets for WooCommerce product archives.', 'happiness-is-pets' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h4 class="widget-title">',
+            'after_title'   => '</h4>',
     ) );
 
     // Offcanvas filter sidebar for WooCommerce archives
     register_sidebar( array(
-        'name'          => esc_html__( 'WooCommerce Filters', 'happiness-is-pets' ),
-        'id'            => 'woocommerce-pets',
-        'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'happiness-is-pets' ),
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h5 class="widget-title">',
-        'after_title'   => '</h5>',
+            'name'          => esc_html__( 'WooCommerce Filters', 'happiness-is-pets' ),
+            'id'            => 'woocommerce-pets',
+            'description'   => esc_html__( 'Widgets displayed in the offcanvas filter on shop and category pages.', 'happiness-is-pets' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h5 class="widget-title">',
+            'after_title'   => '</h5>',
     ) );
 }
 add_action( 'widgets_init', 'happiness_is_pets_widgets_init' );
@@ -683,36 +683,36 @@ require get_template_directory() . '/inc/customizer.php';
  */
 function happiness_is_pets_register_reviews_cpt() {
     $labels = array(
-        'name'               => _x( 'Reviews', 'post type general name', 'happiness-is-pets' ),
-        'singular_name'      => _x( 'Review', 'post type singular name', 'happiness-is-pets' ),
-        'menu_name'          => _x( 'Reviews', 'admin menu', 'happiness-is-pets' ),
-        'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'happiness-is-pets' ),
-        'add_new'            => _x( 'Add New', 'review', 'happiness-is-pets' ),
-        'add_new_item'       => __( 'Add New Review', 'happiness-is-pets' ),
-        'new_item'           => __( 'New Review', 'happiness-is-pets' ),
-        'edit_item'          => __( 'Edit Review', 'happiness-is-pets' ),
-        'view_item'          => __( 'View Review', 'happiness-is-pets' ),
-        'all_items'          => __( 'All Reviews', 'happiness-is-pets' ),
-        'search_items'       => __( 'Search Reviews', 'happiness-is-pets' ),
-        'parent_item_colon'  => __( 'Parent Reviews:', 'happiness-is-pets' ),
-        'not_found'          => __( 'No reviews found.', 'happiness-is-pets' ),
-        'not_found_in_trash' => __( 'No reviews found in Trash.', 'happiness-is-pets' )
+            'name'               => _x( 'Reviews', 'post type general name', 'happiness-is-pets' ),
+            'singular_name'      => _x( 'Review', 'post type singular name', 'happiness-is-pets' ),
+            'menu_name'          => _x( 'Reviews', 'admin menu', 'happiness-is-pets' ),
+            'name_admin_bar'     => _x( 'Review', 'add new on admin bar', 'happiness-is-pets' ),
+            'add_new'            => _x( 'Add New', 'review', 'happiness-is-pets' ),
+            'add_new_item'       => __( 'Add New Review', 'happiness-is-pets' ),
+            'new_item'           => __( 'New Review', 'happiness-is-pets' ),
+            'edit_item'          => __( 'Edit Review', 'happiness-is-pets' ),
+            'view_item'          => __( 'View Review', 'happiness-is-pets' ),
+            'all_items'          => __( 'All Reviews', 'happiness-is-pets' ),
+            'search_items'       => __( 'Search Reviews', 'happiness-is-pets' ),
+            'parent_item_colon'  => __( 'Parent Reviews:', 'happiness-is-pets' ),
+            'not_found'          => __( 'No reviews found.', 'happiness-is-pets' ),
+            'not_found_in_trash' => __( 'No reviews found in Trash.', 'happiness-is-pets' )
     );
 
     $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'review' ),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => null,
-        'menu_icon'          => 'dashicons-star-filled',
-        'supports'           => array( 'title', 'editor', 'thumbnail' ),
+            'labels'             => $labels,
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'query_var'          => true,
+            'rewrite'            => array( 'slug' => 'review' ),
+            'capability_type'    => 'post',
+            'has_archive'        => true,
+            'hierarchical'       => false,
+            'menu_position'      => null,
+            'menu_icon'          => 'dashicons-star-filled',
+            'supports'           => array( 'title', 'editor', 'thumbnail' ),
     );
 
     register_post_type( 'reviews', $args );
@@ -724,12 +724,12 @@ add_action( 'init', 'happiness_is_pets_register_reviews_cpt' );
  */
 function happiness_is_pets_reviews_add_meta_box() {
     add_meta_box(
-        'happiness_is_pets_review_rating',
-        __( 'Star Rating', 'happiness-is-pets' ),
-        'happiness_is_pets_reviews_rating_meta_box_cb',
-        'reviews',
-        'side',
-        'default'
+            'happiness_is_pets_review_rating',
+            __( 'Star Rating', 'happiness-is-pets' ),
+            'happiness_is_pets_reviews_rating_meta_box_cb',
+            'reviews',
+            'side',
+            'default'
     );
 }
 add_action( 'add_meta_boxes_reviews', 'happiness_is_pets_reviews_add_meta_box' );
@@ -939,14 +939,14 @@ add_action( 'init', function() {
 
 add_action('wp_footer', 'custom_add_jquery_script');
 function custom_add_jquery_script() {
-	
-	$pet = $_GET['pet'] ?? false;
-	$detail = $_GET['detail'] ?? false;
-	
-	if( $pet && $detail ){
-		return '';
-	}
-	
+
+    $pet = $_GET['pet'] ?? false;
+    $detail = $_GET['detail'] ?? false;
+
+    if( $pet && $detail ){
+        return '';
+    }
+
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -1000,8 +1000,8 @@ function happiness_is_pets_testimonial_slider_shortcode() {
 
             <?php
             $review_query = new WP_Query( array(
-                'post_type'      => 'reviews',
-                'posts_per_page' => -1,
+                    'post_type'      => 'reviews',
+                    'posts_per_page' => -1,
             ) );
 
             if ( $review_query->have_posts() ) :
@@ -1095,47 +1095,47 @@ function wc_ukm_add_custom_product_statuses( $product_statuses ) {
 
     //B2B
     $product_statuses['b2b'] = array(
-        'label'                     => _x( 'B2B', 'Pet Status', 'wc-unified-km' ),
-        'public'                    => false,
-        'exclude_from_search'       => true,
-        'show_in_admin_all_list'    => false,
-        'show_in_admin_status_list' => true,
-        'post_type'                 => array( 'product' ),
-        'label_count'               => _n_noop(
-            'B2B <span class="count">(%s)</span>',
-            'B2B <span class="count">(%s)</span>',
-            'wc-unified-km'
-        ),
+            'label'                     => _x( 'B2B', 'Pet Status', 'wc-unified-km' ),
+            'public'                    => false,
+            'exclude_from_search'       => true,
+            'show_in_admin_all_list'    => false,
+            'show_in_admin_status_list' => true,
+            'post_type'                 => array( 'product' ),
+            'label_count'               => _n_noop(
+                    'B2B <span class="count">(%s)</span>',
+                    'B2B <span class="count">(%s)</span>',
+                    'wc-unified-km'
+            ),
     );
 
     //Justin
     $product_statuses['just_in'] = array(
-        'label'                     => _x( 'Justin', 'Pet Status', 'wc-unified-km' ),
-        'public'                    => false,
-        'exclude_from_search'       => true,
-        'show_in_admin_all_list'    => false,
-        'show_in_admin_status_list' => true,
-        'post_type'                 => array( 'product' ),
-        'label_count'               => _n_noop(
-            'Justin <span class="count">(%s)</span>',
-            'Justin <span class="count">(%s)</span>',
-            'wc-unified-km'
-        ),
+            'label'                     => _x( 'Justin', 'Pet Status', 'wc-unified-km' ),
+            'public'                    => false,
+            'exclude_from_search'       => true,
+            'show_in_admin_all_list'    => false,
+            'show_in_admin_status_list' => true,
+            'post_type'                 => array( 'product' ),
+            'label_count'               => _n_noop(
+                    'Justin <span class="count">(%s)</span>',
+                    'Justin <span class="count">(%s)</span>',
+                    'wc-unified-km'
+            ),
     );
 
     //Weight Watch
     $product_statuses['weight_watch'] = array(
-        'label'                     => _x( 'Weight Watch', 'Pet Status', 'wc-unified-km' ),
-        'public'                    => true,
-        'exclude_from_search'       => false,
-        'show_in_admin_all_list'    => true,
-        'show_in_admin_status_list' => true,
-        'post_type'                 => array( 'product' ),
-        'label_count'               => _n_noop(
-            'Weight Watch <span class="count">(%s)</span>',
-            'Weight Watch <span class="count">(%s)</span>',
-            'wc-unified-km'
-        ),
+            'label'                     => _x( 'Weight Watch', 'Pet Status', 'wc-unified-km' ),
+            'public'                    => true,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'post_type'                 => array( 'product' ),
+            'label_count'               => _n_noop(
+                    'Weight Watch <span class="count">(%s)</span>',
+                    'Weight Watch <span class="count">(%s)</span>',
+                    'wc-unified-km'
+            ),
     );
 
     //Sold Puppy (existing status)
@@ -1525,11 +1525,11 @@ function happiness_is_pets_infinite_scroll_scripts() {
     }
 
     wp_enqueue_script(
-        'happiness-infinite-scroll',
-        get_template_directory_uri() . '/assets/js/infinite-scroll.js',
-        array( 'jquery' ),
-        HAPPINESS_IS_PETS_VERSION,
-        true
+            'happiness-infinite-scroll',
+            get_template_directory_uri() . '/assets/js/infinite-scroll.js',
+            array( 'jquery' ),
+            HAPPINESS_IS_PETS_VERSION,
+            true
     );
 
     // Get current page number
@@ -1554,18 +1554,18 @@ function happiness_is_pets_infinite_scroll_scripts() {
     }
 
     wp_localize_script(
-        'happiness-infinite-scroll',
-        'infiniteScrollParams',
-        array(
-            'ajaxurl'        => admin_url( 'admin-ajax.php' ),
-            'current_page'   => $current_page,
-            'max_pages'      => $max_pages,
-            'loading_text'   => __( 'Loading more puppies...', 'happiness-is-pets' ),
-            'no_more_text'   => __( 'No more puppies to show', 'happiness-is-pets' ),
-            'error_text'     => __( 'Unable to load more puppies. Please refresh the page.', 'happiness-is-pets' ),
-            'placeholder_url'=> wc_placeholder_img_src(),
-            'query_vars'     => json_encode( $query_vars_for_js ),
-        )
+            'happiness-infinite-scroll',
+            'infiniteScrollParams',
+            array(
+                    'ajaxurl'        => admin_url( 'admin-ajax.php' ),
+                    'current_page'   => $current_page,
+                    'max_pages'      => $max_pages,
+                    'loading_text'   => __( 'Loading more puppies...', 'happiness-is-pets' ),
+                    'no_more_text'   => __( 'No more puppies to show', 'happiness-is-pets' ),
+                    'error_text'     => __( 'Unable to load more puppies. Please refresh the page.', 'happiness-is-pets' ),
+                    'placeholder_url'=> wc_placeholder_img_src(),
+                    'query_vars'     => json_encode( $query_vars_for_js ),
+            )
     );
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_infinite_scroll_scripts' );
@@ -1586,37 +1586,37 @@ function happiness_is_pets_load_more_products() {
 
     // Build filters array
     $filters = array_filter( array(
-        'gender'   => $gender,
-        'breed'    => $breed,
-        'location' => $location,
+            'gender'   => $gender,
+            'breed'    => $breed,
+            'location' => $location,
     ) );
 
     // Build base args - MUST match the initial query exactly
     // Start with query_vars to preserve all initial query parameters
     $args = array(
-        'post_type'      => 'product',
-        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
-        'nopaging'       => true, // Get all products (better than posts_per_page => -1)
-        'fields'         => 'all',
+            'post_type'      => 'product',
+            'post_status'    => happiness_is_pets_get_visible_product_statuses(),
+            'nopaging'       => true, // Get all products (better than posts_per_page => -1)
+            'fields'         => 'all',
     );
 
     // Always exclude Accessories - replicate pre_get_posts logic
     $tax_query = array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => 'accessories',
-            'operator' => 'NOT IN',
-        ),
+            'relation' => 'AND',
+            array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => 'accessories',
+                    'operator' => 'NOT IN',
+            ),
     );
 
     // Add category if it exists (from query_vars)
     if ( ! empty( $category ) ) {
         $tax_query[] = array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => $category,
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $category,
         );
     }
 
@@ -1772,9 +1772,9 @@ function happiness_is_pets_load_more_products() {
         wp_reset_postdata();
 
         wp_send_json_success( array(
-            'html'      => $html,
-            'max_pages' => $products->max_num_pages,
-            'page'      => $paged,
+                'html'      => $html,
+                'max_pages' => $products->max_num_pages,
+                'page'      => $paged,
         ) );
     } else {
         wp_send_json_error( array( 'message' => 'No more products' ) );
@@ -1927,9 +1927,9 @@ add_filter( 'script_loader_src', 'happiness_is_pets_remove_query_strings', 10, 1
 class Happiness_Is_Pets_Location_Filter_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
-            'happiness_location_filter',
-            __( 'Pet Location Filter', 'happiness-is-pets' ),
-            array( 'description' => __( 'Filter puppies by location (Indianapolis or Schererville)', 'happiness-is-pets' ) )
+                'happiness_location_filter',
+                __( 'Pet Location Filter', 'happiness-is-pets' ),
+                array( 'description' => __( 'Filter puppies by location (Indianapolis or Schererville)', 'happiness-is-pets' ) )
         );
     }
 
@@ -1999,29 +1999,29 @@ function happiness_is_pets_location_filter_scripts() {
     }
 
     wp_enqueue_script(
-        'happiness-location-filter',
-        get_template_directory_uri() . '/assets/js/location-filter.js',
-        array( 'jquery' ),
-        HAPPINESS_IS_PETS_VERSION,
-        true
+            'happiness-location-filter',
+            get_template_directory_uri() . '/assets/js/location-filter.js',
+            array( 'jquery' ),
+            HAPPINESS_IS_PETS_VERSION,
+            true
     );
 
     wp_localize_script(
-        'happiness-location-filter',
-        'locationFilterParams',
-        array(
-            'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'   => wp_create_nonce( 'location_filter_nonce' ),
-        )
+            'happiness-location-filter',
+            'locationFilterParams',
+            array(
+                    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                    'nonce'   => wp_create_nonce( 'location_filter_nonce' ),
+            )
     );
 
     // Enqueue debug script to help diagnose filter issues
     wp_enqueue_script(
-        'happiness-filter-debug',
-        get_template_directory_uri() . '/assets/js/filter-debug.js',
-        array( 'jquery' ),
-        HAPPINESS_IS_PETS_VERSION,
-        true
+            'happiness-filter-debug',
+            get_template_directory_uri() . '/assets/js/filter-debug.js',
+            array( 'jquery' ),
+            HAPPINESS_IS_PETS_VERSION,
+            true
     );
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_location_filter_scripts' );
@@ -2057,14 +2057,14 @@ function happiness_is_pets_get_products_by_location( $location ) {
         $query_params[] = '%' . $wpdb->esc_like( $location ) . '%';
 
         $matching_products = $wpdb->get_col( $wpdb->prepare(
-            "SELECT DISTINCT p.ID
+                "SELECT DISTINCT p.ID
              FROM {$wpdb->posts} p
              INNER JOIN {$ref_table} pri ON pri.pet_id = p.ID
              WHERE p.post_type = 'product'
              AND p.post_status IN ($status_placeholders)
              $exclude_clause
              AND pri.location_slug LIKE %s",
-            ...$query_params
+                ...$query_params
         ) );
     } else {
         $matching_products = array();
@@ -2084,30 +2084,30 @@ function happiness_is_pets_ajax_filter_products_by_location() {
 
     // Build query args (excluding Accessories)
     $args = array(
-        'post_type'      => 'product',
-        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
-        'posts_per_page' => -1, // Get all products for the filter
-        'orderby'        => 'date',
-        'order'          => 'DESC',
+            'post_type'      => 'product',
+            'post_status'    => happiness_is_pets_get_visible_product_statuses(),
+            'posts_per_page' => -1, // Get all products for the filter
+            'orderby'        => 'date',
+            'order'          => 'DESC',
     );
 
     // Always exclude Accessories
     $tax_query = array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => 'accessories',
-            'operator' => 'NOT IN',
-        ),
+            'relation' => 'AND',
+            array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => 'accessories',
+                    'operator' => 'NOT IN',
+            ),
     );
 
     // Add category filter if exists
     if ( ! empty( $category ) ) {
         $tax_query[] = array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => $category,
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $category,
         );
     }
 
@@ -2163,13 +2163,13 @@ function happiness_is_pets_ajax_filter_products_by_location() {
         wp_reset_postdata();
 
         wp_send_json_success( array(
-            'html'  => $html,
-            'count' => $products->found_posts,
+                'html'  => $html,
+                'count' => $products->found_posts,
         ) );
     } else {
         wp_send_json_error( array(
-            'message' => 'No products found',
-            'html'    => '',
+                'message' => 'No products found',
+                'html'    => '',
         ) );
     }
 
@@ -2191,10 +2191,10 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
 
     // Always exclude Accessories category
     $tax_query[] = array(
-        'taxonomy' => 'product_cat',
-        'field'    => 'slug',
-        'terms'    => 'accessories',
-        'operator' => 'NOT IN',
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => 'accessories',
+            'operator' => 'NOT IN',
     );
 
     // Handle attribute filters (filter_breed, filter_gender, etc.)
@@ -2205,9 +2205,9 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
 
             if ( taxonomy_exists( $taxonomy ) ) {
                 $tax_query[] = array(
-                    'taxonomy' => $taxonomy,
-                    'field'    => 'slug',
-                    'terms'    => sanitize_text_field( $value ),
+                        'taxonomy' => $taxonomy,
+                        'field'    => 'slug',
+                        'terms'    => sanitize_text_field( $value ),
                 );
             }
         }
@@ -2227,7 +2227,7 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
         }
 
         $query->set( 'post__in', $matching_products );
-		$query->set( 'posts_per_page', -1 );
+        $query->set( 'posts_per_page', -1 );
     }
 
     // Include multiple post statuses (publish, coming_soon, weight_watch)
@@ -2265,8 +2265,8 @@ function happiness_is_pets_get_product_breed( $product_id ) {
 
     if ( $has_ref_table ) {
         $breed = $wpdb->get_var( $wpdb->prepare(
-            "SELECT breed FROM $ref_table WHERE pet_id = %d",
-            $product_id
+                "SELECT breed FROM $ref_table WHERE pet_id = %d",
+                $product_id
         ) );
         $breed = $breed ? trim( $breed ) : '';
     }
@@ -2306,8 +2306,8 @@ function happiness_is_pets_preload_breeds( $product_ids ) {
 
     $placeholders = implode( ',', array_fill( 0, count( $product_ids ), '%d' ) );
     $results = $wpdb->get_results( $wpdb->prepare(
-        "SELECT pet_id, breed FROM $ref_table WHERE pet_id IN ($placeholders)",
-        ...$product_ids
+            "SELECT pet_id, breed FROM $ref_table WHERE pet_id IN ($placeholders)",
+            ...$product_ids
     ) );
 
     // Prime the static cache in happiness_is_pets_get_product_breed
@@ -2438,11 +2438,11 @@ function happiness_is_pets_custom_filter_scripts() {
     }
 
     wp_enqueue_script(
-        'happiness-custom-filters',
-        get_template_directory_uri() . '/assets/js/custom-filters.js',
-        array( 'jquery' ),
-        HAPPINESS_IS_PETS_VERSION,
-        true
+            'happiness-custom-filters',
+            get_template_directory_uri() . '/assets/js/custom-filters.js',
+            array( 'jquery' ),
+            HAPPINESS_IS_PETS_VERSION,
+            true
     );
 
     // Get current page for pagination
@@ -2450,14 +2450,14 @@ function happiness_is_pets_custom_filter_scripts() {
     $max_pages = $GLOBALS['wp_query']->max_num_pages;
 
     wp_localize_script(
-        'happiness-custom-filters',
-        'customFilterParams',
-        array(
-            'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-            'nonce'        => wp_create_nonce( 'custom_filter_nonce' ),
-            'current_page' => $current_page,
-            'max_pages'    => $max_pages,
-        )
+            'happiness-custom-filters',
+            'customFilterParams',
+            array(
+                    'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+                    'nonce'        => wp_create_nonce( 'custom_filter_nonce' ),
+                    'current_page' => $current_page,
+                    'max_pages'    => $max_pages,
+            )
     );
 }
 add_action( 'wp_enqueue_scripts', 'happiness_is_pets_custom_filter_scripts' );
@@ -2556,19 +2556,19 @@ function happiness_is_pets_ajax_custom_filter_products() {
 
     // Build filters array
     $filters = array_filter( array(
-        'gender'   => $gender,
-        'breed'    => $breed,
-        'location' => $location,
+            'gender'   => $gender,
+            'breed'    => $breed,
+            'location' => $location,
     ) );
 
     // Build query args (always exclude Accessories)
     $args = array(
-        'post_type'      => 'product',
-        'post_status'    => happiness_is_pets_get_visible_product_statuses(),
-        'posts_per_page' => 20,
-        'paged'          => $page,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
+            'post_type'      => 'product',
+            'post_status'    => happiness_is_pets_get_visible_product_statuses(),
+            'posts_per_page' => 20,
+            'paged'          => $page,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
     );
 
     // If no filters are active, we'll sort by breed after the query
@@ -2576,13 +2576,13 @@ function happiness_is_pets_ajax_custom_filter_products() {
 
     // Always exclude Accessories category
     $tax_query = array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => 'accessories',
-            'operator' => 'NOT IN',
-        ),
+            'relation' => 'AND',
+            array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => 'accessories',
+                    'operator' => 'NOT IN',
+            ),
     );
 
     // Add custom filters FIRST to get matching products
@@ -2604,9 +2604,9 @@ function happiness_is_pets_ajax_custom_filter_products() {
     // Note: When post__in is set, tax_query will only filter within those products
     if ( ! empty( $category ) ) {
         $tax_query[] = array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => $category,
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => $category,
         );
     }
 
@@ -2712,17 +2712,17 @@ function happiness_is_pets_ajax_custom_filter_products() {
         wp_reset_postdata();
 
         wp_send_json_success( array(
-            'html'       => $html,
-            'count'      => $products->found_posts,
-            'max_pages'  => $products->max_num_pages,
-            'page'       => $page,
+                'html'       => $html,
+                'count'      => $products->found_posts,
+                'max_pages'  => $products->max_num_pages,
+                'page'       => $page,
         ) );
     } else {
         wp_send_json_success( array(
-            'html'       => '<div class="col-12"><div class="alert alert-info text-center"><i class="fas fa-info-circle me-2"></i>No pets found matching your filters. Try adjusting your selection.</div></div>',
-            'count'      => 0,
-            'max_pages'  => 0,
-            'page'       => 1,
+                'html'       => '<div class="col-12"><div class="alert alert-info text-center"><i class="fas fa-info-circle me-2"></i>No pets found matching your filters. Try adjusting your selection.</div></div>',
+                'count'      => 0,
+                'max_pages'  => 0,
+                'page'       => 1,
         ) );
     }
 
