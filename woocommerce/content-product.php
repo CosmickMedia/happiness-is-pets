@@ -43,43 +43,35 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
     <div class="card pet-card shadow-sm border-0 rounded-3 overflow-hidden transition-hover h-100">
         <div class="position-relative">
             <?php if ( $product->get_status() === 'coming_soon' ) :?>
-            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
-                <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
-                   data-bs-toggle="modal"
-                   class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
-                   style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
-                   data-product-id="<?php echo esc_attr( $product_id ); ?>"
-                   data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
-                   data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
-                   data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
-                   data-gender="<?php echo esc_attr( $gender ); ?>"
-                   data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
-                   data-location="<?php echo esc_attr( $location ); ?>"
-                   data-product-url="<?php echo esc_url( get_permalink() ); ?>">
-                   Reserve Now
-                </a>
-            </div>
+                <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                    <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                       data-bs-toggle="modal"
+                       class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
+                       style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
+                       data-product-id="<?php echo esc_attr( $product_id ); ?>"
+                       data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                       data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
+                       data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
+                       data-gender="<?php echo esc_attr( $gender ); ?>"
+                       data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
+                       data-location="<?php echo esc_attr( $location ); ?>"
+                       data-product-url="<?php echo esc_url( get_permalink() ); ?>">
+                        Reserve Now
+                    </a>
+                </div>
             <?php endif; ?>
             <?php if ( $product->get_status() === 'reserved_puppy' ) :?>
-            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
-                <div class="badge shadow text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm"
-                     style="background-color: #fbbf24 !important; color: #78350f !important;">
-                    Reserved
+                <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
+                    <div class="badge shadow text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm"
+                         style="background-color: #fbbf24 !important; color: #78350f !important;">
+                        Reserved
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
-            <?php if ( $product->get_status() === 'sold_puppy' || ( ! $product->is_in_stock() && $product->get_status() === 'publish' ) ) :?>
-            <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
-                <div class="badge shadow text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm"
-                     style="background-color: #ff9800 !important; color: #fff !important;">
-                    Sold
-                </div>
-            </div>
-            <?php endif; ?>
-            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
-                <a href="<?php the_permalink(); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), get_the_title() ) ); ?>">
-            <?php endif; ?>
-                    <div class="position-relative">
+            <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+            <a href="<?php the_permalink(); ?>" class="text-decoration-none position-relative" aria-label="<?php echo esc_attr( sprintf( __( 'View details for %s', 'happiness-is-pets' ), get_the_title() ) ); ?>">
+                <?php endif; ?>
+                <div class="position-relative">
                     <?php
                     if ( has_post_thumbnail() ) {
                         // Force immediate loading without lazy loading attribute
@@ -89,10 +81,10 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         $image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 
                         printf(
-                            '<img src="%s" srcset="%s" sizes="(max-width: 300px) 100vw, 300px" alt="%s" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail object-fit-cover w-100" decoding="async">',
-                            esc_url( $image_url ),
-                            esc_attr( $image_srcset ),
-                            esc_attr( $image_alt ?: get_the_title() )
+                                '<img src="%s" srcset="%s" sizes="(max-width: 300px) 100vw, 300px" alt="%s" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail object-fit-cover w-100" decoding="async">',
+                                esc_url( $image_url ),
+                                esc_attr( $image_srcset ),
+                                esc_attr( $image_alt ?: get_the_title() )
                         );
                     } else {
                         // Custom placeholder for products without images
@@ -106,10 +98,10 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                         <?php
                     }
                     ?>
-                    </div>
-            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
-                </a>
-            <?php endif; ?>
+                </div>
+                <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
+            </a>
+        <?php endif; ?>
         </div>
 
         <div class="card-body p-3">
@@ -126,7 +118,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </div>
 
                     <h5 class="card-title pet-name fw-bold mb-2">
-                        <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
+                        <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
                             <a href="<?php the_permalink(); ?>" class="text-decoration-none text-dark"><?php echo esc_html( $pet_name ); ?></a>
                         <?php else : ?>
                             <?php echo esc_html( $pet_name ); ?>
@@ -135,40 +127,40 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 
                     <div class="card-text">
                         <?php if ( $ref_id ) : ?>
-                        <div class="pet-detail pet-ref-id d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'Ref ID:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $ref_id ); ?></span>
-                        </div>
+                            <div class="pet-detail pet-ref-id d-flex align-items-center mb-1">
+                                <strong class="me-1"><?php esc_html_e( 'Ref ID:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $ref_id ); ?></span>
+                            </div>
                         <?php endif; ?>
 
                         <?php if ( $breed ) : ?>
-                        <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong>
-                            <span>
-                                <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
+                            <div class="pet-detail pet-breed-detail d-flex align-items-center mb-1">
+                                <strong class="me-1"><?php esc_html_e( 'Breed:', 'happiness-is-pets' ); ?></strong>
+                                <span>
+                                <?php if ( $product->get_status() !== 'reserved_puppy' ) : ?>
                                     <a href="<?php the_permalink(); ?>" class="text-decoration-none" style="color: inherit;"><?php echo esc_html( $breed ); ?></a>
                                 <?php else : ?>
                                     <?php echo esc_html( $breed ); ?>
                                 <?php endif; ?>
                             </span>
-                        </div>
+                            </div>
                         <?php endif; ?>
 
                         <?php if ( $gender ) : ?>
-                        <div class="pet-detail pet-gender d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
-                        </div>
+                            <div class="pet-detail pet-gender d-flex align-items-center mb-1">
+                                <strong class="me-1"><?php esc_html_e( 'Gender:', 'happiness-is-pets' ); ?></strong><span class="<?php echo esc_html($gender_class); ?>"> <?php echo esc_html( $gender ); ?></span>
+                            </div>
                         <?php endif; ?>
 
                         <?php if ( $birth_date ) : ?>
-                        <div class="pet-detail pet-dob d-flex align-items-center mb-1">
-                            <strong class="me-1"><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
-                        </div>
+                            <div class="pet-detail pet-dob d-flex align-items-center mb-1">
+                                <strong class="me-1"><?php esc_html_e( 'DOB:', 'happiness-is-pets' ); ?></strong><span> <?php echo esc_html( $birth_date ); ?></span>
+                            </div>
                         <?php endif; ?>
 
                         <?php if ( $location ) : ?>
-                        <div class="pet-detail pet-location d-flex align-items-center mb-1">
-                            <i class="fas fa-map-marker-alt me-1"></i><span> <?php echo esc_html( $location ); ?></span>
-                        </div>
+                            <div class="pet-detail pet-location d-flex align-items-center mb-1">
+                                <i class="fas fa-map-marker-alt me-1"></i><span> <?php echo esc_html( $location ); ?></span>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -191,11 +183,11 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
             <div class="row g-2 mb-2">
                 <div class="col-6">
                     <?php if ( $location_phone ) : ?>
-                    <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $location_phone ) ); ?>"
-                       class="btn w-100"
-                       style="background: white; color: var(--color-primary-dark-grey); border: 3px solid var(--color-primary-dark-grey);">
-                        <i class="fas fa-phone me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Call', 'happiness-is-pets' ); ?></span>
-                    </a>
+                        <a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $location_phone ) ); ?>"
+                           class="btn w-100"
+                           style="background: white; color: var(--color-primary-dark-grey); border: 3px solid var(--color-primary-dark-grey);">
+                            <i class="fas fa-phone me-md-1"></i><span class="d-none d-md-inline"><?php esc_html_e( 'Call', 'happiness-is-pets' ); ?></span>
+                        </a>
                     <?php endif; ?>
                 </div>
                 <div class="col-6">
@@ -213,11 +205,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     </a>
                 </div>
             </div>
-            <?php if ( $product->get_status() !== 'reserved_puppy' && $product->get_status() !== 'sold_puppy' && $product->is_in_stock() ) : ?>
             <a href="<?php the_permalink(); ?>" class="btn btn-primary-theme w-100"><?php esc_html_e( 'Learn More', 'happiness-is-pets' ); ?></a>
-            <?php else : ?>
-            <div class="btn btn-secondary w-100" style="opacity: 0.6; cursor: not-allowed;"><?php esc_html_e( 'Sold', 'happiness-is-pets' ); ?></div>
-            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -242,73 +230,73 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
 </div>
 
 <script>
-(function() {
-    'use strict';
+    (function() {
+        'use strict';
 
-    if (window.petDetailsModalHandlerInitialized) return;
-    window.petDetailsModalHandlerInitialized = true;
+        if (window.petDetailsModalHandlerInitialized) return;
+        window.petDetailsModalHandlerInitialized = true;
 
-    function populatePetDetailsForm(modal, button) {
-        if (!button || !button.classList.contains('pet-details-trigger')) return;
+        function populatePetDetailsForm(modal, button) {
+            if (!button || !button.classList.contains('pet-details-trigger')) return;
 
-        const productData = {
-            petName: button.getAttribute('data-pet-name'),
-            refId: button.getAttribute('data-ref-id'),
-            breed: button.getAttribute('data-breed'),
-            gender: button.getAttribute('data-gender'),
-            birthDate: button.getAttribute('data-birth-date'),
-            location: button.getAttribute('data-location'),
-            productUrl: button.getAttribute('data-product-url')
-        };
-
-        setTimeout(function() {
-            const modalBody = modal.querySelector('.modal-body');
-            if (!modalBody) return;
-
-            const fieldMap = {
-                'gf-pet-name': productData.petName,
-                'gf-ref-id': productData.refId,
-                'gf-breed': productData.breed,
-                'gf-gender': productData.gender,
-                'gf-birth-date': productData.birthDate,
-                'gf-location': productData.location,
-                'gf-product-url': productData.productUrl
+            const productData = {
+                petName: button.getAttribute('data-pet-name'),
+                refId: button.getAttribute('data-ref-id'),
+                breed: button.getAttribute('data-breed'),
+                gender: button.getAttribute('data-gender'),
+                birthDate: button.getAttribute('data-birth-date'),
+                location: button.getAttribute('data-location'),
+                productUrl: button.getAttribute('data-product-url')
             };
 
-            Object.keys(fieldMap).forEach(function(className) {
-                const value = fieldMap[className];
-                let field = null;
+            setTimeout(function() {
+                const modalBody = modal.querySelector('.modal-body');
+                if (!modalBody) return;
 
-                // Try common Gravity Forms selectors
-                const selectors = [
-                    '.gfield.' + className + ' input, .gfield.' + className + ' textarea, .gfield.' + className + ' select',
-                    'li.' + className + ' input, li.' + className + ' textarea, li.' + className + ' select',
-                    '.ginput_container.' + className + ' input, .ginput_container.' + className + ' textarea, .ginput_container.' + className + ' select',
-                    'input.' + className + ', textarea.' + className + ', select.' + className
-                ];
+                const fieldMap = {
+                    'gf-pet-name': productData.petName,
+                    'gf-ref-id': productData.refId,
+                    'gf-breed': productData.breed,
+                    'gf-gender': productData.gender,
+                    'gf-birth-date': productData.birthDate,
+                    'gf-location': productData.location,
+                    'gf-product-url': productData.productUrl
+                };
 
-                for (let i = 0; i < selectors.length && !field; i++) {
-                    field = modalBody.querySelector(selectors[i]);
-                }
+                Object.keys(fieldMap).forEach(function(className) {
+                    const value = fieldMap[className];
+                    let field = null;
 
-                if (field) {
-                    field.value = value;
-                    if (window.jQuery) {
-                        jQuery(field).val(value).trigger('input').trigger('change');
-                    } else {
-                        field.dispatchEvent(new Event('input', { bubbles: true }));
-                        field.dispatchEvent(new Event('change', { bubbles: true }));
+                    // Try common Gravity Forms selectors
+                    const selectors = [
+                        '.gfield.' + className + ' input, .gfield.' + className + ' textarea, .gfield.' + className + ' select',
+                        'li.' + className + ' input, li.' + className + ' textarea, li.' + className + ' select',
+                        '.ginput_container.' + className + ' input, .ginput_container.' + className + ' textarea, .ginput_container.' + className + ' select',
+                        'input.' + className + ', textarea.' + className + ', select.' + className
+                    ];
+
+                    for (let i = 0; i < selectors.length && !field; i++) {
+                        field = modalBody.querySelector(selectors[i]);
                     }
-                }
-            });
-        }, 500);
-    }
 
-    document.addEventListener('show.bs.modal', function(event) {
-        const modal = event.target;
-        if (!modal.id || !modal.id.startsWith('petDetailsModal-')) return;
+                    if (field) {
+                        field.value = value;
+                        if (window.jQuery) {
+                            jQuery(field).val(value).trigger('input').trigger('change');
+                        } else {
+                            field.dispatchEvent(new Event('input', { bubbles: true }));
+                            field.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                });
+            }, 500);
+        }
 
-        populatePetDetailsForm(modal, event.relatedTarget);
-    });
-})();
+        document.addEventListener('show.bs.modal', function(event) {
+            const modal = event.target;
+            if (!modal.id || !modal.id.startsWith('petDetailsModal-')) return;
+
+            populatePetDetailsForm(modal, event.relatedTarget);
+        });
+    })();
 </script>
