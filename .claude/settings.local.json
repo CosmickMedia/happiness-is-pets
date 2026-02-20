@@ -13,7 +13,10 @@
       "Bash(/opt/homebrew/bin/cwebp:*)",
       "Bash(awk:*)",
       "Bash(php -l:*)",
-      "Bash(node -c:*)"
+      "Bash(node -c:*)",
+      "Bash(find:*)",
+      "Bash(xargs ls:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
