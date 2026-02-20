@@ -55,7 +55,7 @@ function get_filter_options() {
 
     // Get distinct breeds and locations from pet reference index in one query each
     $ref_table = $wpdb->prefix . 'pet_reference_index';
-    if ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table ) {
+    if ( happiness_is_pets_ref_table_exists() ) {
         $breeds = $wpdb->get_col( $wpdb->prepare(
             "SELECT DISTINCT pri.breed
              FROM {$ref_table} pri

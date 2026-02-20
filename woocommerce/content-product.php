@@ -44,7 +44,7 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
         <div class="position-relative">
             <?php if ( $product->get_status() === 'coming_soon' ) :?>
                 <div class="position-absolute top-0 end-1 m-2" style="z-index: 10;">
-                    <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                    <a href="#petDetailsModal"
                        data-bs-toggle="modal"
                        class="onsale badge shadow text-bg-info text-uppercase rounded-pill fs-6 py-2 px-3 shadow-sm pet-details-trigger text-decoration-none"
                        style="background-color: #00c8ba !important; color: #fff !important; cursor: pointer;"
@@ -74,7 +74,6 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                 <div class="position-relative">
                     <?php
                     if ( has_post_thumbnail() ) {
-                        // Force immediate loading without lazy loading attribute
                         $image_id = get_post_thumbnail_id();
                         $image_url = wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' );
                         $image_srcset = wp_get_attachment_image_srcset( $image_id, 'woocommerce_thumbnail' );
@@ -191,11 +190,12 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
                     <?php endif; ?>
                 </div>
                 <div class="col-6">
-                    <a href="#petDetailsModal-<?php echo esc_attr( $product_id ); ?>"
+                    <a href="#petDetailsModal"
                        data-bs-toggle="modal"
                        class="btn btn-secondary-theme w-100 pet-details-trigger"
                        style="background-color: var(--color-primary-dark-teal) !important; color: var(--color-button-text) !important;"
                        data-pet-name="<?php echo esc_attr( $pet_name ); ?>"
+                       data-ref-id="<?php echo esc_attr( $ref_id ); ?>"
                        data-breed="<?php echo esc_attr( $first_cat ? $first_cat->name : '' ); ?>"
                        data-gender="<?php echo esc_attr( $gender ); ?>"
                        data-birth-date="<?php echo esc_attr( $birth_date ); ?>"
@@ -209,94 +209,3 @@ $reservation_url = get_theme_mod( 'header_book_button_url', '#' );
         </div>
     </div>
 </div>
-
-<!-- Pet Details Modal -->
-<div class="modal fade" id="petDetailsModal-<?php echo esc_attr( $product_id ); ?>" tabindex="-1" aria-labelledby="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="petDetailsModalLabel-<?php echo esc_attr( $product_id ); ?>">Get Details About <?php echo esc_html( $pet_name ); ?></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <?php if ( shortcode_exists( 'gravityform' ) ) {
-                    echo do_shortcode( '[gravityform id="3" title="false" description="false" ajax="true"]' );
-                } else {
-                    echo '<p style="color: #ef4444;">Contact form unavailable.</p>';
-                } ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    (function() {
-        'use strict';
-
-        if (window.petDetailsModalHandlerInitialized) return;
-        window.petDetailsModalHandlerInitialized = true;
-
-        function populatePetDetailsForm(modal, button) {
-            if (!button || !button.classList.contains('pet-details-trigger')) return;
-
-            const productData = {
-                petName: button.getAttribute('data-pet-name'),
-                refId: button.getAttribute('data-ref-id'),
-                breed: button.getAttribute('data-breed'),
-                gender: button.getAttribute('data-gender'),
-                birthDate: button.getAttribute('data-birth-date'),
-                location: button.getAttribute('data-location'),
-                productUrl: button.getAttribute('data-product-url')
-            };
-
-            setTimeout(function() {
-                const modalBody = modal.querySelector('.modal-body');
-                if (!modalBody) return;
-
-                const fieldMap = {
-                    'gf-pet-name': productData.petName,
-                    'gf-ref-id': productData.refId,
-                    'gf-breed': productData.breed,
-                    'gf-gender': productData.gender,
-                    'gf-birth-date': productData.birthDate,
-                    'gf-location': productData.location,
-                    'gf-product-url': productData.productUrl
-                };
-
-                Object.keys(fieldMap).forEach(function(className) {
-                    const value = fieldMap[className];
-                    let field = null;
-
-                    // Try common Gravity Forms selectors
-                    const selectors = [
-                        '.gfield.' + className + ' input, .gfield.' + className + ' textarea, .gfield.' + className + ' select',
-                        'li.' + className + ' input, li.' + className + ' textarea, li.' + className + ' select',
-                        '.ginput_container.' + className + ' input, .ginput_container.' + className + ' textarea, .ginput_container.' + className + ' select',
-                        'input.' + className + ', textarea.' + className + ', select.' + className
-                    ];
-
-                    for (let i = 0; i < selectors.length && !field; i++) {
-                        field = modalBody.querySelector(selectors[i]);
-                    }
-
-                    if (field) {
-                        field.value = value;
-                        if (window.jQuery) {
-                            jQuery(field).val(value).trigger('input').trigger('change');
-                        } else {
-                            field.dispatchEvent(new Event('input', { bubbles: true }));
-                            field.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
-                    }
-                });
-            }, 500);
-        }
-
-        document.addEventListener('show.bs.modal', function(event) {
-            const modal = event.target;
-            if (!modal.id || !modal.id.startsWith('petDetailsModal-')) return;
-
-            populatePetDetailsForm(modal, event.relatedTarget);
-        });
-    })();
-</script>

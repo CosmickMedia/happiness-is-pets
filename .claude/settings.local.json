@@ -16,7 +16,8 @@
       "Bash(node -c:*)",
       "Bash(find:*)",
       "Bash(xargs ls:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git show:*)"
     ],
     "deny": [],
     "ask": []

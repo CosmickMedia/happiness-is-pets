@@ -165,6 +165,47 @@ function happiness_is_pets_setup() {
 add_action( 'after_setup_theme', 'happiness_is_pets_setup' );
 
 /**
+ * Cached helper to check if pet_reference_index table exists.
+ * Avoids multiple SHOW TABLES queries per page load.
+ */
+function happiness_is_pets_ref_table_exists() {
+    static $exists = null;
+    if ( null === $exists ) {
+        global $wpdb;
+        $ref_table = $wpdb->prefix . 'pet_reference_index';
+        $exists = ( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $ref_table ) ) === $ref_table );
+    }
+    return $exists;
+}
+
+/**
+ * Add database indexes to pet_reference_index table for better query performance.
+ * Only runs once on admin_init, tracked via option.
+ */
+function happiness_is_pets_add_db_indexes() {
+    if ( get_option( 'hip_db_indexes_v1' ) ) {
+        return;
+    }
+
+    global $wpdb;
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+
+    if ( ! happiness_is_pets_ref_table_exists() ) {
+        return;
+    }
+
+    // Suppress errors in case indexes already exist
+    $wpdb->suppress_errors( true );
+    $wpdb->query( "ALTER TABLE {$ref_table} ADD INDEX idx_pet_id (pet_id)" );
+    $wpdb->query( "ALTER TABLE {$ref_table} ADD INDEX idx_breed (breed(100))" );
+    $wpdb->query( "ALTER TABLE {$ref_table} ADD INDEX idx_location_slug (location_slug(50))" );
+    $wpdb->suppress_errors( false );
+
+    update_option( 'hip_db_indexes_v1', true );
+}
+add_action( 'admin_init', 'happiness_is_pets_add_db_indexes' );
+
+/**
  * Add favicon and site icons
  */
 function happiness_is_pets_add_favicons() {
@@ -1681,7 +1722,7 @@ function happiness_is_pets_get_products_by_location( $location ) {
     $query_params = $statuses;
 
     $ref_table = $wpdb->prefix . 'pet_reference_index';
-    $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
+    $has_ref_table = happiness_is_pets_ref_table_exists();
 
     $accessories_term = get_term_by( 'slug', 'accessories', 'product_cat' );
     $exclude_clause = '';
@@ -1876,11 +1917,37 @@ function happiness_is_pets_filter_products_by_attributes( $query ) {
     // Prevent duplicate posts in query results (products with multiple taxonomies)
     $query->set( 'distinct', true );
 
-    // Don't set orderby here - let the_posts filter handle breed sorting
-    // Setting orderby to 'breed' would fail since WordPress doesn't recognize it
-    // The the_posts filter will get all products and sort them by breed
+    // Breed sorting is handled via posts_clauses filter (SQL-level) for performance
 }
 add_action( 'pre_get_posts', 'happiness_is_pets_filter_products_by_attributes', 20 );
+
+/**
+ * Sort products by breed at SQL level for better performance.
+ * Eliminates the need for a duplicate WP_Query and PHP sorting.
+ */
+function happiness_is_pets_sort_by_breed_sql( $clauses, $query ) {
+    global $wpdb;
+
+    if ( is_admin() || ! $query->is_main_query() || ! ( is_shop() || is_product_taxonomy() ) ) {
+        return $clauses;
+    }
+
+    // Don't override sorting if filters are active
+    if ( ! empty( $_GET['filter_breed'] ) || ! empty( $_GET['filter_gender'] ) ) {
+        return $clauses;
+    }
+
+    $ref_table = $wpdb->prefix . 'pet_reference_index';
+    if ( ! happiness_is_pets_ref_table_exists() ) {
+        return $clauses;
+    }
+
+    $clauses['join'] .= " LEFT JOIN {$ref_table} AS pri_sort ON {$wpdb->posts}.ID = pri_sort.pet_id ";
+    $clauses['orderby'] = "CASE WHEN pri_sort.breed IS NULL OR pri_sort.breed = '' THEN 1 ELSE 0 END ASC, pri_sort.breed ASC, {$wpdb->posts}.post_date DESC";
+
+    return $clauses;
+}
+add_filter( 'posts_clauses', 'happiness_is_pets_sort_by_breed_sql', 10, 2 );
 
 /**
  * Helper function to get breed for a product
@@ -1898,12 +1965,8 @@ function happiness_is_pets_get_product_breed( $product_id ) {
     // Try pet reference index (single row lookup, indexed)
     global $wpdb;
     $ref_table = $wpdb->prefix . 'pet_reference_index';
-    static $has_ref_table = null;
-    if ( null === $has_ref_table ) {
-        $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
-    }
 
-    if ( $has_ref_table ) {
+    if ( happiness_is_pets_ref_table_exists() ) {
         $breed = $wpdb->get_var( $wpdb->prepare(
                 "SELECT breed FROM $ref_table WHERE pet_id = %d",
                 $product_id
@@ -1940,7 +2003,7 @@ function happiness_is_pets_preload_breeds( $product_ids ) {
 
     global $wpdb;
     $ref_table = $wpdb->prefix . 'pet_reference_index';
-    if ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) !== $ref_table ) {
+    if ( ! happiness_is_pets_ref_table_exists() ) {
         return;
     }
 
@@ -1974,96 +2037,6 @@ function happiness_is_pets_preload_breeds( $product_ids ) {
         happiness_is_pets_get_product_breed( $id );
     }
 }
-
-/**
- * Sort products by breed alphabetically
- * This hook runs after the query to sort results by breed
- * Uses batch-preloaded breed data to avoid N+1 queries
- */
-add_action( 'the_posts', function( $posts, $query ) {
-    // Only apply to product queries on shop/taxonomy pages
-    if ( ! $query->is_main_query() || ! ( is_shop() || is_product_taxonomy() ) ) {
-        return $posts;
-    }
-
-    // Don't sort if breed or gender filters are active (let filters handle ordering)
-    if ( ! empty( $_GET['filter_breed'] ) || ! empty( $_GET['filter_gender'] ) ) {
-        return $posts;
-    }
-
-    $paged = max( 1, $query->get( 'paged' ) );
-    $posts_per_page = $query->get( 'posts_per_page' ) ?: 20;
-
-    // Build query to get ALL products (same as current query but no pagination)
-    $all_args = $query->query_vars;
-    $all_args['nopaging'] = true;
-    $all_args['fields'] = 'all';
-
-    if ( isset( $all_args['orderby'] ) && $all_args['orderby'] === 'breed' ) {
-        $all_args['orderby'] = 'date';
-        $all_args['order'] = 'DESC';
-    }
-
-    $all_products_query = new WP_Query( $all_args );
-
-    if ( $all_products_query->have_posts() ) {
-        $all_posts = $all_products_query->posts;
-
-        // Batch-preload all breeds in one query to avoid N+1
-        $all_ids = wp_list_pluck( $all_posts, 'ID' );
-        happiness_is_pets_preload_breeds( $all_ids );
-
-        usort( $all_posts, function( $a, $b ) {
-            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
-            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
-
-            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
-                return strcasecmp( $breed_a, $breed_b );
-            }
-            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
-                return -1;
-            }
-            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
-                return 1;
-            }
-            return 0;
-        } );
-
-        // Now paginate the sorted results
-        $offset = ( $paged - 1 ) * $posts_per_page;
-        $paginated_posts = array_slice( $all_posts, $offset, $posts_per_page );
-
-        // Update query object with correct counts
-        $query->found_posts = count( $all_posts );
-        $query->max_num_pages = ceil( count( $all_posts ) / $posts_per_page );
-
-        return $paginated_posts;
-    }
-
-    // Fallback: sort just the current page
-    if ( ! empty( $posts ) ) {
-        $post_ids = wp_list_pluck( $posts, 'ID' );
-        happiness_is_pets_preload_breeds( $post_ids );
-
-        usort( $posts, function( $a, $b ) {
-            $breed_a = happiness_is_pets_get_product_breed( $a->ID );
-            $breed_b = happiness_is_pets_get_product_breed( $b->ID );
-
-            if ( ! empty( $breed_a ) && ! empty( $breed_b ) ) {
-                return strcasecmp( $breed_a, $breed_b );
-            }
-            if ( ! empty( $breed_a ) && empty( $breed_b ) ) {
-                return -1;
-            }
-            if ( empty( $breed_a ) && ! empty( $breed_b ) ) {
-                return 1;
-            }
-            return 0;
-        } );
-    }
-
-    return $posts;
-}, 999, 2 );
 
 /**
  * ================================
@@ -2112,7 +2085,7 @@ function happiness_is_pets_get_filtered_products( $filters = array() ) {
 
     // Build a single query that joins posts, postmeta (gender), and pet_reference_index (breed/location)
     $ref_table = $wpdb->prefix . 'pet_reference_index';
-    $has_ref_table = ( $wpdb->get_var( "SHOW TABLES LIKE '$ref_table'" ) === $ref_table );
+    $has_ref_table = happiness_is_pets_ref_table_exists();
 
     // Start building the query
     $where_clauses = array();

@@ -402,6 +402,13 @@
 
 </div><!-- #page -->
 
+<?php
+// Include shared pet details modal on shop/product pages
+if ( is_shop() || is_product_taxonomy() ) {
+    get_template_part( 'template-parts/pet-details-modal' );
+}
+?>
+
 <?php wp_footer(); ?>
 
 </body>
