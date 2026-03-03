@@ -1328,19 +1328,23 @@ if ( post_password_required() ) { echo get_the_password_form(); return; }
                     </div>
                 <?php endif; ?>
 
+                <?php /* Weight display hidden per customer request
                 <?php if (!empty($current_weight)) : ?>
                     <div class="pup-fact-row">
                         <span class="pup-fact-label"><i class="fas fa-weight"></i> Current Weight</span>
                         <span class="pup-fact-value"><?php echo esc_html($current_weight); ?></span>
                     </div>
                 <?php endif; ?>
+                */ ?>
 
+                <?php /* Est. Adult Weight display hidden per customer request
                 <?php if (!empty($est_adult_weight)) : ?>
                     <div class="pup-fact-row">
                         <span class="pup-fact-label"><i class="fas fa-arrows-alt-v"></i> Est. Adult Weight</span>
                         <span class="pup-fact-value"><?php echo esc_html($est_adult_weight); ?> lbs</span>
                     </div>
                 <?php endif; ?>
+                */ ?>
 
                 <?php if (!empty($location)) : ?>
                     <div class="pup-fact-row">
@@ -1482,6 +1486,7 @@ if ( post_password_required() ) { echo get_the_password_form(); return; }
 
                 <?php if ($has_stats) : ?>
                     <div class="pup-stats-showcase">
+                        <?php /* Breed weight display hidden per customer request
                         <?php if (!empty($kb_stats['weight']['min']) || !empty($kb_stats['weight']['max'])) : ?>
                             <div class="pup-stat-tile">
                                 <i class="fas fa-weight-hanging"></i>
@@ -1489,6 +1494,7 @@ if ( post_password_required() ) { echo get_the_password_form(); return; }
                                 <div><?php echo esc_html($kb_stats['weight']['min']) . (isset($kb_stats['weight']['max']) && $kb_stats['weight']['max'] ? '-' . esc_html($kb_stats['weight']['max']) : '') . (isset($kb_stats['weight']['unit']) ? ' ' . esc_html($kb_stats['weight']['unit']) : ''); ?></div>
                             </div>
                         <?php endif; ?>
+                        */ ?>
 
                         <?php if (!empty($kb_stats['height']['min']) || !empty($kb_stats['height']['max'])) : ?>
                             <div class="pup-stat-tile">
