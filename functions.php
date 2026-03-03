@@ -2345,5 +2345,113 @@ add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_fil
 add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_filter('wpseo_json_ld_output', '__return_false');
 
+//DRIPLEY ORDERS AUTO TAG LOCATION
 
+add_action( 'woocommerce_order_status_completed', function( $order_id ) {
+
+    global $wpdb;
+
+    $order = wc_get_order( $order_id );
+    if ( ! $order ) return;
+
+    $order->add_order_note('[GH TAGGER] START');
+
+    $email = strtolower( trim( (string) $order->get_billing_email() ) );
+    if ( empty( $email ) ) {
+        $order->add_order_note('[GH TAGGER] Missing email');
+        return;
+    }
+
+    $contacts_table = $wpdb->prefix . 'gh_contacts';
+    $tags_table     = $wpdb->prefix . 'gh_tags';
+    $rel_table      = $wpdb->prefix . 'gh_tag_relationships';
+
+    // Get contact ID (your table uses ID)
+    $contact_id = $wpdb->get_var(
+            $wpdb->prepare(
+                    "SELECT ID FROM {$contacts_table} WHERE email = %s LIMIT 1",
+                    $email
+            )
+    );
+
+    if ( ! $contact_id ) {
+        $order->add_order_note('[GH TAGGER] Contact not found');
+        return;
+    }
+
+    foreach ( $order->get_items() as $item ) {
+
+        $product_id = (int) $item->get_product_id();
+        if ( ! $product_id ) continue;
+
+        $location_slug = trim( (string) get_post_meta( $product_id, 'location_slug', true ) );
+        if ( $location_slug === '' ) continue;
+
+        $tag_slug  = 'new-order-' . sanitize_title( $location_slug );
+        $tag_label = 'New Order - ' . ucwords( str_replace('-', ' ', $location_slug) );
+
+        // Check for existing tag (your schema uses tag_slug + tag_id)
+        $tag_id = $wpdb->get_var(
+                $wpdb->prepare(
+                        "SELECT tag_id FROM {$tags_table} WHERE tag_slug = %s LIMIT 1",
+                        $tag_slug
+                )
+        );
+
+        // Create tag if missing
+        if ( ! $tag_id ) {
+
+            $insert = $wpdb->insert(
+                    $tags_table,
+                    [
+                            'tag_slug'          => $tag_slug,
+                            'tag_name'          => $tag_label,
+                            'tag_description'   => '',
+                            'show_as_preference'=> 0
+                    ]
+            );
+
+            if ( $insert === false ) {
+                $order->add_order_note('[GH TAGGER] Tag insert failed: ' . $wpdb->last_error);
+                return;
+            }
+
+            $tag_id = (int) $wpdb->insert_id;
+            $order->add_order_note('[GH TAGGER] Tag created ID: ' . $tag_id);
+        }
+
+        // Ensure relationship exists (schema confirmed uses contact_id + tag_id)
+        $exists = $wpdb->get_var(
+                $wpdb->prepare(
+                        "SELECT tag_id FROM {$rel_table} WHERE contact_id = %d AND tag_id = %d LIMIT 1",
+                        $contact_id,
+                        $tag_id
+                )
+        );
+
+        if ( ! $exists ) {
+
+            $insert_rel = $wpdb->insert(
+                    $rel_table,
+                    [
+                            'contact_id' => $contact_id,
+                            'tag_id'     => $tag_id
+                    ]
+            );
+
+            if ( $insert_rel === false ) {
+                $order->add_order_note('[GH TAGGER] Relationship insert failed: ' . $wpdb->last_error);
+                return;
+            }
+
+            $order->add_order_note('[GH TAGGER] Tag linked successfully');
+        }
+
+        break; // only tag once per order
+
+    }
+
+    $order->add_order_note('[GH TAGGER] END');
+
+}, 99 );
 
