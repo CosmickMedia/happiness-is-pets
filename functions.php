@@ -407,7 +407,7 @@ function happiness_is_pets_basic_seo() {
     <meta name="twitter:image" content="<?php echo esc_url( $hero_image ); ?>">
 
     <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
+    <!--<script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@graph": [
@@ -507,7 +507,7 @@ function happiness_is_pets_basic_seo() {
             }
         ]
     }
-    </script>
+    </script>-->
     <?php
 }
 add_action( 'wp_head', 'happiness_is_pets_basic_seo', 1 );
@@ -715,6 +715,9 @@ add_filter( 'nav_menu_css_class', 'happiness_is_pets_add_menu_li_class', 1, 3 );
 
 // Include customizer additions (for theme options)
 require get_template_directory() . '/inc/customizer.php';
+
+// Areas We Serve meta box functionality
+require get_template_directory() . '/assets/add-ons/areas-we-serve.php';
 
 // If using a Walker Class for Bootstrap Nav:
 // require get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php'; // Download and place NavWalker class if needed
@@ -2344,6 +2347,9 @@ function happiness_is_pets_ajax_custom_filter_products() {
 add_action( 'wp_ajax_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_action( 'wp_ajax_nopriv_custom_filter_products', 'happiness_is_pets_ajax_custom_filter_products' );
 add_filter('wpseo_json_ld_output', '__return_false');
+
+// Disable ALL Yoast schema output (modern API)
+add_filter('wpseo_schema_graph', '__return_empty_array');
 
 //DRIPLEY ORDERS AUTO TAG LOCATION
 

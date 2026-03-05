@@ -4931,3 +4931,159 @@ html {
     }
 }
 
+/* ========================================
+   Areas We Serve Template Styles
+   ======================================== */
+
+.page__content {
+    padding: 40px 0;
+    background-color: var(--color-background);
+}
+
+/* ==========================================================================
+   Areas We Serve Template Styles
+   ========================================================================== */
+
+/* Info Section - Enhanced Design */
+.aws-info-section {
+    background: linear-gradient(135deg, var(--color-light-background) 0%, #fff 100%);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.aws-info-section .row {
+    justify-content: center;
+}
+
+/* Individual Info Box Card - Premium Look */
+.aws-info-box {
+    text-align: center;
+    padding: 24px 16px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aws-info-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.aws-info-label {
+    font-size: 0.75rem;
+    color: var(--color-button);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.aws-info-value {
+    font-size: 1.1rem;
+    color: var(--color-heading);
+    font-weight: 700;
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+/* Content Section */
+.aws-content-section {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+.aws-content-section p {
+    margin-bottom: 1rem;
+}
+
+.aws-contact-details {
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+/* Read More Component */
+.aws-content-preview {
+    margin-bottom: 0.5rem;
+}
+
+.aws-content-expanded {
+    margin-bottom: 1rem;
+}
+
+.aws-read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-button);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.aws-read-more-btn:hover {
+    background-color: var(--color-button-hover, var(--color-button));
+    filter: brightness(0.9);
+}
+
+.aws-chevron {
+    display: inline-block;
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.aws-read-more-btn.expanded .aws-chevron {
+    transform: rotate(180deg);
+}
+
+/* Products Section */
+.aws-products-section {
+    padding: 30px 20px;
+    background: var(--color-light-background);
+    border-radius: 8px;
+}
+
+.aws-products-section .section-title {
+    color: var(--color-heading);
+    font-size: 1.75rem;
+    margin-bottom: 25px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .aws-info-section {
+        padding: 20px;
+    }
+
+    .aws-info-box {
+        padding: 16px 12px;
+    }
+
+    .aws-info-label {
+        font-size: 0.7rem;
+    }
+
+    .aws-info-value {
+        font-size: 1rem;
+    }
+
+    .aws-products-section {
+        padding: 20px 15px;
+    }
+
+    .aws-read-more-btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 1rem;
+    }
+}
+
