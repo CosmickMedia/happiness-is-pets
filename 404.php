@@ -75,6 +75,12 @@ get_header();
         margin-bottom: 30px;
         opacity: 0.3;
     }
+    .view-more-container {
+        margin: 40px auto;
+    }
+    .view-more-container .error-404-cta {
+        margin: 0 auto;
+    }
 
     @media (max-width: 768px) {
         .error-404-page {
@@ -116,13 +122,71 @@ get_header();
             <p class="error-404-message">
                 <?php esc_html_e( 'We\'re sorry, but the page you\'re looking for seems to have wandered off. Don\'t worry though, we have plenty of adorable puppies waiting to meet you!', 'happiness-is-pets' ); ?>
             </p>
+        </div>
+    </div>
+    <div class="main-container">
+        <?php
+        $args = array(
+            'post_type'      => 'product',
+            'posts_per_page' => 24,
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => array( 'accessories' ),
+                    'operator' => 'NOT IN',
+                ),
+            ),
+        );
 
+        $pets = new WP_Query( $args );
+
+        if ( $pets->have_posts() ) :
+            // Deduplicate posts using already-loaded post objects (no extra queries)
+            $seen_ids = array();
+            $unique_posts = array();
+            foreach ( $pets->posts as $post ) {
+                if ( ! isset( $seen_ids[ $post->ID ] ) ) {
+                    $seen_ids[ $post->ID ] = true;
+                    $unique_posts[] = $post;
+                }
+            }
+            if ( count( $unique_posts ) !== count( $pets->posts ) ) {
+                $pets->posts = $unique_posts;
+                $pets->post_count = count( $unique_posts );
+            }
+            
+            woocommerce_product_loop_start();
+            
+            // Track displayed IDs as double-check
+            $displayed_ids = array();
+            while ( $pets->have_posts() ) :
+                $pets->the_post();
+                $product_id = get_the_ID();
+                
+                // Skip if already displayed
+                if ( in_array( $product_id, $displayed_ids, true ) ) {
+                    continue;
+                }
+                $displayed_ids[] = $product_id;
+                
+                wc_get_template_part( 'content', 'product' );
+            endwhile;
+            woocommerce_product_loop_end();
+        else :
+            wc_get_template( 'loop/no-products-found.php' );
+        endif;
+
+        wp_reset_postdata();
+        ?>
+        <div class="view-more-container">
             <a href="<?php echo esc_url( home_url( '/puppies-for-sale/' ) ); ?>" class="error-404-cta">
                 <i class="fas fa-heart"></i>
                 <span><?php esc_html_e( 'View Our Adorable Puppies', 'happiness-is-pets' ); ?></span>
             </a>
         </div>
     </div>
+        
 </main>
 
 <?php
